@@ -857,6 +857,7 @@
                     <input type="text" id="global-search" placeholder="Search tasks, projects, people..." oninput="handleGlobalSearch(this.value)">
                 </div>
                 <div class="topbar-actions">
+                    <button class="btn btn-ghost" onclick="openShortcutsModal()" title="Keyboard shortcuts">⌨ Shortcuts</button>
                     <button class="btn btn-primary" onclick="openAddTaskModal()">+ New Task</button>
                 </div>
             </div>
@@ -1879,6 +1880,46 @@
     }
 
     // ═══════════════════════════════════════════════════════════
+    //  KEYBOARD SHORTCUTS HELP
+    // ═══════════════════════════════════════════════════════════
+    function openShortcutsModal() {
+        const rows = [
+            ['n', 'New task'],
+            ['/', 'Focus search'],
+            ['Esc', 'Close modal'],
+            ['1', 'Go to Overview'],
+            ['2', 'Go to All Tasks'],
+            ['3', 'Go to Board'],
+            ['4', 'Go to Projects'],
+            ['5', 'Go to Sprints'],
+            ['6', 'Go to Team'],
+            ['?', 'Show this help'],
+        ];
+
+        openModal(`
+            <div class="modal-header">
+                <h3>Keyboard Shortcuts</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table style="width:100%;border-collapse:collapse;">
+                    ${rows.map(([key, desc]) => `
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:10px 0;width:80px;">
+                                <kbd style="display:inline-block;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--surface-alt);font-family:monospace;font-size:13px;font-weight:700;color:var(--text);">${esc(key)}</kbd>
+                            </td>
+                            <td style="padding:10px 0;font-size:14px;color:var(--text-secondary);">${esc(desc)}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+            </div>
+        `);
+    }
+
+    // ═══════════════════════════════════════════════════════════
     //  KEYBOARD SHORTCUTS
     // ═══════════════════════════════════════════════════════════
     document.addEventListener('keydown', (e) => {
@@ -1896,6 +1937,7 @@
         if (e.key === '5') navigateTo('sprints');
         if (e.key === '6') navigateTo('team');
         if (e.key === '/') { e.preventDefault(); document.getElementById('global-search').focus(); }
+        if (e.key === '?') { e.preventDefault(); openShortcutsModal(); }
     });
 
     // ═══════════════════════════════════════════════════════════
