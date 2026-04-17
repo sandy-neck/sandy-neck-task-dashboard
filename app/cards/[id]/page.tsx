@@ -57,6 +57,12 @@ export default function CardDetailPage() {
       const data = await res.json()
       const newValue = Number(data.estimated_value_usd)
 
+      if (data.error) {
+        alert(`Re-value error: ${data.error}`)
+        setRevaluing(false)
+        return
+      }
+
       if (newValue > 0) {
         const update: Record<string, unknown> = { current_value: newValue, updated_at: new Date().toISOString() }
         if (data.official_image_url) update.image_url = data.official_image_url
@@ -65,11 +71,13 @@ export default function CardDetailPage() {
           supabase.from('cards').update(update).eq('id', card.id),
           supabase.from('price_snapshots').insert({ card_id: card.id, estimated_value: newValue, notes: data.notes }),
         ])
+      } else {
+        alert(`Got value: ${data.estimated_value_usd} — check API key in Vercel env vars`)
       }
 
       await loadCard()
-    } catch {
-      alert('Re-value failed. Please try again.')
+    } catch (err) {
+      alert(`Re-value failed: ${err}`)
     }
     setRevaluing(false)
   }
