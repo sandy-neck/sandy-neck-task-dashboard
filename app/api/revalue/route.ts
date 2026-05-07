@@ -43,7 +43,8 @@ Return ONLY a JSON object:
       return NextResponse.json({ error: 'Unexpected AI response' }, { status: 500 })
     }
 
-    const result = JSON.parse(content.text)
+    const cleaned = content.text.trim().replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '')
+    const result = JSON.parse(cleaned)
     return NextResponse.json({ ...result, official_image_url })
   } catch (error) {
     console.error('Revalue error:', error)

@@ -60,7 +60,8 @@ Return ONLY the JSON object. No markdown, no code blocks, no other text.`,
       return NextResponse.json({ error: 'Unexpected response from AI' }, { status: 500 })
     }
 
-    const result = JSON.parse(content.text)
+    const cleaned = content.text.trim().replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '')
+    const result = JSON.parse(cleaned)
 
     // Fetch official card image from Pokémon TCG API
     const official_image_url = await fetchOfficialImage(result.name, result.set_name, result.card_number)
