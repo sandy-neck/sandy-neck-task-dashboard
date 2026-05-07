@@ -26,6 +26,7 @@ export default function CardDetailPage() {
   const [loading, setLoading] = useState(true)
   const [revaluing, setRevaluing] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [statusMsg, setStatusMsg] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
 
   const loadCard = useCallback(async () => {
     const [cardRes, snapshotsRes] = await Promise.all([
@@ -42,6 +43,7 @@ export default function CardDetailPage() {
   async function handleRevalue() {
     if (!card) return
     setRevaluing(true)
+    setStatusMsg(null)
     try {
       const res = await fetch('/api/revalue', {
         method: 'POST',
@@ -58,7 +60,7 @@ export default function CardDetailPage() {
       const newValue = Number(data.estimated_value_usd)
 
       if (data.error) {
-        alert(`Re-value error: ${data.error}`)
+        setStatusMsg({ type: 'error', text: `AI error: ${data.error}` })
         setRevaluing(false)
         return
       }
@@ -67,17 +69,28 @@ export default function CardDetailPage() {
         const update: Record<string, unknown> = { current_value: newValue, updated_at: new Date().toISOString() }
         if (data.official_image_url) update.image_url = data.official_image_url
 
-        await Promise.all([
+        const [updateRes, insertRes] = await Promise.all([
           supabase.from('cards').update(update).eq('id', card.id),
           supabase.from('price_snapshots').insert({ card_id: card.id, estimated_value: newValue, notes: data.notes }),
         ])
+
+        if (updateRes.error) {
+          setStatusMsg({ type: 'error', text: `Save failed: ${updateRes.error.message}` })
+          setRevaluing(false)
+          return
+        }
+        if (insertRes.error) {
+          console.warn('Snapshot insert failed:', insertRes.error.message)
+        }
+
+        setStatusMsg({ type: 'success', text: `Updated to $${newValue.toFixed(2)}${data.official_image_url ? ' · image refreshed' : ''}` })
       } else {
-        alert(`Got value: ${data.estimated_value_usd} — check API key in Vercel env vars`)
+        setStatusMsg({ type: 'error', text: `Got $0 — check ANTHROPIC_API_KEY in Vercel env vars` })
       }
 
       await loadCard()
     } catch (err) {
-      alert(`Re-value failed: ${err}`)
+      setStatusMsg({ type: 'error', text: `Re-value failed: ${err}` })
     }
     setRevaluing(false)
   }
@@ -167,6 +180,11 @@ export default function CardDetailPage() {
           >
             {revaluing ? '⏳ Re-valuing...' : '🔄 Re-value Card'}
           </button>
+          {statusMsg && (
+            <p className={`mt-2 text-xs text-center px-2 py-1 rounded-lg ${statusMsg.type === 'error' ? 'bg-red-900/30 text-red-400' : 'bg-green-900/30 text-green-400'}`}>
+              {statusMsg.text}
+            </p>
+          )}
         </div>
 
         {/* Details */}
