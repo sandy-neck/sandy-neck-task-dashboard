@@ -18,6 +18,22 @@ function conditionBadge(condition: string | null) {
   return 'bg-red-900/60 text-red-400'
 }
 
+const CONDITIONS = ['Mint', 'Near Mint', 'Lightly Played', 'Moderately Played', 'Heavily Played', 'Damaged']
+const CARD_TYPES = ['Pokemon', 'Trainer', 'Energy']
+const POKEMON_TYPES = ['Fire', 'Water', 'Grass', 'Lightning', 'Psychic', 'Fighting', 'Darkness', 'Metal', 'Dragon', 'Fairy', 'Colorless']
+
+interface EditDraft {
+  name: string
+  set_name: string
+  card_number: string
+  rarity: string
+  hp: string
+  card_type: string
+  pokemon_type: string
+  condition: string
+  condition_notes: string
+}
+
 export default function CardDetailPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
@@ -27,6 +43,9 @@ export default function CardDetailPage() {
   const [revaluing, setRevaluing] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [statusMsg, setStatusMsg] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
+  const [editing, setEditing] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [draft, setDraft] = useState<EditDraft | null>(null)
 
   const loadCard = useCallback(async () => {
     const [cardRes, snapshotsRes] = await Promise.all([
@@ -39,6 +58,49 @@ export default function CardDetailPage() {
   }, [id])
 
   useEffect(() => { loadCard() }, [loadCard])
+
+  function startEdit() {
+    if (!card) return
+    setDraft({
+      name: card.name,
+      set_name: card.set_name ?? '',
+      card_number: card.card_number ?? '',
+      rarity: card.rarity ?? '',
+      hp: card.hp ?? '',
+      card_type: card.card_type ?? '',
+      pokemon_type: card.pokemon_type ?? '',
+      condition: card.condition ?? '',
+      condition_notes: card.condition_notes ?? '',
+    })
+    setEditing(true)
+    setStatusMsg(null)
+  }
+
+  async function saveEdit() {
+    if (!card || !draft) return
+    setSaving(true)
+    const { error } = await supabase.from('cards').update({
+      name: draft.name.trim(),
+      set_name: draft.set_name.trim() || null,
+      card_number: draft.card_number.trim() || null,
+      rarity: draft.rarity.trim() || null,
+      hp: draft.hp.trim() || null,
+      card_type: draft.card_type || null,
+      pokemon_type: draft.pokemon_type || null,
+      condition: draft.condition || null,
+      condition_notes: draft.condition_notes.trim() || null,
+      updated_at: new Date().toISOString(),
+    }).eq('id', card.id)
+
+    if (error) {
+      setStatusMsg({ type: 'error', text: `Save failed: ${error.message}` })
+    } else {
+      setEditing(false)
+      setStatusMsg({ type: 'success', text: 'Card details updated' })
+      await loadCard()
+    }
+    setSaving(false)
+  }
 
   async function handleRevalue() {
     if (!card) return
@@ -187,25 +249,119 @@ export default function CardDetailPage() {
           )}
         </div>
 
-        {/* Details */}
+        {/* Card Details — view or edit */}
         <div className="bg-zinc-900 rounded-2xl p-4 border border-zinc-800 space-y-3">
-          <h2 className="text-white font-semibold">Card Details</h2>
-          {details.map(({ label, value }) =>
-            value ? (
-              <div key={label} className="flex justify-between text-sm">
-                <span className="text-zinc-400">{label}</span>
-                <span className="text-white">{value}</span>
-              </div>
-            ) : null
-          )}
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-zinc-400">Condition</span>
-            <span className={`text-xs px-2 py-1 rounded-full ${conditionBadge(card.condition)}`}>
-              {card.condition || 'Unknown'}
-            </span>
+          <div className="flex items-center justify-between">
+            <h2 className="text-white font-semibold">Card Details</h2>
+            {!editing && (
+              <button onClick={startEdit} className="text-amber-400 text-xs px-3 py-1 rounded-lg border border-amber-400/30 hover:bg-amber-400/10 transition-colors">
+                ✏️ Edit
+              </button>
+            )}
           </div>
-          {card.condition_notes && (
-            <p className="text-zinc-400 text-xs border-t border-zinc-800 pt-3">{card.condition_notes}</p>
+
+          {editing && draft ? (
+            <div className="space-y-3">
+              {[
+                { label: 'Name', key: 'name' as const, type: 'text' },
+                { label: 'Set', key: 'set_name' as const, type: 'text' },
+                { label: 'Number', key: 'card_number' as const, type: 'text' },
+                { label: 'Rarity', key: 'rarity' as const, type: 'text' },
+                { label: 'HP', key: 'hp' as const, type: 'text' },
+              ].map(({ label, key }) => (
+                <div key={key}>
+                  <label className="text-zinc-400 text-xs mb-1 block">{label}</label>
+                  <input
+                    type="text"
+                    value={draft[key]}
+                    onChange={(e) => setDraft({ ...draft, [key]: e.target.value })}
+                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-amber-400"
+                  />
+                </div>
+              ))}
+
+              <div>
+                <label className="text-zinc-400 text-xs mb-1 block">Card Type</label>
+                <select
+                  value={draft.card_type}
+                  onChange={(e) => setDraft({ ...draft, card_type: e.target.value })}
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-amber-400"
+                >
+                  <option value="">— select —</option>
+                  {CARD_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-zinc-400 text-xs mb-1 block">Pokémon Type</label>
+                <select
+                  value={draft.pokemon_type}
+                  onChange={(e) => setDraft({ ...draft, pokemon_type: e.target.value })}
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-amber-400"
+                >
+                  <option value="">— none —</option>
+                  {POKEMON_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-zinc-400 text-xs mb-1 block">Condition</label>
+                <select
+                  value={draft.condition}
+                  onChange={(e) => setDraft({ ...draft, condition: e.target.value })}
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-amber-400"
+                >
+                  <option value="">— select —</option>
+                  {CONDITIONS.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-zinc-400 text-xs mb-1 block">Condition Notes</label>
+                <textarea
+                  value={draft.condition_notes}
+                  onChange={(e) => setDraft({ ...draft, condition_notes: e.target.value })}
+                  rows={2}
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-amber-400 resize-none"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  onClick={saveEdit}
+                  disabled={saving}
+                  className="flex-1 py-2 rounded-xl bg-amber-400 text-black text-sm font-bold disabled:opacity-50"
+                >
+                  {saving ? 'Saving...' : 'Save'}
+                </button>
+                <button
+                  onClick={() => setEditing(false)}
+                  className="flex-1 py-2 rounded-xl bg-zinc-800 text-zinc-300 text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {details.map(({ label, value }) =>
+                value ? (
+                  <div key={label} className="flex justify-between text-sm">
+                    <span className="text-zinc-400">{label}</span>
+                    <span className="text-white">{value}</span>
+                  </div>
+                ) : null
+              )}
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-zinc-400">Condition</span>
+                <span className={`text-xs px-2 py-1 rounded-full ${conditionBadge(card.condition)}`}>
+                  {card.condition || 'Unknown'}
+                </span>
+              </div>
+              {card.condition_notes && (
+                <p className="text-zinc-400 text-xs border-t border-zinc-800 pt-3">{card.condition_notes}</p>
+              )}
+            </>
           )}
         </div>
 
