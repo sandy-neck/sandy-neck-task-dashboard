@@ -30,7 +30,6 @@ def main():
         "social": {},
         "klaviyo": {},
         "google_local": {},
-        "analysis": {},
         "errors": [],
     }
 
@@ -100,34 +99,24 @@ def main():
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
 
-    # ── Synthesis ──────────────────────────────────────────────────────────────
-    print("🧠 Synthesizing insights with Claude...")
+    # ── Write + send email ─────────────────────────────────────────────────────
+    print("🧠 Writing email with Claude...")
+    email_content = {"subject": "daily update", "body": "<p>Data collected — synthesis unavailable today.</p>", "signal_level": "quiet"}
     try:
         synth = ClaudeSynthesizer()
-        payload["analysis"] = synth.analyze(payload)
-        insights = payload["analysis"].get("insights", [])
-        recs = payload["analysis"].get("recommendations", [])
-        print(f"   Insights: {len(insights)}  |  Recommendations: {len(recs)}")
-        if payload["analysis"].get("headline_metric"):
-            print(f"   Headline: {payload['analysis']['headline_metric']}")
+        email_content = synth.generate_email(payload)
+        print(f"   Subject: {email_content.get('subject','')}")
+        print(f"   Signal:  {email_content.get('signal_level','')}")
     except Exception as e:
         msg = f"Synthesis: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
-        payload["analysis"] = {
-            "summary": "Claude synthesis unavailable today — raw data compiled below.",
-            "headline_metric": "",
-            "insights": [],
-            "recommendations": [],
-            "alerts": [],
-        }
 
-    # ── Email ──────────────────────────────────────────────────────────────────
-    print("📧 Sending email report...")
+    print("📧 Sending email...")
     try:
         reporter = EmailReporter()
-        reporter.send(payload)
-        recipient = os.environ.get("REPORT_RECIPIENT", "sandy@sandyneckprovisions.com")
+        reporter.send(email_content)
+        recipient = os.environ.get("REPORT_RECIPIENT", "goodvibes@sandyneckprovisions.com")
         print(f"   Sent to: {recipient}")
     except Exception as e:
         msg = f"Email: {e}"
