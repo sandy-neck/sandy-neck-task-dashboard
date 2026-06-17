@@ -1,0 +1,6 @@
+anthropic>=0.49.0
+requests>=2.32.0
+pytz>=2024.2
+# Google APIs (optional — only needed if GOOGLE_SERVICE_ACCOUNT_JSON is set)
+google-auth>=2.29.0
+google-api-python-client>=2.131.0

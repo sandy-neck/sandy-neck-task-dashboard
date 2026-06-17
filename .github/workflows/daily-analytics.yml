@@ -1,0 +1,81 @@
+name: Daily Analytics Report
+
+on:
+  schedule:
+    # 7 AM ET = 12:00 UTC (EST, Nov–Mar) / 11:00 UTC (EDT, Mar–Nov)
+    # Using 12:00 UTC ensures delivery by 7 AM ET year-round (7 AM EST / 8 AM EDT)
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (skip email send)'
+        type: boolean
+        default: false
+
+jobs:
+  daily-analytics:
+    name: Run Daily Analytics Agent
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: agent_requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r agent_requirements.txt
+
+      - name: Run analytics agent
+        working-directory: agent
+        env:
+          # Shopify — required
+          SHOPIFY_SHOP_DOMAIN: ${{ secrets.SHOPIFY_SHOP_DOMAIN }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+
+          # Claude / Anthropic — required
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # Email delivery — required
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT }}
+          REPORT_SENDER_NAME: Sandy Neck Analytics
+
+          # Klaviyo — optional (stub if missing)
+          KLAVIYO_PRIVATE_KEY: ${{ secrets.KLAVIYO_PRIVATE_KEY }}
+          KLAVIYO_STUB_MODE: ${{ secrets.KLAVIYO_PRIVATE_KEY == '' && 'true' || 'false' }}
+
+          # Social media — optional (stub if missing)
+          SOCIAL_STUB_MODE: ${{ secrets.INSTAGRAM_ACCESS_TOKEN == '' && 'true' || 'false' }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_CHANNEL_ID: ${{ secrets.YOUTUBE_CHANNEL_ID }}
+
+          # Google Business Profile + Search Console — optional (stub if missing)
+          GOOGLE_STUB_MODE: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON == '' && 'true' || 'false' }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GOOGLE_BUSINESS_LOCATION: ${{ secrets.GOOGLE_BUSINESS_LOCATION }}
+          SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
+
+        run: python daily_analytics.py
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analytics-failure-log
+          path: agent/
+          retention-days: 7
