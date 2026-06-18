@@ -24,9 +24,9 @@ The Shopify and email secrets are the only ones required to start.
 | `SHOPIFY_SHOP_DOMAIN` | `sandy-neck-provisions-8044.myshopify.com` |
 | `SHOPIFY_ACCESS_TOKEN` | Admin API access token — see below |
 
-**Getting the access token — Shopify Partners Dashboard (current method):**
+**Getting the access token — Shopify Developer Dashboard (current method):**
 
-> The old "Develop apps" option in Shopify Admin is deprecated. Custom apps now live at [partners.shopify.com](https://partners.shopify.com). Your Partners Dashboard app has a Client ID and Client Secret — use them to complete a one-time OAuth exchange to get a permanent store access token.
+> The old "Develop apps" option in Shopify Admin is deprecated. Custom apps now live at [dev.shopify.com](https://dev.shopify.com). Your Developer Dashboard app has a Client ID and Client Secret — use them to complete a one-time OAuth exchange to get a permanent store access token.
 
 1. In your browser (while logged into Shopify Admin), open this URL with your Client ID:
    ```

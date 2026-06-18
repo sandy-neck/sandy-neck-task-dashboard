@@ -4,11 +4,11 @@
 
 **Shopify Admin custom app creation is deprecated.** The "Develop apps" option inside Shopify Admin (Settings → Apps and sales channels) no longer works for creating new custom apps.
 
-All custom Shopify apps must be created and managed via the **Shopify Partners / Developer Dashboard** at [partners.shopify.com](https://partners.shopify.com).
+All custom Shopify apps must be created and managed via the **Shopify Developer Dashboard** at [dev.shopify.com](https://dev.shopify.com).
 
-### How to get a store access token from a Partners Dashboard app
+### How to get a store access token from a Developer Dashboard app
 
-The Partners Dashboard app has a **Client ID** and **Client Secret** (not a direct access token). To get a permanent store-specific access token (`shpat_...`):
+The Developer Dashboard app has a **Client ID** and **Client Secret** (not a direct access token). To get a permanent store-specific access token (`shpat_...`):
 
 1. **Authorize:** open this URL in a browser while logged into Shopify Admin:
    ```

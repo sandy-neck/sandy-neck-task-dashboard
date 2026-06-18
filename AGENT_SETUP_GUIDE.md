@@ -9,7 +9,7 @@ Work through these in order. Steps 1–4 get you a working daily email. Steps 5�
 
 This lets the agent read your store data (orders, revenue, products, conversion, inventory).
 
-> **Note:** The old "Develop apps" option inside Shopify Admin is deprecated — Shopify now requires custom apps to be created via the **Shopify Partners / Developer Dashboard** at [partners.shopify.com](https://partners.shopify.com). Your existing app there (with a Client ID and Client Secret) is exactly what you need.
+> **Note:** The old "Develop apps" option inside Shopify Admin is deprecated — Shopify now requires custom apps to be created via the **Shopify Developer Dashboard** at [dev.shopify.com](https://dev.shopify.com). Your existing app there (with a Client ID and Client Secret) is exactly what you need.
 
 **You already have the app — you just need to get the store access token from it.**
 
@@ -41,8 +41,8 @@ The response looks like: `{"access_token":"shpat_xxxx...","scope":"read_orders,.
 
 That `access_token` is your permanent store credential.
 
-**If you need to create a new Partners Dashboard app:**
-1. [partners.shopify.com](https://partners.shopify.com) → **Apps → Create app → Create app manually**
+**If you need to create a new Developer Dashboard app:**
+1. [dev.shopify.com](https://dev.shopify.com) → **Apps → Create app → Create app manually**
 2. Name: `Analytics Agent` → **Create**
 3. Under **Configuration**, set redirect URI to `https://example.com` and enable the scopes above
 4. Then follow Steps A and B
