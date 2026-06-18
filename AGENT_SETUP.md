@@ -24,17 +24,24 @@ The Shopify and email secrets are the only ones required to start.
 | `SHOPIFY_SHOP_DOMAIN` | `sandy-neck-provisions-8044.myshopify.com` |
 | `SHOPIFY_ACCESS_TOKEN` | Admin API access token — see below |
 
-**Getting the access token:**
-1. Shopify Admin → **Settings → Apps and sales channels → Develop apps**
-2. Create app → name it "Analytics Agent"
-3. **Configure Admin API scopes** — enable:
-   - `read_orders` · `read_products` · `read_customers`
-   - `read_inventory` · `read_analytics` · `read_reports`
-4. **Install app** → copy the Admin API access token (shown once — save it)
+**Getting the access token — Shopify Partners Dashboard (current method):**
 
-> **Note on architecture:** The in-session Shopify MCP tools (`run-analytics-query`, etc.) are great
-> for interactive analysis right now. The scheduled agent uses the same Shopify Admin API and
-> identical ShopifyQL syntax — just authenticated directly rather than via a session-bound MCP server.
+> The old "Develop apps" option in Shopify Admin is deprecated. Custom apps now live at [partners.shopify.com](https://partners.shopify.com). Your Partners Dashboard app has a Client ID and Client Secret — use them to complete a one-time OAuth exchange to get a permanent store access token.
+
+1. In your browser (while logged into Shopify Admin), open this URL with your Client ID:
+   ```
+   https://sandy-neck-provisions-8044.myshopify.com/admin/oauth/authorize?client_id=YOUR_CLIENT_ID&scope=read_analytics,read_customers,read_inventory,read_orders,read_products,read_reports&redirect_uri=https://example.com
+   ```
+2. Click **Install** → you'll be redirected to `https://example.com/?code=XXXX&...` — copy the `code` value
+3. Run this to exchange the code for a permanent token:
+   ```bash
+   curl -s -X POST "https://sandy-neck-provisions-8044.myshopify.com/admin/oauth/access_token" \
+     -H "Content-Type: application/json" \
+     -d '{"client_id":"CLIENT_ID","client_secret":"CLIENT_SECRET","code":"CODE"}'
+   ```
+4. The response contains `"access_token":"shpat_xxxx..."` — that's your token
+
+> The in-session Shopify MCP tools (`run-analytics-query`, etc.) are great for interactive analysis right now. The scheduled agent uses the same Shopify Admin API and identical ShopifyQL syntax — authenticated directly with this token rather than via a session-bound MCP server.
 
 ---
 

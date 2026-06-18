@@ -9,24 +9,49 @@ Work through these in order. Steps 1–4 get you a working daily email. Steps 5�
 
 This lets the agent read your store data (orders, revenue, products, conversion, inventory).
 
-1. Log into Shopify Admin → **Settings** (bottom-left gear) → **Apps and sales channels**
-2. Top-right: click **Develop apps** → if prompted, click **Allow custom app development** → confirm
-3. Click **Create an app** → name it `Analytics Agent` → **Create app**
-4. Click **Configure Admin API scopes** — check these boxes:
-   - `read_analytics`
-   - `read_customers`
-   - `read_inventory`
-   - `read_orders`
-   - `read_products`
-   - `read_reports`
-5. **Save** → then **Install app** (top right banner) → **Install**
-6. Under "Admin API access token" → click **Reveal token once** → copy it immediately (shown once only)
+> **Note:** The old "Develop apps" option inside Shopify Admin is deprecated — Shopify now requires custom apps to be created via the **Shopify Partners / Developer Dashboard** at [partners.shopify.com](https://partners.shopify.com). Your existing app there (with a Client ID and Client Secret) is exactly what you need.
+
+**You already have the app — you just need to get the store access token from it.**
+
+**Step A — Open the OAuth authorization URL in your browser**
+
+While logged into your Shopify Admin, paste this URL into your browser, replacing `YOUR_CLIENT_ID`:
+
+```
+https://sandy-neck-provisions-8044.myshopify.com/admin/oauth/authorize?client_id=YOUR_CLIENT_ID&scope=read_analytics,read_customers,read_inventory,read_orders,read_products,read_reports&redirect_uri=https://example.com
+```
+
+Click **Install** when the Shopify prompt appears. You'll be redirected to a URL like:
+`https://example.com/?code=SOME_CODE&shop=sandy-neck-provisions-8044.myshopify.com&...`
+
+Copy the `code` value out of that URL.
+
+**Step B — Exchange the code for a permanent token**
+
+In your terminal, run this (fill in Client ID, Client Secret, and the code from Step A):
+
+```bash
+curl -s -X POST \
+  "https://sandy-neck-provisions-8044.myshopify.com/admin/oauth/access_token" \
+  -H "Content-Type: application/json" \
+  -d '{"client_id":"YOUR_CLIENT_ID","client_secret":"YOUR_CLIENT_SECRET","code":"CODE_FROM_STEP_A"}'
+```
+
+The response looks like: `{"access_token":"shpat_xxxx...","scope":"read_orders,..."}`
+
+That `access_token` is your permanent store credential.
+
+**If you need to create a new Partners Dashboard app:**
+1. [partners.shopify.com](https://partners.shopify.com) → **Apps → Create app → Create app manually**
+2. Name: `Analytics Agent` → **Create**
+3. Under **Configuration**, set redirect URI to `https://example.com` and enable the scopes above
+4. Then follow Steps A and B
 
 **Add to GitHub Secrets:**
 | Secret name | Value |
 |---|---|
 | `SHOPIFY_SHOP_DOMAIN` | `sandy-neck-provisions-8044.myshopify.com` |
-| `SHOPIFY_ACCESS_TOKEN` | the token you just copied |
+| `SHOPIFY_ACCESS_TOKEN` | the `access_token` from Step B (`shpat_...`) |
 
 ---
 
