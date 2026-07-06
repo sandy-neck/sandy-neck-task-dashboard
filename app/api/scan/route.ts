@@ -13,8 +13,9 @@ export async function POST(req: Request) {
     }
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1024,
+      model: 'claude-sonnet-5',
+      max_tokens: 1400,
+      thinking: { type: 'disabled' },
       messages: [
         {
           role: 'user',
@@ -46,7 +47,7 @@ export async function POST(req: Request) {
   "ai_valuation_notes": "1-2 sentences explaining what drives this card's value"
 }
 
-For estimated_value_usd: use your best knowledge of current Pokémon TCG market prices. Consider the set era, rarity, card popularity, and the condition you observed. Be realistic and grounded.
+For estimated_value_usd: use your best knowledge of this specific card's actual TCGPlayer/eBay sold-listing prices — not a generic price tier for its rarity. Two cards of the same rarity and era can differ significantly in value based on character popularity, print run, and demand, so do not default to a common "round number" estimate. Use cents-level precision when the real market price supports it (e.g. $3.85 or $6.20 rather than always $3.50 or $6.50 or $4.50). Consider the set era, rarity, card popularity, and the condition you observed. Be realistic and grounded.
 
 Return ONLY the JSON object. No markdown, no code blocks, no other text.`,
             },

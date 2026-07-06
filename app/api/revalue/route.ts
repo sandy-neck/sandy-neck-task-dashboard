@@ -14,18 +14,21 @@ export async function POST(req: Request) {
 
     const [aiResponse, official_image_url] = await Promise.all([
       client.messages.create({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 256,
+        model: 'claude-sonnet-5',
+        max_tokens: 400,
+        thinking: { type: 'disabled' },
         messages: [
           {
             role: 'user',
-            content: `You are a Pokémon card market expert. Estimate the current market value for:
+            content: `You are a Pokémon card market expert with deep knowledge of TCGPlayer and eBay sold-listing prices. Estimate the current market value for:
 
 Card: ${cardName}
 Set: ${setName || 'Unknown'}
 Number: ${cardNumber || 'Unknown'}
 Rarity: ${rarity || 'Unknown'}
 Condition: ${condition || 'Near Mint'}
+
+Base your estimate on this specific card's known sales history, not a generic price tier for its rarity. Two cards of the same rarity from the same era can differ significantly in value based on character popularity, print run, and demand — do not default to a common "round number" estimate. Use cents-level precision when the real market price supports it (e.g. $3.85 or $6.20 rather than always $3.50 or $6.50 or $4.50).
 
 Return ONLY a JSON object:
 {
