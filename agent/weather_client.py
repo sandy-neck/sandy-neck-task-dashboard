@@ -19,10 +19,12 @@ from datetime import datetime, time, timedelta
 LATITUDE = float(os.environ.get("STORE_LATITUDE", "41.7370"))
 LONGITUDE = float(os.environ.get("STORE_LONGITUDE", "-70.3870"))
 
-# NOAA station id for tide predictions. Unset by default on purpose — guessing a station would
-# silently produce tides for the wrong body of water. Find the nearest station at
-# https://tidesandcurrents.noaa.gov/map/ and set the id here.
+# Tide station. An explicit id always wins; otherwise the station is resolved by name at runtime
+# against NOAA's own station list. Resolving beats hardcoding a guessed id — a wrong station
+# silently reports tides for the wrong body of water, which is worse than no tides at all. The
+# resolved station is logged every run so it can be eyeballed.
 TIDE_STATION = os.environ.get("NOAA_TIDE_STATION", "").strip()
+TIDE_STATION_NAME = os.environ.get("NOAA_TIDE_STATION_NAME", "Barnstable Harbor").strip()
 
 # WMO weather codes → plain description.
 WEATHER_CODES = {
@@ -50,18 +52,55 @@ class WeatherClient:
             return {"available": False, "error": str(e)}
 
         result = {"available": True, "days": days}
-        if TIDE_STATION:
-            try:
-                result["tides"] = self._fetch_tides()
-            except Exception as e:
-                result["tides"] = {"available": False, "error": str(e)}
-        else:
-            result["tides"] = {
-                "available": False,
-                "reason": "NOAA_TIDE_STATION not set — find the nearest station at "
-                          "https://tidesandcurrents.noaa.gov/map/ and set it to enable tide context.",
-            }
+        try:
+            station = self._resolve_station()
+            result["tides"] = (
+                self._fetch_tides(station["id"]) | {"station_name": station["name"]}
+                if station else
+                {"available": False, "reason": f"No NOAA station matching '{TIDE_STATION_NAME}'."}
+            )
+        except Exception as e:
+            result["tides"] = {"available": False, "error": str(e)}
         return result
+
+    # ── Station resolution ────────────────────────────────────────────────────
+
+    def _resolve_station(self) -> dict | None:
+        """
+        Find the tide station, preferring an explicit id, then a name match, then proximity.
+
+        Looked up live rather than hardcoded: NOAA station ids are not guessable, and a wrong one
+        fails silently with plausible-looking numbers for the wrong harbour.
+        """
+        if TIDE_STATION:
+            return {"id": TIDE_STATION, "name": f"station {TIDE_STATION} (explicitly set)"}
+
+        resp = self.session.get(
+            "https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json",
+            params={"type": "tidepredictions"},
+            timeout=25,
+        )
+        resp.raise_for_status()
+        stations = resp.json().get("stations", [])
+        if not stations:
+            return None
+
+        wanted = TIDE_STATION_NAME.lower()
+        named = [s for s in stations if wanted in (s.get("name") or "").lower()]
+
+        # Several stations can share a harbour name across states — pick whichever is nearest.
+        pool = named or stations
+        def distance(station):
+            try:
+                return ((float(station["lat"]) - LATITUDE) ** 2
+                        + (float(station["lng"]) - LONGITUDE) ** 2) ** 0.5
+            except (KeyError, TypeError, ValueError):
+                return float("inf")
+
+        best = min(pool, key=distance)
+        if not named and distance(best) > 1.0:  # ~60 miles; nothing sensible nearby
+            return None
+        return {"id": best["id"], "name": f"{best.get('name')} ({best['id']})"}
 
     # ── Weather ───────────────────────────────────────────────────────────────
 
@@ -233,7 +272,7 @@ class WeatherClient:
 
     # ── Tides ─────────────────────────────────────────────────────────────────
 
-    def _fetch_tides(self) -> dict:
+    def _fetch_tides(self, station_id: str) -> dict:
         today = datetime.now().date()
         start = today - timedelta(days=14)
         resp = self.session.get(
@@ -244,7 +283,7 @@ class WeatherClient:
                 "begin_date": start.strftime("%Y%m%d"),
                 "end_date": (today + timedelta(days=1)).strftime("%Y%m%d"),
                 "datum": "MLLW",
-                "station": TIDE_STATION,
+                "station": station_id,
                 "time_zone": "lst_ldt",
                 "units": "english",
                 "interval": "hilo",
@@ -277,7 +316,7 @@ class WeatherClient:
                 "events": events,
                 "midday_low": any(10 <= int(e["time"].split(":")[0]) <= 16 for e in lows),
             }
-        return {"available": True, "station": TIDE_STATION, "by_day": by_day}
+        return {"available": True, "station": station_id, "by_day": by_day}
 
 
 def _mean(values):

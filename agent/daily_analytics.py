@@ -18,6 +18,7 @@ from klaviyo_client import KlaviyoClient
 from google_local_client import GoogleLocalClient
 from weather_client import WeatherClient, comparable_days, score_days_with_snp500
 from expectations import assess
+from targets import pace, load_prior_year_curve, save_prior_year_curve
 from brain import Brain
 from synthesizer import ClaudeSynthesizer
 from email_report import EmailReporter
@@ -56,12 +57,31 @@ def main():
         payload["season"] = shopify.get_season_trend()
         payload["reorder_signals"] = shopify.get_reorder_signals()
 
+        # Pace against the annual target using prior year's shape. The curve is cached because
+        # last year's numbers don't change — no point re-pulling a full year every morning.
+        curve = load_prior_year_curve()
+        if curve is None:
+            prior = shopify.get_daily_revenue_for_year(now.year - 1)
+            if prior:
+                curve = save_prior_year_curve(now.year - 1, prior)
+                print(f"   Built {now.year - 1} seasonality curve "
+                      f"(${curve['total_revenue']:,.0f} across {len(prior)} days)")
+        payload["pacing"] = pace(shopify.get_ytd_revenue(), now.date(), curve=curve)
+
         print(f"   Reporting on: {report_date}")
         print(f"   Revenue:      ${sales.get('revenue', 0):,.2f} / {sales.get('orders', 0)} orders")
         for row in payload["channel_split"][:4]:
             print(f"     {row['channel']:<18} ${row['revenue']:>9,.2f}  ({row['share_pct']}%)")
         urgent = [s for s in payload["reorder_signals"] if s["urgency"] in ("critical", "out of stock")]
         print(f"   Reorder flags: {len(payload['reorder_signals'])} ({len(urgent)} urgent)")
+        pacing = payload.get("pacing", {})
+        if pacing.get("available"):
+            print(f"   YTD:          ${pacing['ytd_revenue']:,.0f} of ${pacing['target']:,} "
+                  f"({pacing['pct_of_target']}%) — {pacing['status']}")
+            print(f"   Season:       {pacing['phase']['phase']}, "
+                  f"{pacing['phase']['days_remaining']} days left | "
+                  f"projecting ${pacing['projected_year_end']:,}")
+            print(f"   Pace basis:   {pacing['basis']}")
         print(f"   Source:       {sales.get('source')}")
     except Exception as e:
         msg = f"Shopify: {e}"

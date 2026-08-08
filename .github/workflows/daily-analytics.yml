@@ -81,7 +81,10 @@ jobs:
           # is set; find the nearest at https://tidesandcurrents.noaa.gov/map/
           STORE_LATITUDE: ${{ vars.STORE_LATITUDE || '41.7370' }}
           STORE_LONGITUDE: ${{ vars.STORE_LONGITUDE || '-70.3870' }}
+          # Station resolves by name against NOAA's list at runtime; set NOAA_TIDE_STATION to
+          # pin a specific id instead.
           NOAA_TIDE_STATION: ${{ vars.NOAA_TIDE_STATION }}
+          NOAA_TIDE_STATION_NAME: ${{ vars.NOAA_TIDE_STATION_NAME || 'Barnstable Harbor' }}
 
           ANALYTICS_MODEL: ${{ vars.ANALYTICS_MODEL || 'claude-opus-5' }}
 

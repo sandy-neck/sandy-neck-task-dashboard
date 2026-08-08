@@ -385,6 +385,39 @@ class ShopifyClient:
         except Exception:
             return {}
 
+    # ── Annual pacing ──────────────────────────────────────────────────────────
+
+    def get_ytd_revenue(self) -> float:
+        """Total revenue banked so far this calendar year."""
+        year_start = f"{datetime.now(ET).year}-01-01"
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW gross_sales TIMESERIES month "
+                f"SINCE {year_start} UNTIL today"
+            )
+            return round(sum(float(r.get("gross_sales") or 0) for r in rows), 2)
+        except Exception:
+            return None
+
+    def get_daily_revenue_for_year(self, year: int) -> dict:
+        """
+        Daily revenue for a full year, as {YYYY-MM-DD: revenue}.
+
+        Only used to build the prior-year seasonality curve, which is then cached — last year's
+        numbers don't change, so this should run once rather than every morning.
+        """
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW gross_sales TIMESERIES day "
+                f"SINCE {year}-01-01 UNTIL {year}-12-31"
+            )
+            return {
+                str(r.get("day", ""))[:10]: float(r.get("gross_sales") or 0)
+                for r in rows if r.get("day")
+            }
+        except Exception:
+            return {}
+
     # ── Reorder intelligence ───────────────────────────────────────────────────
 
     def get_reorder_signals(self, lookback_days: int = 14, limit: int = 25) -> list:

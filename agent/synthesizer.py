@@ -287,8 +287,19 @@ Channel split on {report_date}:
 Top in-store sellers, last 7 days:
 {json.dumps(data.get('instore_products', []), indent=2)}
 
-Season to date (peak runs Memorial Day → Labor Day):
+Season to date:
 {json.dumps(data.get('season', {}), indent=2)}
+
+YEAR AGAINST TARGET:
+{json.dumps(data.get('pacing', {}), indent=2)}
+
+Pacing is seasonal, never a straight line — "we're 60% through the year" means nothing when August
+carries a fifth of it. Talk about it as: where the year sits against the $190k target given how much
+normally lands by now, and what that projects to at year end. If `basis` says the curve is estimated
+rather than measured prior-year history, say so — don't present a guess as a measurement.
+
+Mention pacing when it's genuinely moved or when the phase is turning. It does not need to appear
+every single day.
 
 Whole-store daily totals, last 14 days:
 {json.dumps(sales.get('weekly_trend', [])[-14:], indent=2)}

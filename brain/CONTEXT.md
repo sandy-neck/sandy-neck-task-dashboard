@@ -77,6 +77,51 @@ is expected, not alarming.
 
 ---
 
+## Annual target and season calendar
+
+**Annual sales target: $190,000 for the year.** Sandy wants to stay abreast of how the business is
+trending toward that number — not at year-end, but continuously.
+
+**Pacing is not a straight line through the calendar.** This is a seasonal business; a fixed
+percentage of the year elapsed says nothing about how much revenue should have landed. August alone
+carries a large share of the year. The right question is always "how much of the year's revenue has
+normally landed by this date, and are we ahead of or behind that" — never "we're 60% through the
+year so we should be at 60% of target."
+
+**Prior year sales are the reference guide for seasonality shape.** The pacing logic lives in
+`agent/targets.py` — the target constant, the season phase calendar, and the curve logic are all
+there and can be edited. The prior-year curve, once computed from real Shopify history, is cached at
+`brain/reference/prior-year-seasonality.json` so it doesn't need to be re-derived from a full year of
+orders on every run. **Until that cache exists, a documented estimated monthly curve is used instead**
+(also in `agent/targets.py`), and the agent must say plainly when it is pacing against the estimate
+rather than measured prior-year history.
+
+### Season phases (as of 2026-08-08)
+
+In Sandy's words: roughly two more weeks of peak, then early shoulder through mid-September (store
+starts going down to weekends only), then late shoulder through Columbus Day weekend, then
+"hopefully online/social sales to finish the year and an area for growth opportunity for sure."
+Columbus Day 2026 is Monday October 12, which is why late shoulder runs through roughly that date.
+
+| Phase | Dates | What it means |
+|---|---|---|
+| Deep off-season | Jan 1 – Apr 30 | Online and social only. Store effectively closed. |
+| Spring ramp | May 1 – May 24 | Getting ready. Weekend traffic begins. |
+| Peak | May 25 – Aug 22 | Memorial Day to late August. The year is won or lost here. |
+| Early shoulder | Aug 23 – Sep 15 | Drops toward weekends only. Volume falls fast. |
+| Late shoulder | Sep 16 – Oct 12 | Weekends through Columbus Day. Last of the foot traffic. |
+| Off-season | Oct 13 – Dec 31 | Online, social and TikTok. The growth opportunity. |
+
+### How to talk about pacing
+
+Report where the year stands against the $190k target **adjusted for season position** — expected
+revenue by this date, actual vs. that, projected year-end at the current pace. Never report pacing
+as a naive percentage of the calendar year elapsed. And always flag clearly when the pacing is
+running off the estimated fallback curve rather than real prior-year data, since the estimate is a
+documented guess, not measured history.
+
+---
+
 ## Product intelligence
 
 Things that are true about specific products and would otherwise take months to re-learn.
@@ -243,3 +288,5 @@ no framework at all.
 6. **Be honest about small numbers.** 4 online orders is not a trend, and neither is a 50% swing on
    a base of 2.
 7. **Say when you don't know.** A flagged unknown is more useful than a confident guess.
+8. **Keep year-to-date pace against the $190k target in view**, adjusted for season position — and
+   say whether that pacing is based on real prior-year history or the estimated fallback curve.
