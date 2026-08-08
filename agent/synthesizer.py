@@ -50,7 +50,11 @@ Judge in-store and online on their own terms. Never blend them into one revenue 
 - TikTok, Instagram, the web store — but check *what* is selling before characterising a channel
 - Concrete growth opportunities, especially local search
 
-If one side has nothing worth saying, say so in a line and move on. Do not pad a section to make it symmetrical.
+**Website traffic is the one exception to "drop empty sections."** Always include a line on it, every single day, even when nothing happened: is traffic up or down on the previous week, anything odd, and a suggestion if you genuinely have one. BJ wants to watch this trend accumulate rather than only hear about it when it moves. Keep it to ONE line unless something is actually going on.
+
+Judge traffic on its own scale. A move from 95 to 110 sessions a day is not "up 16%" in any meaningful sense — say "traffic's roughly flat, ~100 a day." Only call a change real when it's large enough to survive the small numbers involved.
+
+Beyond that one line, if a side has nothing worth saying, leave it out. Do not pad a section to make it symmetrical.
 
 ## Weather is not colour commentary
 
@@ -421,8 +425,20 @@ context file. Where a lead time isn't recorded, say that's what you'd need.
         google = data.get("google_local", {})
         google_real = google if google.get("available") and not google.get("stub") else {}
 
+        traffic_line = (
+            f"Sessions last 7 days: {conv['sessions_7d']} vs {conv['sessions_prior_7d']} the week "
+            f"before ({conv['sessions_change_pct']:+.1f}%)"
+            if conv.get("sessions_change_pct") is not None
+            else f"Sessions last 7 days: {conv.get('sessions_7d', 'unavailable')} "
+                 f"(no prior week to compare)"
+        )
+
         sections.append(f"""═══ ONLINE (analyse in a vacuum, on its own scale) ═══
-Web store sessions on {report_date}: {conv.get('sessions', 'unavailable')}
+
+WEBSITE TRAFFIC — always worth one line in the email, even on a nothing day
+{traffic_line}
+Daily sessions (oldest first): {json.dumps([d['sessions'] for d in conv.get('daily_sessions', [])])}
+Sessions on {report_date}: {conv.get('sessions', 'unavailable')}
 Funnel: {conv.get('cart_additions','?')} cart adds → {conv.get('reached_checkout','?')} reached checkout → {conv.get('completed_checkout','?')} completed
 
 Top online-store sellers, last 7 days:
