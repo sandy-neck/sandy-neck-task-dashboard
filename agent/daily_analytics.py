@@ -281,9 +281,8 @@ def main():
                 brain.append_learned(content["learned"])
                 print("   Appended to LEARNED.md")
             if brain_context.get("inbox"):
-                notes = [l for l in brain_context["inbox"].splitlines() if l.strip().startswith("-")]
-                brain.mark_inbox_processed(notes, report_date)
-                print(f"   Inbox: {len(notes)} note(s) marked processed")
+                brain.mark_inbox_processed(report_date)
+                print("   Inbox: notes marked processed")
         except Exception as e:
             msg = f"Brain write: {e}"
             print(f"   ERROR: {msg}", file=sys.stderr)

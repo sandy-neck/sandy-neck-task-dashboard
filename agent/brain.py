@@ -169,30 +169,53 @@ class Brain:
             existing = "# Learned\n"
         path.write_text(f"{existing}\n\n---\n\n{entry}\n", encoding="utf-8")
 
-    def mark_inbox_processed(self, note_lines: list[str], day: str) -> None:
+    def mark_inbox_processed(self, day: str) -> None:
         """
-        Move handled notes from Unprocessed to Processed, stamped with where they landed.
-        Left untouched if anything looks off — losing a note is worse than processing it twice.
+        Move everything in Unprocessed to Processed, stamped with the date it was read.
+
+        Works on whole entries, not lines. Notes wrap across several lines, and moving only the
+        bullet leaves its continuation stranded under the wrong heading — which shreds the note into
+        fragments that read like separate half-thoughts.
+
+        Left untouched if the file isn't in the expected shape; processing twice is recoverable,
+        mangling someone's notes is not.
         """
-        if not note_lines:
-            return
         path = self.base / "INBOX.md"
         try:
             raw = path.read_text(encoding="utf-8")
         except (FileNotFoundError, OSError):
             return
 
-        moved = []
-        for note in note_lines:
-            note = note.strip()
-            if note and note in raw:
-                raw = raw.replace(note + "\n", "", 1)
-                moved.append(f"{note}  _(processed {day})_")
-        if not moved:
+        section = re.search(
+            r"(^##\s+Unprocessed\s*$)(.*?)(?=^##\s+|\Z)", raw, re.MULTILINE | re.DOTALL
+        )
+        if not section:
             return
+
+        body = section.group(2)
+        entries, current = [], []
+        for line in body.splitlines():
+            if re.match(r"^\s*[-*]\s+\S", line):       # new bullet starts a new entry
+                if current:
+                    entries.append("\n".join(current))
+                current = [line.rstrip()]
+            elif current and line.strip() and not line.startswith("#"):
+                current.append(line.rstrip())          # continuation of the current entry
+            elif current and not line.strip():
+                entries.append("\n".join(current))
+                current = []
+        if current:
+            entries.append("\n".join(current))
+
+        entries = [e for e in entries if e.strip() and e.strip() not in ("---", "***", "___")]
+        if not entries:
+            return
+
+        stamped = [f"{e}\n  _(processed {day})_" for e in entries]
+        raw = raw[:section.start(2)] + "\n\n" + raw[section.end(2):]
 
         marker = "## Processed"
         if marker not in raw:
             raw = raw.rstrip() + f"\n\n{marker}\n"
-        raw = raw.replace(marker, marker + "\n\n" + "\n".join(moved), 1)
+        raw = raw.replace(marker, marker + "\n\n" + "\n".join(stamped), 1)
         path.write_text(raw, encoding="utf-8")
