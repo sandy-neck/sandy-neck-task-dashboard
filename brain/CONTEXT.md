@@ -263,6 +263,21 @@ short of what a day like that should do," never "12.4% below forecast." Every da
 expected vs. actual, so after a season there's real data to replace the guess. Anchors live in
 `agent/expectations.py` and can be changed freely.
 
+### Changes to the expectation curve — read before comparing across dates
+
+The curve has been changed since the first runs, so `% of expected` is **not** comparable across
+these dates. Both changes were deliberate.
+
+| Date | Change | Effect |
+|---|---|---|
+| 2026-08-08 | Added a **day-of-week factor** from measured 2025 data | A Friday or Tuesday is no longer held to a Saturday's number. Aug 7's expected moved $1,841 → $1,694 for identical inputs. |
+| 2026-08-08 | **Excluded the Snack Shack** from all history | The prior-year curve and every pacing figure rebuilt against the real store base. |
+
+The 2026-08-07 journal flagged the first of these as an unexplained shift and was right to — that
+is exactly the behaviour wanted. It is explained now, and the thread can close. **Log any future
+change to the curve here**, because a silently re-anchored denominator makes every historical
+comparison quietly wrong.
+
 Worked example — **2026-08-07** scored **480** (near-perfect). Expected ≈ $2,000. Actual $1,468.65 —
 **73%, a gap of −$531.** The original email called that day "strong, +25% vs average." It was a miss.
 That inversion is the entire reason this section exists.
