@@ -16,6 +16,36 @@ Together, these tell you whether to double down on SEO for specific phrases, or 
 
 ---
 
+## Which Google account this all lives under
+
+**Decided 2026-08-08: everything here runs under BJ's personal Google account,
+`bjmclaughlin12@gmail.com`. Not the Sandy Neck Provisions Workspace account.**
+
+The reason is simple: that personal account is what manages the Business Profile listing on
+business.google.com, and Google's API access approval cares about the account that manages the
+listing. The Workspace account owns a Cloud *organization* but has no access to the listing, so
+building there would have meant granting cross-account access first and explaining a mismatch on
+the request form.
+
+Two things worth knowing so this isn't re-litigated:
+
+- **"No organization" is normal and fine.** Organizations are a Workspace feature. A personal Gmail
+  creates standalone projects with no org attached, and nothing in this setup needs one. If the
+  project picker shows "No organization," that is the expected state, not a problem.
+- **The account choice barely matters at runtime.** The agent authenticates as the *service
+  account*, whose key lives in GitHub secrets — not as BJ. Day-to-day operation doesn't depend on
+  either login.
+
+The tradeoff, stated once: a piece of business infrastructure sits on a personal account. If Meghan
+ever needs to administer it, or that Gmail becomes inaccessible, someone has to move the project.
+Moving a Cloud project between accounts is a solved problem and not urgent, but it is real. Logged
+in `brain/CONTEXT.md` under housekeeping.
+
+An empty `Sandy Neck Local Discovery` project also exists under the Workspace org from a first
+attempt. It is unused and costs nothing; delete it whenever.
+
+---
+
 ## Part 1 — Google Business Profile
 
 **Time: ~30–45 min of your own work, plus several days of waiting on Google — start this first.**
@@ -23,9 +53,15 @@ Together, these tell you whether to double down on SEO for specific phrases, or 
 ### Step 1 — Create a Google Cloud project
 **Time: ~5 min**
 
-1. Go to **console.cloud.google.com**
-2. Top nav → project dropdown → **New Project** → name it something like `Sandy Neck Local Discovery` → **Create**
-3. Make sure the new project is selected in the dropdown before continuing
+1. Sign in to **console.cloud.google.com** as **`bjmclaughlin12@gmail.com`** — the account that
+   manages the Business Profile listing. Using any other account here will cause the access request
+   in Step 2 to be rejected.
+2. Top nav → project dropdown → **New Project** → name it `Sandy Neck Local Discovery` → leave
+   Location as **No organization** → **Create**
+3. Wait ~15 seconds for it to provision, then select it in the dropdown
+4. Grab the **Project ID** and **Project number** — both are on **IAM & Admin → Settings**, or in
+   the project picker's columns. The form in Step 2 wants one of them and is inconsistent about
+   which, so note both.
 
 ### Step 2 — Request Business Profile API access (DO THIS FIRST — it's slow)
 **Time: ~10 min to submit, then a wait of several days**

@@ -331,6 +331,12 @@ no framework at all.
   ordering for a shoulder-season arrival or holding to next spring.
 
 ### Housekeeping, low priority
+- **The Google Cloud project sits on BJ's personal account** (`bjmclaughlin12@gmail.com`), not the
+  Sandy Neck Provisions Workspace account, because the personal account is what manages the Business
+  Profile listing and Google's API approval follows listing access. Deliberate, decided 2026-08-08 —
+  see `LOCAL_DISCOVERY_SETUP.md`. Worth consolidating onto the business account eventually so Meghan
+  can administer it and it doesn't depend on one personal login. Not urgent: the agent authenticates
+  as a service account, not as BJ.
 - **Send the daily email from Sandy's own mailbox.** The From name says "Sandy" but the address is
   whatever `SMTP_USERNAME` holds. BJ has a dedicated address for her; switching means setting
   `SMTP_USERNAME` to it plus an App Password for that account. Cosmetic — deferred deliberately
