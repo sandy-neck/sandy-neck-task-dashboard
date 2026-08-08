@@ -18,7 +18,7 @@ ANNUAL_TARGET = 190_000
 
 CACHE = Path(__file__).resolve().parent.parent / "brain" / "reference" / "prior-year-seasonality.json"
 
-# Sandy's own description of the year, used to date the phases and to shape the fallback curve:
+# BJ's own description of the year, used to date the phases and to shape the fallback curve:
 #   peak through late August, early shoulder to mid-September dropping to weekends only,
 #   late shoulder through Columbus Day weekend, then online/social carries the rest.
 SEASON_PHASES = [

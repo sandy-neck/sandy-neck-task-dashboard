@@ -31,6 +31,6 @@ sit in the data looking like a trend.
 ## Log
 
 - 2026-08-08 08:00 — Allie led a pilates class in the sand area. Direct sales from the class itself
-  were small, but Sandy's read was that it set the tone for the day. Store went on to a very strong
+  were small, but BJ's read was that it set the tone for the day. Store went on to a very strong
   Saturday. See `LEARNED.md` for the hourly comparison — the 8–10am window ran roughly double the
   previous Saturday's orders.

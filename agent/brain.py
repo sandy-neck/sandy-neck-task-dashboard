@@ -1,7 +1,7 @@
 """
 Second brain I/O — the agent's memory between runs.
 
-Reading order matters. CONTEXT.md is curated by Sandy and is authoritative; LEARNED.md is the
+Reading order matters. CONTEXT.md is curated by BJ and is authoritative; LEARNED.md is the
 agent's own accumulated guesswork and is not. The agent may append to LEARNED.md and write daily
 logs, but never rewrites CONTEXT.md unattended — a bad inference shouldn't be able to corrupt the
 file everything else is judged against.

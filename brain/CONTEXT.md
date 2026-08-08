@@ -15,7 +15,9 @@ Last substantive update: 2026-08-08
 Coastal provisions shop in East Sandwich / Sandy Neck, Barnstable County, Cape Cod, MA.
 Gear, food, apparel, and gifts — things people actually use, with a connection to the water.
 
-- Owners: Sandy and BJ. Meghan works the floor and talks to customers.
+- Owners: **BJ and Meghan** (married). Meghan works the floor and talks to customers.
+- **Sandy** is the AI assistant that writes the daily email — named for the beach, not a person.
+  When these notes say "BJ said" or "BJ's read", that is the owner, not the assistant.
 - ~993 products in Shopify. Shopify Basic plan.
 - Seasonal business. Peak is Memorial Day → Labor Day.
 - Store contact: goodvibes@sandyneckprovisions.com
@@ -114,7 +116,7 @@ comparisons, not just revenue totals.
 
 ## Annual target and season calendar
 
-**Annual sales target: $190,000 for the year.** Sandy wants to stay abreast of how the business is
+**Annual sales target: $190,000 for the year.** BJ wants to stay abreast of how the business is
 trending toward that number — not at year-end, but continuously.
 
 **Pacing is not a straight line through the calendar.** This is a seasonal business; a fixed
@@ -133,7 +135,7 @@ rather than measured prior-year history.
 
 ### Season phases (as of 2026-08-08)
 
-In Sandy's words: roughly two more weeks of peak, then early shoulder through mid-September (store
+In BJ's words: roughly two more weeks of peak, then early shoulder through mid-September (store
 starts going down to weekends only), then late shoulder through Columbus Day weekend, then
 "hopefully online/social sales to finish the year and an area for growth opportunity for sure."
 Columbus Day 2026 is Monday October 12, which is why late shoulder runs through roughly that date.
@@ -224,7 +226,7 @@ substantially outperform a cool or rainy one, and comparing them without that co
 confidently wrong conclusions.
 
 Worked example — **2026-08-07**: hot and muggy, a classic beach day. The store did $1,468.65, which
-beat the recent daily average by ~25%. The agent called that a strong day. Sandy's read: given the
+beat the recent daily average by ~25%. The agent called that a strong day. BJ's read: given the
 conditions it **slightly underperformed** what it should have done. Same number, opposite conclusion.
 The weather is what makes the difference.
 
@@ -243,7 +245,7 @@ Day quality feeds the analysis through the **SNP 500** (see `projects/snp-500.md
 how good a Sandy Neck beach day it was. That score is turned into an expected in-store revenue, and
 **the day gets judged on actual vs. expected, not on the raw number.**
 
-Sandy's anchors, stated plainly:
+BJ's anchors, stated plainly:
 
 > *"If it is a rainy Tuesday then I am happy to surpass 500, whereas a great beach Friday like
 > yesterday I would hope to be at 2000."*
@@ -297,7 +299,7 @@ stack did. Anecdotes like this belong in `INBOX.md` — they're data.
 Things the agent should not guess at. Answer these here and they stop being open.
 
 ### SNP 500 — tracked as a project
-A framework Sandy built for in-store analysis (the name plays on the S&P 500). Developed primarily
+A framework BJ built for in-store analysis (the name plays on the S&P 500). Developed primarily
 in ChatGPT, **not yet transferred here and not active.** It was meant to be ready for the 2026
 season and wasn't.
 

@@ -5,7 +5,7 @@ This is the rudimentary version on purpose. The whole problem with the early rep
 revenue with no sense of whether it was any good — "$1,468, up 25%" reads as a win right up until
 you remember it was a near-perfect beach Friday and should have done far better.
 
-The anchors are Sandy's, stated plainly:
+The anchors are BJ's, stated plainly:
 
     "If it is a rainy Tuesday then I am happy to surpass 500, whereas a great beach Friday like
      yesterday I would hope to be at 2000."
@@ -50,7 +50,7 @@ def weekday_adjusted(snp_score, day=None, curve=None, anchors=None):
     Expected revenue for a given day quality, adjusted for which day of the week it is.
 
     A great beach Tuesday should not be held to a Saturday's number. Without this the report keeps
-    "discovering" that midweek is quieter, which is something Sandy already knows and doesn't need
+    "discovering" that midweek is quieter, which is something BJ already knows and doesn't need
     explained. Factors come from measured prior-year data; absent that, the day quality stands alone.
     """
     base = expected_revenue(snp_score, anchors)

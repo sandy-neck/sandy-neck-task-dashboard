@@ -2,7 +2,7 @@
 
 A running memory for the store. The point is that the daily email stops being a series of
 disconnected one-off observations and starts accumulating into something that understands the
-business roughly as well as Sandy does.
+business roughly as well as BJ does.
 
 ## The four files
 

@@ -42,7 +42,7 @@ funnel analysis to say anything reliable.
 ### 2026-08-08 — A morning event may lift the whole day, not just its own hour
 **Confidence: low** — one Saturday against one Saturday, weather not yet controlled for.
 
-Allie ran a pilates class in the sand area at 8am. Sandy's read: small direct sales, but it "set the
+Allie ran a pilates class in the sand area at 8am. BJ's read: small direct sales, but it "set the
 tone." The hourly data is consistent with that, and the shape is more interesting than the totals.
 
 Same hours, both ET, against the previous Saturday:
@@ -88,7 +88,7 @@ The SNP 500 → expected-revenue curve is weather-only. Three recent days with n
 
 Both Saturdays cleared the entire band that the scored days sat inside, and Aug 8 nearly doubled the top of it.
 
-The mechanism is unremarkable and that's a point in its favour: weekend visitor volume on the Cape is a demand input that operates independently of the sky. Sandy's $2,000-for-a-perfect-day anchor was almost certainly formed thinking about a *weekend* perfect day — the note that generated it referenced "a great beach Friday." So the curve may be roughly right for Fri/Sat/Sun and materially too high for Mon–Thu.
+The mechanism is unremarkable and that's a point in its favour: weekend visitor volume on the Cape is a demand input that operates independently of the sky. BJ's $2,000-for-a-perfect-day anchor was almost certainly formed thinking about a *weekend* perfect day — the note that generated it referenced "a great beach Friday." So the curve may be roughly right for Fri/Sat/Sun and materially too high for Mon–Thu.
 
 **Why it matters:** two things flip. First, days like Aug 7 get labelled misses when they may be near the realistic weekday ceiling — the same inversion error in the opposite direction. Second, forward planning breaks: the week of Aug 9 has four Sun–Wed days scored 400–460 and the forecast expects ~$12.9k from the week. If a weekday discount is real, actual is likelier $10–11k, and the shortfall against the $17.8k the target needs is closer to $7k than $5k. That's the difference between "push a little" and "this week cannot be saved by weather."
 

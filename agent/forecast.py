@@ -3,13 +3,13 @@ Week-ahead projections, and what each day needs to earn.
 
 Two different numbers, and the gap between them is the whole point:
 
-  EXPECTED — what a day like this normally does. Descriptive, from the SNP 500 score and Sandy's
+  EXPECTED — what a day like this normally does. Descriptive, from the SNP 500 score and BJ's
              revenue anchors. "A 480 day usually brings about $2,000."
 
   REQUIRED — what a day like this needs to do to stay on track for the annual target. Prescriptive,
              back-solved from what's left to earn and how much of the year remains.
 
-A day can clear EXPECTED and still miss REQUIRED. That is exactly the question Sandy asked: today
+A day can clear EXPECTED and still miss REQUIRED. That is exactly the question BJ asked: today
 was a great Saturday compared to other days, but was it a great Saturday *given that August has to
 carry the year*? Reporting only the first number quietly congratulates the business for keeping pace
 with itself while the target slips away.
