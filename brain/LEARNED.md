@@ -132,3 +132,16 @@ This refines the 2026-08-08 weekday-term note. The right correction may not be a
 Jul 26 (SNP 425) did $1,159 / 32 orders. Aug 2 (SNP 395) did $859 / 34 orders. Both sit inside or below the midweek $1,200 band, nowhere near the Saturday band ($1,910 at score 410, $3,092 at 450). If Sunday really is a weekday for these purposes, the week-ahead forecast is overstating three days next week rather than two, and the Sun–Tue block should be planned around ~$1,200 each, not ~$1,860.
 
 **To test:** Sun Aug 9 is scored 450 — Exceptional, and the highest-quality Sunday in the record. If it lands near $1,200–1,400 the claim holds; if it clears $1,800 it dies and Sunday belongs with the weekend. That's a clean single-day test and it resolves tomorrow.
+
+---
+
+### 2026-08-08 — The midweek revenue ceiling is a basket-size ceiling, not a footfall ceiling
+**Confidence: medium** — clean within-week contrast with a clear mechanism, but one week and no ice-split yet.
+
+Across Aug 4–7 (SNP 440/425/420/445) revenue sat in a $1,184–$1,469 band while order count ranged 22 → 31 → 25 → 57. Aug 7 had 2.6x Aug 4's transactions for 20% more revenue; AOV $25.68 vs $55.06. Aug 1 (Sat, 410) did 66 orders and Aug 7 nearly matched it on count, but not on dollars.
+
+So the constraint on a good midweek day is not how many people come through the door — Friday proved the door can do near-Saturday volume — it's what each one spends. The likely mechanism is composition: hot beach days pull a high-frequency, low-ticket, ice-and-go customer, and that customer dilutes the average faster than they add to the total. Which means the lever on those days is attachment at the point of the cheap purchase, not more traffic.
+
+**To test:** split each day's AOV into ice-containing and non-ice tickets across Aug 4 (low count), Aug 7 (high count) and Aug 8 (100 orders). If the non-ice basket is stable across all three and only the ice share moves, this is composition and the attachment play is right. If the non-ice basket itself falls on high-footfall days, something else is happening — queue length, staff attention, stockouts — and the fix is operational instead.
+
+**What would kill it:** a high-order-count day that also posts a high AOV, or finding the ice tickets already carry a second item.
