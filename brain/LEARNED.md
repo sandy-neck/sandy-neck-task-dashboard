@@ -70,3 +70,28 @@ appeared, not in the class hour.
 
 **Why it matters if true:** events would be a demand lever the business can actually pull, unlike
 weather. That makes it worth measuring properly rather than on vibes.
+
+---
+
+### 2026-08-08 — The expectation curve has no weekday term, and weekday looks like a bigger factor than weather at the top of the range
+**Confidence: medium** — clean ordering across three scored days plus two unscored Saturdays, obvious mechanism, but n is small and the Saturdays lack SNP 500 scores.
+
+The SNP 500 → expected-revenue curve is weather-only. Three recent days with near-identical scores landed in strict weekday order as a fraction of what they "should" have done:
+
+| Day | Score | Actual | % of expected |
+|---|---:|---:|---:|
+| Tue Jul 28 | 450 | $668.79 | 36% |
+| Tue Aug 4 | 440 | $1,225.94 | 67% |
+| Fri Aug 7 | 445 | $1,468.65 | 80% |
+| Sat Aug 1 | — | $1,910.20 | — |
+| Sat Aug 8 | — | ~$3,022.95 | — |
+
+Both Saturdays cleared the entire band that the scored days sat inside, and Aug 8 nearly doubled the top of it.
+
+The mechanism is unremarkable and that's a point in its favour: weekend visitor volume on the Cape is a demand input that operates independently of the sky. Sandy's $2,000-for-a-perfect-day anchor was almost certainly formed thinking about a *weekend* perfect day — the note that generated it referenced "a great beach Friday." So the curve may be roughly right for Fri/Sat/Sun and materially too high for Mon–Thu.
+
+**Why it matters:** two things flip. First, days like Aug 7 get labelled misses when they may be near the realistic weekday ceiling — the same inversion error in the opposite direction. Second, forward planning breaks: the week of Aug 9 has four Sun–Wed days scored 400–460 and the forecast expects ~$12.9k from the week. If a weekday discount is real, actual is likelier $10–11k, and the shortfall against the $17.8k the target needs is closer to $7k than $5k. That's the difference between "push a little" and "this week cannot be saved by weather."
+
+**To test:** attach SNP 500 scores to every day including weekends (Aug 1 and Aug 8 are the immediate gaps), then bucket % -of-expected by weekday across 3–4 weeks. If Mon–Thu clusters materially below Fri–Sun at matched scores, add a weekday multiplier to `agent/expectations.py`. What would kill it: a weekday Exceptional day that clears 95%+ of expected, or a weekend day that lands at 50%.
+
+**Caution:** do not over-fit to Jul 28. A 450-score day doing 36% is an outlier by any reading and may have a cause nothing to do with weekday — late July, post-holiday lull, something local. The Aug 4 / Aug 7 / Aug 8 progression is the sturdier part of the evidence.
