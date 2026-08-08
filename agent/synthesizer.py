@@ -203,6 +203,39 @@ class ClaudeSynthesizer:
             "learned": block("learned"),
         }
 
+    @staticmethod
+    def _recent_table(data: dict, trend: dict) -> str:
+        """
+        Every scored day alongside its revenue, as one table.
+
+        Previously only the report date's score reached the prompt, so the agent could see that a
+        Saturday did $3,023 but had no idea what kind of day it was — which blocked both the
+        weekday-effect and event-effect questions it was trying to answer. The scores were already
+        being computed; they just weren't being handed over.
+        """
+        from datetime import date as _date
+
+        scores = data.get("snp500") or {}
+        if not scores:
+            return "  (no scored days available)"
+
+        rows = []
+        for day in sorted(scores):
+            entry = scores[day] or {}
+            if entry.get("score") is None:
+                continue
+            revenue = float((trend.get(day) or {}).get("gross_sales") or 0)
+            orders = int((trend.get(day) or {}).get("orders") or 0)
+            try:
+                weekday = _date.fromisoformat(day).strftime("%a")
+            except ValueError:
+                weekday = "?"
+            actual = f"${revenue:>8,.0f} / {orders:>3} orders" if revenue else "        — forecast"
+            rows.append(
+                f"  {day}  {weekday}  SNP {entry['score']:>3} {entry.get('rating', ''):<12} {actual}"
+            )
+        return "\n".join(rows) if rows else "  (no scored days available)"
+
     def _build_prompt(self, data: dict, brain: dict) -> str:
         shopify = data.get("shopify", {})
         sales = shopify.get("sales", {})
@@ -317,7 +350,12 @@ do", not "12.4% below forecast".
 {f"Tides: {json.dumps(tide_day)}" if tide_day else "Tides: not configured"}
 
 COMPARABLE RECENT DAYS (similar SNP 500 — compare against THESE, not against the calendar):
-{chr(10).join(comparison_lines) if comparison_lines else "  none found in range"}""")
+{chr(10).join(comparison_lines) if comparison_lines else "  none found in range"}
+
+RECENT DAYS — CONDITIONS AND REVENUE TOGETHER
+Every scored day in range, so any two days can be compared like for like. Use this rather than
+asking for scores you already have.
+{self._recent_table(data, trend)}""")
 
         sections.append(f"""═══ IN-STORE (Point of Sale) ═══
 Channel split, last 7 days:
