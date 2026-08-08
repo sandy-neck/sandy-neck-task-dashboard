@@ -45,14 +45,31 @@ def expected_revenue(snp_score, anchors=None):
     return float(points[-1][1])
 
 
-def assess(actual_revenue, snp_score, anchors=None):
+def weekday_adjusted(snp_score, day=None, curve=None, anchors=None):
+    """
+    Expected revenue for a given day quality, adjusted for which day of the week it is.
+
+    A great beach Tuesday should not be held to a Saturday's number. Without this the report keeps
+    "discovering" that midweek is quieter, which is something Sandy already knows and doesn't need
+    explained. Factors come from measured prior-year data; absent that, the day quality stands alone.
+    """
+    base = expected_revenue(snp_score, anchors)
+    if base is None or day is None or not curve:
+        return base, 1.0
+    factor = (curve.get("weekday_factor") or {}).get(str(day.weekday()))
+    if not factor:
+        return base, 1.0
+    return base * float(factor), float(factor)
+
+
+def assess(actual_revenue, snp_score, anchors=None, day=None, curve=None):
     """
     Compare what happened to what the conditions warranted.
 
     Returns the expectation, the ratio, and a verdict — the verdict bands are deliberately wide,
     because the anchors are a gut estimate and narrow bands would imply a precision that isn't there.
     """
-    expected = expected_revenue(snp_score, anchors)
+    expected, weekday_factor = weekday_adjusted(snp_score, day, curve, anchors)
     if not expected or actual_revenue is None:
         return {"available": False}
 
@@ -76,4 +93,6 @@ def assess(actual_revenue, snp_score, anchors=None):
         "pct_of_expected": round(ratio * 100),
         "verdict": verdict,
         "gap": round(actual_revenue - expected, 2),
+        "weekday_factor": round(weekday_factor, 3),
+        "weekday_adjusted": weekday_factor != 1.0,
     }

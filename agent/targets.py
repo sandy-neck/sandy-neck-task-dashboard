@@ -48,38 +48,69 @@ def current_phase(day: date = None):
     return {"phase": "Unknown", "note": "", "days_remaining": None, "ends": None}
 
 
+# Bumped whenever the underlying query changes shape. A curve built before the Snack Shack was
+# excluded describes a different business, and silently pacing against it would understate the
+# target by about 20%.
+CURVE_VERSION = 2
+
+
 def load_prior_year_curve():
-    """Cached cumulative-share-by-day-of-year curve, if one has been built."""
+    """Cached cumulative-share-by-day-of-year curve, if one has been built and is still valid."""
     try:
         data = json.loads(CACHE.read_text(encoding="utf-8"))
-        if data.get("cumulative_by_doy"):
-            return data
     except (FileNotFoundError, OSError, json.JSONDecodeError):
-        pass
-    return None
+        return None
+    if data.get("version") != CURVE_VERSION:
+        return None  # stale shape — the caller rebuilds it
+    return data if data.get("cumulative_by_doy") else None
 
 
 def save_prior_year_curve(year: int, daily_revenue: dict):
     """
-    Build and cache the cumulative curve from {YYYY-MM-DD: revenue}.
+    Build and cache the seasonality curve from {YYYY-MM-DD: revenue}.
 
-    Stored as cumulative share of the year by day-of-year, so it can pace any target without
-    re-deriving anything.
+    Stores two things derived from the same pass:
+      - cumulative share of the year by day-of-year, so any target can be paced without re-deriving
+      - a weekday multiplier, because a Tuesday and a Saturday are not the same unit of measurement
+        even in identical weather
     """
     total = sum(daily_revenue.values())
     if total <= 0:
         return None
 
     running, cumulative = 0.0, {}
+    weekday_totals, weekday_counts = {}, {}
     for day_str in sorted(daily_revenue):
-        running += daily_revenue[day_str]
+        amount = daily_revenue[day_str]
+        running += amount
         try:
-            doy = date.fromisoformat(day_str).timetuple().tm_yday
+            day = date.fromisoformat(day_str)
         except ValueError:
             continue
-        cumulative[str(doy)] = round(running / total, 6)
+        cumulative[str(day.timetuple().tm_yday)] = round(running / total, 6)
+        # Only in-season days carry weekday signal; a closed January Tuesday says nothing.
+        if amount > 0:
+            weekday_totals[day.weekday()] = weekday_totals.get(day.weekday(), 0) + amount
+            weekday_counts[day.weekday()] = weekday_counts.get(day.weekday(), 0) + 1
 
-    payload = {"year": year, "total_revenue": round(total, 2), "cumulative_by_doy": cumulative}
+    averages = {
+        wd: weekday_totals[wd] / weekday_counts[wd]
+        for wd in weekday_totals if weekday_counts.get(wd)
+    }
+    overall = sum(averages.values()) / len(averages) if averages else 0
+    weekday_factor = {
+        str(wd): round(avg / overall, 3) for wd, avg in averages.items()
+    } if overall else {}
+
+    payload = {
+        "version": CURVE_VERSION,
+        "year": year,
+        "excludes": "Snack Shack",
+        "total_revenue": round(total, 2),
+        "cumulative_by_doy": cumulative,
+        # Monday=0 … Sunday=6, relative to an average in-season day.
+        "weekday_factor": weekday_factor,
+    }
     CACHE.parent.mkdir(parents=True, exist_ok=True)
     CACHE.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return payload

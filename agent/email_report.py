@@ -10,6 +10,42 @@ from email.mime.text import MIMEText
 
 FONT_STACK = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 
+# Constant prefix so a mail filter can match on it reliably. Built in code rather than left to the
+# model, because a filter that depends on the model remembering a format will eventually break.
+SUBJECT_PREFIX = "SNP Daily"
+
+
+def build_subject(report_date: str, payload: dict, tag: str = "") -> str:
+    """
+    Assemble a scannable, filterable subject.
+
+        SNP Daily — Fri Aug 7 · $1,469 · 80% · tire deflators critical
+
+    Fixed prefix, then the day, then the two numbers worth seeing without opening anything, then a
+    short descriptor from the model.
+    """
+    from datetime import date
+
+    parts = [SUBJECT_PREFIX]
+    try:
+        parts.append(date.fromisoformat(report_date).strftime("%a %b %-d"))
+    except (ValueError, TypeError):
+        parts.append(str(report_date or "").strip() or "update")
+
+    revenue = (payload.get("shopify", {}).get("sales") or {}).get("revenue")
+    if revenue:
+        parts.append(f"${revenue:,.0f}")
+
+    expectation = payload.get("expectation") or {}
+    if expectation.get("available"):
+        parts.append(f"{expectation['pct_of_expected']}% of expected")
+
+    tag = " ".join((tag or "").split())[:48].strip(" .—-")
+    if tag:
+        parts.append(tag)
+
+    return f"{parts[0]} — " + " · ".join(parts[1:]) if len(parts) > 1 else parts[0]
+
 
 class EmailReporter:
     def __init__(self):
@@ -20,7 +56,7 @@ class EmailReporter:
         self.smtp_user = os.environ.get("SMTP_USERNAME") or ""
         self.smtp_pass = os.environ.get("SMTP_PASSWORD") or ""
         self.recipient = os.environ.get("REPORT_RECIPIENT") or "goodvibes@sandyneckprovisions.com"
-        self.sender_name = os.environ.get("REPORT_SENDER_NAME") or "Alex (Sandy Neck Analytics)"
+        self.sender_name = os.environ.get("REPORT_SENDER_NAME") or "Sandy"
 
         if not self.smtp_user or not self.smtp_pass:
             raise ValueError(

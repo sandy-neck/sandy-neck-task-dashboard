@@ -13,6 +13,29 @@ import pytz
 API_VERSION = "2025-04"
 ET = pytz.timezone("America/New_York")
 
+# POS locations excluded from every sales query.
+#
+# The Snack Shack was a one-year 2025 experiment that isn't operating in 2026. Leaving it in makes
+# the store look like it's coasting: 2025 reads as $184k when the comparable store base was $149k,
+# turning a ~27% target into an apparent ~3% one. It was also high-volume and low-ticket (2,547
+# orders averaging ~$13.63), so it distorts basket size and order counts as well as revenue.
+EXCLUDED_POS_LOCATIONS = ["Snack Shack"]
+
+
+def _location_filter() -> str:
+    """WHERE fragment excluding retired locations. Empty string if nothing is excluded."""
+    if not EXCLUDED_POS_LOCATIONS:
+        return ""
+    return " AND ".join(
+        f"pos_location_name != '{name}'" for name in EXCLUDED_POS_LOCATIONS
+    )
+
+
+def _sales_where(extra: str = "") -> str:
+    """Build a WHERE clause combining the location exclusion with any query-specific condition."""
+    parts = [p for p in (_location_filter(), extra) if p]
+    return f"WHERE {' AND '.join(parts)} " if parts else ""
+
 
 class ShopifyClient:
     def __init__(self):
@@ -132,6 +155,7 @@ class ShopifyClient:
             rows = self._shopifyql(
                 "FROM sales "
                 "SHOW orders, gross_sales, net_sales, average_order_value "
+                f"{_sales_where()}"
                 "TIMESERIES day SINCE -14d UNTIL today"
             )
             by_day = {str(r.get("day", ""))[:10]: r for r in rows}
@@ -288,6 +312,7 @@ class ShopifyClient:
             return self._shopifyql(
                 "FROM sales "
                 "SHOW orders, total_sales "
+                f"{_sales_where()}"
                 "GROUP BY order_referrer_source, order_referrer_name "
                 "SINCE -7d UNTIL today"
             )
@@ -307,6 +332,7 @@ class ShopifyClient:
         try:
             rows = self._shopifyql(
                 "FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
                 "GROUP BY new_or_returning_customer "
                 "SINCE -7d UNTIL today"
             )
@@ -371,6 +397,7 @@ class ShopifyClient:
         try:
             rows = self._shopifyql(
                 f"FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
                 f"GROUP BY sales_channel "
                 f"SINCE {since} UNTIL today"
             )
@@ -392,6 +419,7 @@ class ShopifyClient:
         try:
             rows = self._shopifyql(
                 f"FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
                 f"GROUP BY sales_channel "
                 f"SINCE {day} UNTIL {day}"
             )
@@ -410,9 +438,10 @@ class ShopifyClient:
         """Top sellers within a single channel — 'what moved in the store' vs. 'what moved online'."""
         safe = channel.replace("'", "")
         try:
+            where = _sales_where(f"sales_channel = '{safe}'")
             return self._shopifyql(
                 f"FROM sales SHOW gross_sales, net_items_sold, orders "
-                f"WHERE sales_channel = '{safe}' "
+                f"{where}"
                 f"GROUP BY product_title "
                 f"ORDER BY gross_sales DESC LIMIT {limit} "
                 f"SINCE {since} UNTIL today"
@@ -432,6 +461,7 @@ class ShopifyClient:
         try:
             rows = self._shopifyql(
                 f"FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
                 f"TIMESERIES week "
                 f"SINCE {season_start} UNTIL today"
             )
@@ -464,7 +494,9 @@ class ShopifyClient:
         year_start = f"{datetime.now(ET).year}-01-01"
         try:
             rows = self._shopifyql(
-                f"FROM sales SHOW gross_sales TIMESERIES month "
+                f"FROM sales SHOW gross_sales "
+                f"{_sales_where()}"
+                f"TIMESERIES month "
                 f"SINCE {year_start} UNTIL today"
             )
             return round(sum(float(r.get("gross_sales") or 0) for r in rows), 2)
@@ -480,7 +512,9 @@ class ShopifyClient:
         """
         try:
             rows = self._shopifyql(
-                f"FROM sales SHOW gross_sales TIMESERIES day "
+                f"FROM sales SHOW gross_sales "
+                f"{_sales_where()}"
+                f"TIMESERIES day "
                 f"SINCE {year}-01-01 UNTIL {year}-12-31"
             )
             return {
@@ -503,6 +537,7 @@ class ShopifyClient:
         try:
             sold = self._shopifyql(
                 f"FROM sales SHOW net_items_sold, gross_sales "
+                f"{_sales_where()}"
                 f"GROUP BY product_title "
                 f"SINCE -{lookback_days}d UNTIL today"
             )

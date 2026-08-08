@@ -9,7 +9,7 @@ ones learned.
 """
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, date
 import pytz
 
 from shopify_client import ShopifyClient
@@ -22,7 +22,7 @@ from targets import pace, load_prior_year_curve, save_prior_year_curve
 from forecast import project_week, best_opportunity
 from brain import Brain
 from synthesizer import ClaudeSynthesizer
-from email_report import EmailReporter
+from email_report import EmailReporter, build_subject
 
 ET = pytz.timezone("America/New_York")
 
@@ -168,7 +168,9 @@ def main():
 
             # The number that makes revenue mean something.
             revenue = payload.get("shopify", {}).get("sales", {}).get("revenue")
-            payload["expectation"] = assess(revenue, today["score"])
+            payload["expectation"] = assess(revenue, today["score"],
+                                            day=date.fromisoformat(report_date),
+                                            curve=load_prior_year_curve())
             if payload["expectation"].get("available"):
                 exp = payload["expectation"]
                 print(f"   Expected ~${exp['expected_revenue']:,} → actual "
@@ -290,6 +292,8 @@ def main():
     # ── Send ──────────────────────────────────────────────────────────────────
     print("Sending...")
     try:
+        content["subject"] = build_subject(report_date, payload, content.get("subject", ""))
+        print(f"   Subject: {content['subject']}")
         EmailReporter().send(content)
         print(f"   Sent to: {os.environ.get('REPORT_RECIPIENT') or 'goodvibes@sandyneckprovisions.com'}")
     except Exception as e:

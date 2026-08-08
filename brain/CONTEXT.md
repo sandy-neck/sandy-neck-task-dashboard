@@ -77,6 +77,41 @@ is expected, not alarming.
 
 ---
 
+## The Snack Shack (excluded from all analysis)
+
+The Snack Shack was a separate location run as a one-off, single-year experiment in 2025. It is
+not operating in 2026. In the owner's words, it "added sales but was mostly a disaster - huge
+costs, huge stress and took attention from the store when we needed it most."
+
+**It must be excluded from ALL analysis** — every sales query, the prior-year seasonality curve,
+target pacing, and any year-over-year comparison. It appears in Shopify data under the POS
+location name "Snack Shack." Queries exclude it with:
+
+```
+WHERE pos_location_name != 'Snack Shack'
+```
+
+Verified 2025 figures (measured, not estimated):
+
+| Line | Orders | Gross sales |
+|---|---:|---:|
+| Total 2025 including Snack Shack | — | $184,128.96 |
+| Snack Shack alone | 2,547 | $34,725.20 |
+| Sandy Neck Provisions store | 3,188 | $133,642.96 |
+| Unattributed / non-POS (online, TikTok, etc.) | 656 | $15,760.80 |
+| **2025 excluding Snack Shack** | — | **$149,403.76** |
+
+**This changes what the 2026 target actually means.** The $190,000 target is roughly a **27%
+increase** over the comparable 2025 base of $149,404 — not the ~3% increase it looks like if you
+compare against the headline $184,129. Any pacing or year-over-year read that includes Snack
+Shack is wrong and will make the business look like it's coasting when it's actually reaching.
+
+Also note: Snack Shack ran 2,547 orders for $34,725 — an average around $13.63 per order. It was
+high-volume and low-ticket, so leaving it in also distorts average basket and order-count
+comparisons, not just revenue totals.
+
+---
+
 ## Annual target and season calendar
 
 **Annual sales target: $190,000 for the year.** Sandy wants to stay abreast of how the business is
@@ -290,3 +325,6 @@ no framework at all.
 7. **Say when you don't know.** A flagged unknown is more useful than a confident guess.
 8. **Keep year-to-date pace against the $190k target in view**, adjusted for season position — and
    say whether that pacing is based on real prior-year history or the estimated fallback curve.
+9. **Always exclude the Snack Shack.** Filter it out of every query (`pos_location_name !=
+   'Snack Shack'`) and never compare against 2025 totals that include it — the comparable 2025
+   base is $149,403.76, not the $184,128.96 headline.
