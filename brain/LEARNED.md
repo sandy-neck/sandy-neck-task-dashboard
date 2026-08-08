@@ -36,3 +36,37 @@ costs, or the checkout itself. Nothing here identifies which, and the numbers ar
 funnel analysis to say anything reliable.
 
 **To test:** what are those ~100 daily sessions landing on, and where are they coming from?
+
+---
+
+### 2026-08-08 — A morning event may lift the whole day, not just its own hour
+**Confidence: low** — one Saturday against one Saturday, weather not yet controlled for.
+
+Allie ran a pilates class in the sand area at 8am. Sandy's read: small direct sales, but it "set the
+tone." The hourly data is consistent with that, and the shape is more interesting than the totals.
+
+Same hours, both ET, against the previous Saturday:
+
+| Window | Sat 2026-08-01 | Sat 2026-08-08 (event) |
+|---|---:|---:|
+| 8am | 3 orders · $37.50 | 5 orders · $141.48 |
+| 9am | 4 orders · $143.96 | 9 orders · $368.98 |
+| 8–10am | 7 orders · $181 | 14 orders · $510 |
+| Full day | 66 orders · $1,910.20 | ~95 orders · ~$2,978 (still open) |
+
+The class hour itself was modest. The lift shows up in the **hours after it** — roughly double the
+orders and 2.8x the revenue across the early window, and a day tracking ~56% past the comparable
+Saturday's full total.
+
+Worth noting what this is *not*: proof. Two Saturdays is not a pattern, weather differed, and the
+store may simply have had a strong day. A plausible mechanism exists — an 8am event puts people on
+the sand early, and early beach traffic is exactly what drives ice and provisions — but mechanism is
+not evidence.
+
+**To test:** log every event with its date and time, then compare the event day against
+weather-matched non-event days rather than the adjacent calendar. Three or four events would make
+this either real or dead. The 8–10am window is the specific thing to watch — that's where the signal
+appeared, not in the class hour.
+
+**Why it matters if true:** events would be a demand lever the business can actually pull, unlike
+weather. That makes it worth measuring properly rather than on vibes.

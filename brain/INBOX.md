@@ -16,6 +16,8 @@ Nothing here needs to be formatted or complete. Half a thought beats a lost one.
   so we're jammed up. Want lead time surfaced *before* something runs low, not after.
 - 2026-08-08 — Customer told Meghan she found us by googling "swim suits near me." Not our name — a
   generic category + proximity search. Worth understanding how much of that traffic exists.
+- 2026-08-08 — Allie ran a pilates class in the sand area at 8am. Direct sales from it were small,
+  but it felt like it set the tone for the day. Great day overall.
 
 ---
 
