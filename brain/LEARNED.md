@@ -95,3 +95,16 @@ The mechanism is unremarkable and that's a point in its favour: weekend visitor 
 **To test:** attach SNP 500 scores to every day including weekends (Aug 1 and Aug 8 are the immediate gaps), then bucket % -of-expected by weekday across 3–4 weeks. If Mon–Thu clusters materially below Fri–Sun at matched scores, add a weekday multiplier to `agent/expectations.py`. What would kill it: a weekday Exceptional day that clears 95%+ of expected, or a weekend day that lands at 50%.
 
 **Caution:** do not over-fit to Jul 28. A 450-score day doing 36% is an outlier by any reading and may have a cause nothing to do with weekday — late July, post-holiday lull, something local. The Aug 4 / Aug 7 / Aug 8 progression is the sturdier part of the evidence.
+
+---
+
+### 2026-08-08 — The online store's proven sellers are Jeep apparel and off-season clothing, not beach goods
+**Confidence: low-medium** — consistent across the week's small order count, plausible mechanism, but 5 orders is not a sample.
+
+Top online-store sellers for the week ending 2026-08-07: Jeep Sun Dog long sleeve ($42.81), Jeep Duck Duck long sleeve ($42.81), Jeep Logo Pom Hat ($35.68), Jeep Beach Sunset Hat ($35), plus an SNP Lighthouse cropped sweatshirt ($49) and the online-exclusive Plovers tee ($34). Surfer Dudes at $99.96 was a single 4-unit order. Almost nothing beach-consumable, and two items (pom hat, cropped sweatshirt) are actively wrong for August on Cape Cod.
+
+Reading: the web audience is not the person driving to Sandy Neck. It looks more like a Jeep/beach-culture apparel buyer who may never come to the store, and who is not shopping on weather. If that holds, it explains why the online funnel doesn't respond to beach days, and it points the post-Labor Day push at apparel and Jeep-community content rather than at gear.
+
+**To test:** pull the online product mix across a rain week and a heat week. If the mix is stable regardless of weather while in-store swings hard, the two audiences are genuinely separate. Also check whether the Jeep orders ship out of state.
+
+**What would kill it:** a run of online orders for ice-adjacent or beach-gear items, or evidence the Jeep buyers are local pickup.
