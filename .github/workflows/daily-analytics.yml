@@ -5,6 +5,19 @@ on:
     # 7 AM ET = 12:00 UTC (EST, Nov–Mar) / 11:00 UTC (EDT, Mar–Nov)
     # Using 12:00 UTC ensures delivery by 7 AM ET year-round (7 AM EST / 8 AM EDT)
     - cron: '0 12 * * *'
+
+  # Run on every push to the development branch so changes can be exercised without clicking
+  # through the Actions UI. Remove this block once the agent is stable — it sends a real email
+  # on every push.
+  push:
+    branches:
+      - claude/shopify-ecommerce-agent-qzy33e
+    paths-ignore:
+      # The run commits its own journal here. GitHub already declines to trigger workflows from
+      # pushes made with GITHUB_TOKEN, but ignoring the path makes the loop impossible rather
+      # than merely unlikely — and skips pointless reruns on journal-only commits.
+      - 'brain/**'
+
   workflow_dispatch:
     inputs:
       dry_run:
