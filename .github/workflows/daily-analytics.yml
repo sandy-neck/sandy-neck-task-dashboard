@@ -18,9 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    # The agent writes its journal back into brain/, so the run needs push access.
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Needed so the journal commit can rebase onto any concurrent pushes.
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -70,7 +77,34 @@ jobs:
           GOOGLE_BUSINESS_LOCATION: ${{ secrets.GOOGLE_BUSINESS_LOCATION }}
           SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
 
+          # Weather & tides — Open-Meteo needs no key. Tides stay off until a NOAA station
+          # is set; find the nearest at https://tidesandcurrents.noaa.gov/map/
+          STORE_LATITUDE: ${{ vars.STORE_LATITUDE || '41.7370' }}
+          STORE_LONGITUDE: ${{ vars.STORE_LONGITUDE || '-70.3870' }}
+          NOAA_TIDE_STATION: ${{ vars.NOAA_TIDE_STATION }}
+
+          ANALYTICS_MODEL: ${{ vars.ANALYTICS_MODEL || 'claude-opus-5' }}
+
         run: python daily_analytics.py
+
+      - name: Commit journal entry
+        # Runs even if the email failed — a day's analysis is worth keeping either way.
+        if: always()
+        run: |
+          if [ -z "$(git status --porcelain brain/)" ]; then
+            echo "No brain changes to commit."
+            exit 0
+          fi
+          git config user.name  "Sandy Neck Analytics"
+          git config user.email "actions@github.com"
+          git add brain/
+          git commit -m "Daily journal: $(date -u +%Y-%m-%d)"
+          # The scheduled run and a human push can race; rebase rather than fail.
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && break
+            sleep $((attempt * 3))
+          done
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Upload logs on failure
         if: failure()

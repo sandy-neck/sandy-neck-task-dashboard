@@ -289,6 +289,174 @@ class ShopifyClient:
             except Exception:
                 return {"new_customers_7d": None, "returning_customers_7d": None, "returning_rate": None}
 
+    # ── Channel split ──────────────────────────────────────────────────────────
+
+    def get_channel_split(self, since: str = "-7d") -> list:
+        """
+        Revenue by sales channel. This is the backbone of the whole report — in-store and online
+        are different businesses and get judged separately, never as one blended number.
+        """
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW orders, gross_sales "
+                f"GROUP BY sales_channel "
+                f"SINCE {since} UNTIL today"
+            )
+            total = sum(float(r.get("gross_sales") or 0) for r in rows) or 1
+            return [
+                {
+                    "channel": r.get("sales_channel") or "Unattributed",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                    "share_pct": round(float(r.get("gross_sales") or 0) / total * 100, 1),
+                }
+                for r in sorted(rows, key=lambda x: float(x.get("gross_sales") or 0), reverse=True)
+            ]
+        except Exception:
+            return []
+
+    def get_channel_day(self, day: str) -> list:
+        """Per-channel revenue for one specific day."""
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW orders, gross_sales "
+                f"GROUP BY sales_channel "
+                f"SINCE {day} UNTIL {day}"
+            )
+            return [
+                {
+                    "channel": r.get("sales_channel") or "Unattributed",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows
+            ]
+        except Exception:
+            return []
+
+    def get_top_products_by_channel(self, channel: str, since: str = "-7d", limit: int = 8) -> list:
+        """Top sellers within a single channel — 'what moved in the store' vs. 'what moved online'."""
+        safe = channel.replace("'", "")
+        try:
+            return self._shopifyql(
+                f"FROM sales SHOW gross_sales, net_items_sold, orders "
+                f"WHERE sales_channel = '{safe}' "
+                f"GROUP BY product_title "
+                f"ORDER BY gross_sales DESC LIMIT {limit} "
+                f"SINCE {since} UNTIL today"
+            )
+        except Exception:
+            return []
+
+    # ── Season to date ─────────────────────────────────────────────────────────
+
+    def get_season_trend(self) -> dict:
+        """
+        Where the season stands. Peak runs Memorial Day → Labor Day, so a single day only means
+        something against the arc it sits on.
+        """
+        now = datetime.now(ET)
+        season_start = f"{now.year}-05-25"
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW orders, gross_sales "
+                f"TIMESERIES week "
+                f"SINCE {season_start} UNTIL today"
+            )
+            weeks = [
+                {
+                    "week": str(r.get("week", ""))[:10],
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows
+            ]
+            total = sum(w["revenue"] for w in weeks)
+            recent = weeks[-4:] if len(weeks) >= 4 else weeks
+            peak = max(weeks, key=lambda w: w["revenue"], default=None)
+            return {
+                "season_start": season_start,
+                "weeks": weeks,
+                "season_to_date_revenue": round(total, 2),
+                "recent_weeks": recent,
+                "peak_week": peak,
+                "weeks_elapsed": len(weeks),
+            }
+        except Exception:
+            return {}
+
+    # ── Reorder intelligence ───────────────────────────────────────────────────
+
+    def get_reorder_signals(self, lookback_days: int = 14, limit: int = 25) -> list:
+        """
+        Products at risk of running out, with enough context to make the reorder call.
+
+        Stock alone doesn't answer anything — 6 units is comfortable for a slow mover and an
+        emergency for something selling 4 a day. Pairing stock with recent velocity gives days of
+        cover, which is the number that actually matters against a vendor's lead time.
+        """
+        try:
+            sold = self._shopifyql(
+                f"FROM sales SHOW net_items_sold, gross_sales "
+                f"GROUP BY product_title "
+                f"SINCE -{lookback_days}d UNTIL today"
+            )
+        except Exception:
+            return []
+
+        velocity = {}
+        for row in sold:
+            title = row.get("product_title")
+            if not title:
+                continue
+            units = float(row.get("net_items_sold") or 0)
+            velocity[title] = {
+                "units_sold": units,
+                "revenue": float(row.get("gross_sales") or 0),
+                "per_day": units / lookback_days,
+            }
+
+        try:
+            stock_rows = self._shopifyql(
+                "FROM inventory SHOW ending_inventory_units "
+                "GROUP BY product_title "
+                "ORDER BY ending_inventory_units ASC LIMIT 250"
+            )
+        except Exception:
+            return []
+
+        signals = []
+        for row in stock_rows:
+            title = row.get("product_title")
+            if not title:
+                continue
+            on_hand = float(row.get("ending_inventory_units") or 0)
+            stats = velocity.get(title)
+            if not stats or stats["per_day"] <= 0:
+                continue  # not selling — a low count here isn't a reorder question
+
+            days_cover = on_hand / stats["per_day"]
+            if days_cover > 45:
+                continue  # comfortable
+
+            signals.append({
+                "title": title,
+                "on_hand": int(on_hand),
+                "units_sold_recent": round(stats["units_sold"], 1),
+                "units_per_day": round(stats["per_day"], 2),
+                "days_of_cover": round(days_cover, 1),
+                "revenue_recent": round(stats["revenue"], 2),
+                "urgency": (
+                    "out of stock" if on_hand <= 0
+                    else "critical" if days_cover <= 7
+                    else "low" if days_cover <= 21
+                    else "watch"
+                ),
+            })
+
+        signals.sort(key=lambda s: s["days_of_cover"])
+        return signals[:limit]
+
     # ── Inventory alerts ───────────────────────────────────────────────────────
 
     def get_low_inventory(self, threshold: int = 10) -> list:

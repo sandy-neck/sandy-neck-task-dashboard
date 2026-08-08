@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
 Sandy Neck Provisions — Daily Analytics Agent
-Runs via GitHub Actions cron at 7 AM ET every day.
+Runs via GitHub Actions cron at 7 AM ET.
+
+Reports on the last complete sales day, analysing in-store and online separately, weather-adjusting
+every comparison, and keeping a running journal in brain/ so each run starts from what the previous
+ones learned.
 """
 import os
 import sys
@@ -12,6 +16,8 @@ from shopify_client import ShopifyClient
 from social_client import SocialClient
 from klaviyo_client import KlaviyoClient
 from google_local_client import GoogleLocalClient
+from weather_client import WeatherClient, comparable_days
+from brain import Brain
 from synthesizer import ClaudeSynthesizer
 from email_report import EmailReporter
 
@@ -22,119 +28,154 @@ def main():
     now = datetime.now(ET)
     run_date = now.strftime("%A, %B %-d, %Y")
     print(f"[{now.strftime('%I:%M %p ET')}] Sandy Neck Analytics — {run_date}")
-    print("-" * 55)
+    print("-" * 60)
 
-    payload = {
-        "date": run_date,
-        "shopify": {},
-        "social": {},
-        "klaviyo": {},
-        "google_local": {},
-        "errors": [],
-    }
+    payload = {"date": run_date, "shopify": {}, "social": {}, "klaviyo": {},
+               "google_local": {}, "weather": {}, "errors": []}
+    report_date = None
 
-    # ── Shopify ────────────────────────────────────────────────────────────────
-    print("📦 Fetching Shopify data...")
+    # ── Shopify ───────────────────────────────────────────────────────────────
+    print("Shopify...")
     try:
         shopify = ShopifyClient()
         sales = shopify.get_sales_summary()
+        report_date = sales.get("report_date")
+
         payload["shopify"] = {
             "sales": sales,
-            "top_products": shopify.get_top_products(),
             "referral_sources": shopify.get_referral_sources(),
             "customer_insights": shopify.get_customer_insights(),
-            "inventory_alerts": shopify.get_low_inventory(),
             "conversion_metrics": shopify.get_conversion_metrics(),
         }
-        print(f"   Reporting on:   {sales.get('report_date', 'unknown')}")
-        print(f"   Revenue:        ${sales.get('revenue', 0):,.2f}")
-        print(f"   Orders:         {sales.get('orders', 0)}")
-        print(f"   7-day avg:      ${sales.get('week_avg_revenue', 0):,.2f}")
-        print(f"   Data source:    {sales.get('source', 'unknown')}")
+        payload["channel_split"] = shopify.get_channel_split()
+        payload["channel_day"] = shopify.get_channel_day(report_date) if report_date else []
+        payload["instore_products"] = shopify.get_top_products_by_channel("Point of Sale")
+        payload["online_products"] = shopify.get_top_products_by_channel("Online Store")
+        payload["tiktok_products"] = shopify.get_top_products_by_channel("TikTok")
+        payload["season"] = shopify.get_season_trend()
+        payload["reorder_signals"] = shopify.get_reorder_signals()
+
+        print(f"   Reporting on: {report_date}")
+        print(f"   Revenue:      ${sales.get('revenue', 0):,.2f} / {sales.get('orders', 0)} orders")
+        for row in payload["channel_split"][:4]:
+            print(f"     {row['channel']:<18} ${row['revenue']:>9,.2f}  ({row['share_pct']}%)")
+        urgent = [s for s in payload["reorder_signals"] if s["urgency"] in ("critical", "out of stock")]
+        print(f"   Reorder flags: {len(payload['reorder_signals'])} ({len(urgent)} urgent)")
+        print(f"   Source:       {sales.get('source')}")
     except Exception as e:
         msg = f"Shopify: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
 
-    # ── Social ─────────────────────────────────────────────────────────────────
-    print("📱 Fetching social media data...")
+    # ── Weather & tides ───────────────────────────────────────────────────────
+    print("Weather & tides...")
     try:
-        social = SocialClient()
-        payload["social"] = social.get_all_metrics()
-        active = [k for k, v in payload["social"].items() if isinstance(v, dict) and v.get("available")]
-        stubs = [k for k, v in payload["social"].items() if isinstance(v, dict) and v.get("stub")]
-        print(f"   Active platforms: {', '.join(active) or 'none'}")
-        if stubs:
-            print(f"   Stub mode (sample data): {', '.join(stubs)}")
+        payload["weather"] = WeatherClient().get_context()
+        days = payload["weather"].get("days", {})
+        if report_date and report_date in days:
+            day = days[report_date]
+            print(f"   {report_date}: {day['conditions']}, feels {day['feels_like_f']}°F "
+                  f"— {day['beach_label']} ({day['beach_score']}/100)")
+            payload["comparable_days"] = comparable_days(days, report_date)
+            print(f"   Comparable days found: {len(payload['comparable_days'])}")
+        if not payload["weather"].get("tides", {}).get("available"):
+            print("   Tides: not configured (set NOAA_TIDE_STATION)")
     except Exception as e:
-        msg = f"Social: {e}"
+        msg = f"Weather: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
 
-    # ── Klaviyo ────────────────────────────────────────────────────────────────
-    print("✉️  Fetching Klaviyo data...")
+    # ── Optional sources ──────────────────────────────────────────────────────
+    for label, key, fetch in [
+        ("Social", "social", lambda: SocialClient().get_all_metrics()),
+        ("Klaviyo", "klaviyo", lambda: KlaviyoClient().get_metrics()),
+        ("Google local", "google_local", lambda: GoogleLocalClient().get_all_metrics()),
+    ]:
+        print(f"{label}...")
+        try:
+            payload[key] = fetch()
+            stubbed = (
+                payload[key].get("stub")
+                if isinstance(payload[key], dict)
+                else any(v.get("stub") for v in payload[key].values() if isinstance(v, dict))
+            )
+            print(f"   {'sample data (not connected)' if stubbed else 'live'}")
+        except Exception as e:
+            msg = f"{label}: {e}"
+            print(f"   ERROR: {msg}", file=sys.stderr)
+            payload["errors"].append(msg)
+
+    # ── Brain ─────────────────────────────────────────────────────────────────
+    print("Reading brain...")
+    brain = Brain()
+    brain_context = {}
     try:
-        klaviyo = KlaviyoClient()
-        payload["klaviyo"] = klaviyo.get_metrics()
-        rev = payload["klaviyo"].get("revenue_7d")
-        print(f"   Email revenue (7d): {f'${rev:,.2f}' if rev else 'unavailable'}")
-        if payload["klaviyo"].get("stub"):
-            print("   Stub mode: klaviyo")
+        brain_context = {
+            "context": brain.context(),
+            "inbox": brain.inbox(),
+            "learned": brain.learned(),
+            "recent_logs": brain.recent_logs(days=5),
+            "open_threads": brain.open_threads(),
+        }
+        print(f"   context {len(brain_context['context']):,} chars | "
+              f"{len(brain_context['recent_logs'])} recent logs | "
+              f"{len(brain_context['open_threads'])} open threads"
+              f"{' | inbox has notes' if brain_context['inbox'] else ''}")
     except Exception as e:
-        msg = f"Klaviyo: {e}"
+        msg = f"Brain read: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
 
-    # ── Google Local ───────────────────────────────────────────────────────────
-    print("🗺️  Fetching Google local presence data...")
+    # ── Write ─────────────────────────────────────────────────────────────────
+    print("Writing...")
+    content = {"subject": "daily update", "signal_level": "quiet",
+               "body": "<p>Data collected — synthesis unavailable today.</p>",
+               "daily_log": "", "learned": ""}
     try:
-        google = GoogleLocalClient()
-        payload["google_local"] = google.get_all_metrics()
-        bp = payload["google_local"].get("business_profile", {})
-        sc = payload["google_local"].get("search_console", {})
-        print(f"   Maps views (7d):    {bp.get('maps_views_7d', 'unavailable')}")
-        print(f"   Search clicks (7d): {sc.get('total_clicks_7d', 'unavailable')}")
-        if payload["google_local"].get("stub"):
-            print("   Stub mode: google")
-    except Exception as e:
-        msg = f"Google Local: {e}"
-        print(f"   ERROR: {msg}", file=sys.stderr)
-        payload["errors"].append(msg)
-
-    # ── Write + send email ─────────────────────────────────────────────────────
-    print("🧠 Writing email with Claude...")
-    email_content = {"subject": "daily update", "body": "<p>Data collected — synthesis unavailable today.</p>", "signal_level": "quiet"}
-    try:
-        synth = ClaudeSynthesizer()
-        email_content = synth.generate_email(payload)
-        print(f"   Subject: {email_content.get('subject','')}")
-        print(f"   Signal:  {email_content.get('signal_level','')}")
+        content = ClaudeSynthesizer().generate(payload, brain_context)
+        print(f"   Subject: {content.get('subject')}")
+        print(f"   Signal:  {content.get('signal_level')}")
     except Exception as e:
         msg = f"Synthesis: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
 
-    print("📧 Sending email...")
+    # ── Persist to brain ──────────────────────────────────────────────────────
+    if content.get("daily_log") and report_date:
+        try:
+            path = brain.write_daily_log(report_date, content["daily_log"])
+            print(f"   Journal: {path.relative_to(path.parent.parent.parent)}")
+            if content.get("learned"):
+                brain.append_learned(content["learned"])
+                print("   Appended to LEARNED.md")
+            if brain_context.get("inbox"):
+                notes = [l for l in brain_context["inbox"].splitlines() if l.strip().startswith("-")]
+                brain.mark_inbox_processed(notes, report_date)
+                print(f"   Inbox: {len(notes)} note(s) marked processed")
+        except Exception as e:
+            msg = f"Brain write: {e}"
+            print(f"   ERROR: {msg}", file=sys.stderr)
+            payload["errors"].append(msg)
+
+    # ── Send ──────────────────────────────────────────────────────────────────
+    print("Sending...")
     try:
-        reporter = EmailReporter()
-        reporter.send(email_content)
-        recipient = os.environ.get("REPORT_RECIPIENT", "goodvibes@sandyneckprovisions.com")
-        print(f"   Sent to: {recipient}")
+        EmailReporter().send(content)
+        print(f"   Sent to: {os.environ.get('REPORT_RECIPIENT') or 'goodvibes@sandyneckprovisions.com'}")
     except Exception as e:
         msg = f"Email: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
         payload["errors"].append(msg)
 
-    # ── Done ───────────────────────────────────────────────────────────────────
-    print("-" * 55)
+    print("-" * 60)
     if payload["errors"]:
-        print(f"⚠️  Completed with {len(payload['errors'])} issue(s):")
+        print(f"Completed with {len(payload['errors'])} issue(s):")
         for err in payload["errors"]:
-            print(f"   • {err}")
+            print(f"   - {err}")
         if any(e.startswith(("Shopify:", "Email:")) for e in payload["errors"]):
             sys.exit(1)
     else:
-        print("✅ Daily analytics report delivered successfully.")
+        print("Delivered.")
 
 
 if __name__ == "__main__":
