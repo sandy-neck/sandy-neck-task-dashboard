@@ -54,7 +54,9 @@ jobs:
           SMTP_PORT: ${{ secrets.SMTP_PORT || '587' }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT || 'goodvibes@sandyneckprovisions.com' }}
+          # Pinned deliberately rather than read from a secret: the secret's value can't be read
+          # back once set, so it was impossible to confirm where the report was actually going.
+          REPORT_RECIPIENT: goodvibes@sandyneckprovisions.com
           REPORT_SENDER_NAME: Sandy Neck Analytics
 
           # Klaviyo — optional (stub if missing)

@@ -1,7 +1,7 @@
 # Sandy Neck Provisions — Analytics Agent Setup Guide
 
 The daily analytics agent runs at **7 AM ET every day** via GitHub Actions.
-It emails a report to sandy@sandyneckprovisions.com covering Shopify store performance,
+It emails a report to goodvibes@sandyneckprovisions.com covering Shopify store performance,
 Klaviyo email marketing, social media, and Google local presence (Maps + Search Console).
 
 All optional data sources run in "sample data" mode until real credentials are added.
@@ -61,7 +61,7 @@ The Shopify and email secrets are the only ones required to start.
 | `SMTP_PORT` | `587` |
 | `SMTP_USERNAME` | Your sending Gmail address |
 | `SMTP_PASSWORD` | Gmail **App Password** — see below |
-| `REPORT_RECIPIENT` | `sandy@sandyneckprovisions.com` |
+| `REPORT_RECIPIENT` | Not used — the recipient is pinned to `goodvibes@sandyneckprovisions.com` in the workflow |
 
 **Creating a Gmail App Password:**
 1. Google Account → Security → 2-Step Verification (must be on)
@@ -203,7 +203,7 @@ export SHOPIFY_ACCESS_TOKEN="shpat_..."
 export ANTHROPIC_API_KEY="sk-ant-..."
 export SMTP_USERNAME="you@gmail.com"
 export SMTP_PASSWORD="xxxx xxxx xxxx xxxx"
-export REPORT_RECIPIENT="sandy@sandyneckprovisions.com"
+export REPORT_RECIPIENT="goodvibes@sandyneckprovisions.com"
 
 # Optional sources — run in stub mode for testing
 export SOCIAL_STUB_MODE=true
