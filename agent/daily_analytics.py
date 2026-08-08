@@ -83,6 +83,13 @@ def main():
                   f"projecting ${pacing['projected_year_end']:,}")
             print(f"   Pace basis:   {pacing['basis']}")
         print(f"   Source:       {sales.get('source')}")
+        if shopify.ql_errors:
+            # Loud on purpose: a silent fallback to raw orders costs the channel split,
+            # reorder signals and real pacing, and looks like everything is fine.
+            print(f"   ShopifyQL FAILED {len(shopify.ql_errors)}x — falling back:", file=sys.stderr)
+            for err in shopify.ql_errors[:3]:
+                print(f"      {err}", file=sys.stderr)
+            payload["errors"].append(f"ShopifyQL unavailable ({len(shopify.ql_errors)} queries)")
     except Exception as e:
         msg = f"Shopify: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)

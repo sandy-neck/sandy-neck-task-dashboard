@@ -23,6 +23,7 @@ class ShopifyClient:
             "X-Shopify-Access-Token": self.token,
             "Content-Type": "application/json",
         })
+        self.ql_errors = []
 
     # ── Low-level helpers ──────────────────────────────────────────────────────
 
@@ -38,27 +39,51 @@ class ShopifyClient:
         return result["data"]
 
     def _shopifyql(self, query: str) -> list:
-        """Run a ShopifyQL query and return list of dicts (one per row)."""
+        """
+        Run a ShopifyQL query and return one dict per row.
+
+        The response shape changed from what this originally targeted: `parseErrors` is a scalar
+        rather than a list of {code, message}, and the data lives in `tableData.rows` rather than
+        `tableData.unformattedData`. Requesting the old fields made the whole GraphQL document
+        invalid, so every ShopifyQL call was rejected before executing and silently fell back to
+        raw order queries — which looked like a permissions problem and wasn't.
+        """
         gql = """
         query RunShopifyQL($q: String!) {
           shopifyqlQuery(query: $q) {
-            parseErrors { code message }
+            parseErrors
             tableData {
-              unformattedData
+              rows
               columns { name dataType }
             }
           }
         }
         """
-        data = self._gql(gql, {"q": query})
+        try:
+            data = self._gql(gql, {"q": query})
+        except Exception as e:
+            # Callers fall back on failure, which is right for resilience but hides breakage —
+            # a schema change looked like a permissions problem for days. Record it so the run
+            # reports what actually went wrong.
+            self.ql_errors.append(f"{query[:70]}... → {e}")
+            raise
         result = data["shopifyqlQuery"]
-        if result.get("parseErrors"):
-            raise ValueError(f"ShopifyQL: {result['parseErrors'][0]['message']}")
-        table = result.get("tableData")
-        if not table or not table.get("unformattedData"):
+
+        errors = result.get("parseErrors")
+        if errors:
+            self.ql_errors.append(f"{query[:70]}... → {errors}")
+            raise ValueError(f"ShopifyQL rejected query: {errors}")
+
+        table = result.get("tableData") or {}
+        rows = table.get("rows") or []
+        if not rows:
             return []
-        cols = [c["name"] for c in table["columns"]]
-        return [dict(zip(cols, row)) for row in table["unformattedData"]]
+
+        # rows arrive already keyed by column name; tolerate positional arrays just in case.
+        if isinstance(rows[0], dict):
+            return rows
+        cols = [c["name"] for c in table.get("columns", [])]
+        return [dict(zip(cols, row)) for row in rows]
 
     # ── Sales & revenue ────────────────────────────────────────────────────────
 
