@@ -17,6 +17,7 @@ from social_client import SocialClient
 from klaviyo_client import KlaviyoClient
 from google_local_client import GoogleLocalClient
 from weather_client import WeatherClient, comparable_days, score_days_with_snp500
+from expectations import assess
 from brain import Brain
 from synthesizer import ClaudeSynthesizer
 from email_report import EmailReporter
@@ -91,6 +92,15 @@ def main():
             print(f"      {today['headline']}")
             payload["comparable_days"] = comparable_days(days, report_date)
             print(f"   Comparable days: {len(payload['comparable_days'])}")
+
+            # The number that makes revenue mean something.
+            revenue = payload.get("shopify", {}).get("sales", {}).get("revenue")
+            payload["expectation"] = assess(revenue, today["score"])
+            if payload["expectation"].get("available"):
+                exp = payload["expectation"]
+                print(f"   Expected ~${exp['expected_revenue']:,} → actual "
+                      f"${exp['actual_revenue']:,.2f} ({exp['pct_of_expected']}%) "
+                      f"— {exp['verdict']}")
         if not payload["weather"].get("tides", {}).get("available"):
             print("   Tides: not configured (set NOAA_TIDE_STATION) — SNP 500 tide factor inactive")
     except Exception as e:

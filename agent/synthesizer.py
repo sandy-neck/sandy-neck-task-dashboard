@@ -231,16 +231,30 @@ class ClaudeSynthesizer:
             sections.append(f"═══ YOUR RECENT JOURNAL ENTRIES ═══\n{recent}")
 
         snp = (data.get("snp500") or {}).get(report_date, {})
+        exp = data.get("expectation") or {}
+        expectation_line = (
+            f"Expected about ${exp['expected_revenue']:,} for a day this good. "
+            f"Actual ${exp['actual_revenue']:,.2f} — {exp['pct_of_expected']}% of that, "
+            f"{exp['verdict']} (gap ${exp['gap']:+,.0f})."
+            if exp.get("available") else "Expectation unavailable."
+        )
+
         sections.append(f"""═══ CONDITIONS ON {report_date} ═══
 
-SNP 500: {snp.get('score', 'unavailable')}/100 — {snp.get('rating', '?')} (confidence {snp.get('confidence', '?')})
+SNP 500: {snp.get('score', 'unavailable')}/500 — {snp.get('rating', '?')} (confidence {snp.get('confidence', '?')})
 {snp.get('headline', '')}
   Strongest positives: {', '.join(snp.get('drivers_positive', [])) or 'none'}
   Limiting factors:    {', '.join(str(d) for d in snp.get('drivers_negative', [])) or 'none'}
 
-This is the beach-quality score for the day. It is the denominator for judging sales: a big number
-on a 95 day can be an underperformance, and a modest number on a 40 day can be a good result. Do not
-report revenue without saying what kind of day it was.
+**{expectation_line}**
+
+This is the most important framing in the whole report. Revenue means nothing without the kind of
+day it was: $1,468 on a 480 day is a miss, and $640 on a 150 day is a win. Lead the in-store section
+with how the day did against expectation, not with the raw number.
+
+The expectation curve is a gut baseline from Sandy (rainy day ≈ $500, perfect beach day ≈ $2,000),
+not a fitted model. Treat it as a rough yardstick — say "well short of what a day like that should
+do", not "12.4% below forecast".
 
 {f"Weather: {today_weather.get('conditions')}, high {today_weather.get('high_f')}°F, feels like {today_weather.get('feels_like_f')}°F" if today_weather else "Weather: unavailable"}
 {f"Precipitation: {today_weather.get('precip_in')} in | Wind: {today_weather.get('wind_mph')} mph | Sun: {today_weather.get('sunshine_hours')} hrs" if today_weather else ""}

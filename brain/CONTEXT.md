@@ -157,6 +157,34 @@ What to build intuition on over time:
 Rule: never call a day good or bad on revenue alone. Say what the weather was and judge against
 comparable conditions.
 
+### What a day should do — the expectation curve
+
+Day quality feeds the analysis through the **SNP 500** (see `projects/snp-500.md`), a 1–500 score of
+how good a Sandy Neck beach day it was. That score is turned into an expected in-store revenue, and
+**the day gets judged on actual vs. expected, not on the raw number.**
+
+Sandy's anchors, stated plainly:
+
+> *"If it is a rainy Tuesday then I am happy to surpass 500, whereas a great beach Friday like
+> yesterday I would hope to be at 2000."*
+
+| SNP 500 | Kind of day | Expected in-store revenue |
+|---:|---|---:|
+| 150 | Rainy, poor beach weather | $500 |
+| 480 | Near-perfect beach day | $2,000 |
+
+Linear between, flat outside — there's a floor of people who come regardless of weather, and a
+ceiling where the store hits its own capacity.
+
+**This is a gut baseline, not a fitted model,** and the agent should talk about it that way: "well
+short of what a day like that should do," never "12.4% below forecast." Every daily log records
+expected vs. actual, so after a season there's real data to replace the guess. Anchors live in
+`agent/expectations.py` and can be changed freely.
+
+Worked example — **2026-08-07** scored **480** (near-perfect). Expected ≈ $2,000. Actual $1,468.65 —
+**73%, a gap of −$531.** The original email called that day "strong, +25% vs average." It was a miss.
+That inversion is the entire reason this section exists.
+
 ---
 
 ## How people find us

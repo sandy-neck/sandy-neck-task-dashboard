@@ -7,7 +7,7 @@ bands and behaviour, not exact integers, so calibration can move numbers without
 Run: python test_snp500.py
 """
 from datetime import time
-from snp500 import score_day, _band
+from snp500 import score_day, _band, SCALE_MAX
 
 CASES = []
 
@@ -26,7 +26,8 @@ def ideal_summer():
         "dew_point_f": 60, "wind_mph": 7, "low_tide_local": time(15, 30), "bugs": "low",
         "access": "open", "favorable_window_hours": 6,
     })
-    assert r["score"] >= 90, f"expected Exceptional, got {r['score']}"
+    assert r["score_100"] >= 90, f"expected Exceptional, got {r['score']}"
+    assert 1 <= r["score"] <= SCALE_MAX, f"published score must be 1-500: {r['score']}"
     named = set(r["drivers_positive"])
     assert named & {"tide", "temperature", "wind"}, f"drivers should name tide/temp/wind: {named}"
     return r
@@ -39,7 +40,7 @@ def pretty_but_windy():
         "dew_point_f": 60, "wind_mph": 22, "low_tide_local": time(15, 0), "bugs": "low",
         "access": "open",
     })
-    assert r["score"] < 80, f"wind should keep it below Great, got {r['score']}"
+    assert r["score_100"] < 80, f"wind should keep it below Great, got {r['score']}"
     assert any("wind" in d for d in r["drivers_negative"]), f"wind should be named limiting: {r['drivers_negative']}"
     return r
 
@@ -51,7 +52,7 @@ def rain_ideal_tide():
         "cloud_pct": 95, "dew_point_f": 70, "wind_mph": 10, "low_tide_local": time(15, 0),
         "bugs": "low", "access": "open",
     })
-    assert r["score"] <= 55, f"rain cap should bind at 55, got {r['score']}"
+    assert r["score_100"] <= 55, f"rain cap should bind at 55, got {r['score']}"
     assert any("rain" in x for x in r["penalty_reasons"]), r["penalty_reasons"]
     return r
 
@@ -106,7 +107,7 @@ def cold_clear_spring():
         "dew_point_f": 45, "wind_mph": 8, "low_tide_local": time(15, 0), "bugs": "low",
         "access": "open",
     })
-    assert r["score"] < 70, f"sun must not inflate a cold day, got {r['score']}"
+    assert r["score_100"] < 70, f"sun must not inflate a cold day, got {r['score']}"
     assert any(d=="temperature" or "cold" in d for d in r["drivers_negative"]), r["drivers_negative"]
     return r
 
@@ -130,7 +131,7 @@ def ordinary_day_not_exceptional():
         "dew_point_f": 66, "wind_mph": 12, "low_tide_local": time(11, 0), "bugs": "moderate",
         "access": "open",
     })
-    assert r["score"] < 90, f"ordinary day must not hit Exceptional, got {r['score']}"
+    assert r["score_100"] < 90, f"ordinary day must not hit Exceptional, got {r['score']}"
     return r
 
 

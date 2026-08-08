@@ -22,7 +22,20 @@ Every threshold lives in CONFIG so weights stay tunable without touching logic.
 """
 from datetime import time
 
-ALGORITHM_VERSION = "1.0"
+ALGORITHM_VERSION = "1.1"
+
+# The published score runs 1–500. That's the joke — the Sandy Neck Provisions 500, against the
+# Standard & Poor's 500 — and the joke is the point, so it's the number customers see.
+# Factor tables stay 0–100 internally because that's how the PRD specifies them; `score_100` is
+# retained in the payload for debugging and calibration.
+SCALE_MAX = 500
+
+
+def to_scale(score_100):
+    """0–100 internal → 1–500 published."""
+    if score_100 is None:
+        return None
+    return max(1, min(SCALE_MAX, round(score_100 * SCALE_MAX / 100)))
 
 CONFIG = {
     # PRD §5 — category weights
@@ -304,7 +317,8 @@ def score_day(data: dict, config: dict = None) -> dict:
 
     return {
         "date_local": data.get("date_local"),
-        "score": score,
+        "score": to_scale(score),      # 1–500, the published number
+        "score_100": score,            # internal, for calibration and debugging
         "rating": _band(score),
         "confidence": confidence,
         "status": status,
@@ -476,8 +490,9 @@ def compute_confidence(data) -> int:
     return max(0, min(100, round(0.50 * freshness + 0.30 * completeness + 0.20 * reliability)))
 
 
-def _headline(score, positives, negatives, reasons, window):
-    band = _band(score)
+def _headline(score_100, positives, negatives, reasons, window):
+    band = _band(score_100)
+    score = to_scale(score_100)
     if positives:
         lead = ", ".join(reasons.get(name, name) for name, _ in positives[:2])
         sentence = f"{lead.capitalize()}"
