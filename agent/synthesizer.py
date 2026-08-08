@@ -216,6 +216,16 @@ class ClaudeSynthesizer:
                 f"{brain['learned']}"
             )
 
+        if brain.get("events"):
+            sections.append(
+                "═══ EVENTS LOG ═══\n"
+                "Things that happened which the data alone can't show. If one falls on the day being\n"
+                "reported, say so — an unexplained spike is worse than no spike. Be careful not to\n"
+                "credit an event for something it plausibly didn't cause; say what's consistent with\n"
+                "what, and what would actually settle it.\n\n"
+                f"{brain['events']}"
+            )
+
         if brain.get("open_projects"):
             projects = "\n\n".join(
                 f"### {p['name']} — {p['status']}\n"
@@ -300,6 +310,26 @@ rather than measured prior-year history, say so — don't present a guess as a m
 
 Mention pacing when it's genuinely moved or when the phase is turning. It does not need to appear
 every single day.
+
+WEEK AHEAD — expected vs. required:
+{json.dumps(data.get('forecast', {}), indent=2)}
+
+Two numbers per day, and the gap between them is the point:
+  expected — what a day of that quality normally does
+  required — what it needs to do to stay on track for the $190k target
+
+A day can clear `expected` and still miss `required`. That distinction is the most actionable thing
+in the whole email. Reporting only `expected` congratulates the business for keeping pace with
+itself while the target slips.
+
+Use this to look forward, not just back. If the week ahead is short, say where the leverage is —
+`best lever` names the highest-quality day still carrying a gap, which is where a promo or a push
+would actually land (a washout is not fixable, a busy Saturday is improvable). Only suggest a
+specific action — a flash sale, a post, extended hours, an event like the pilates class — when the
+numbers support it and you can say what it's meant to close. Do not invent promotions to fill space.
+
+Both numbers rest on a gut-level expectation curve, so speak in rough terms: "the week ahead looks
+about $1,500 light against what the target needs" — never a precise-sounding forecast.
 
 Whole-store daily totals, last 14 days:
 {json.dumps(sales.get('weekly_trend', [])[-14:], indent=2)}

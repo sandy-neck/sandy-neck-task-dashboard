@@ -66,6 +66,36 @@ class Brain:
         )
         return [(p.stem, _read(p, limit=4_000)) for p in entries[:days]]
 
+    def events(self, around: str = None, window: int = 21) -> str:
+        """
+        Recent entries from the events log.
+
+        The agent can see weather and sales but not that someone ran a class on the sand at 8am.
+        Without that line, an unusual morning either reads as noise or gets pinned on the wrong
+        cause — so these are pulled in before anything gets explained.
+        """
+        raw = _read(self.base / "events.md", limit=6_000)
+        if not raw:
+            return ""
+        match = re.search(r"^##\s+Log\s*$(.*)", raw, re.MULTILINE | re.DOTALL)
+        body = (match.group(1) if match else raw).strip()
+
+        if not around:
+            return body
+        try:
+            cutoff = (date.fromisoformat(around) - timedelta(days=window)).isoformat()
+        except ValueError:
+            return body
+        # Keep undated lines: continuation text belongs with the entry above it.
+        kept, keeping = [], False
+        for line in body.splitlines():
+            stamp = re.match(r"^\s*[-*]\s*(\d{4}-\d{2}-\d{2})", line)
+            if stamp:
+                keeping = stamp.group(1) >= cutoff
+            if keeping:
+                kept.append(line)
+        return "\n".join(kept).strip()
+
     def open_projects(self) -> list[dict]:
         """
         Projects still in flight. These are the loops that fall through the cracks when they live

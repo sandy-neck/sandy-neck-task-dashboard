@@ -19,6 +19,7 @@ from google_local_client import GoogleLocalClient
 from weather_client import WeatherClient, comparable_days, score_days_with_snp500
 from expectations import assess
 from targets import pace, load_prior_year_curve, save_prior_year_curve
+from forecast import project_week, best_opportunity
 from brain import Brain
 from synthesizer import ClaudeSynthesizer
 from email_report import EmailReporter
@@ -128,6 +129,24 @@ def main():
                 print(f"   Expected ~${exp['expected_revenue']:,} → actual "
                       f"${exp['actual_revenue']:,.2f} ({exp['pct_of_expected']}%) "
                       f"— {exp['verdict']}")
+
+        # Week ahead: what conditions should deliver vs what the target actually needs.
+        pacing = payload.get("pacing", {})
+        payload["forecast"] = project_week(
+            snp, pacing.get("ytd_revenue"), now.date(),
+            curve=load_prior_year_curve(),
+        )
+        fc = payload["forecast"]
+        if fc.get("available"):
+            print(f"   Week ahead: {len(fc['days'])} days scored, "
+                  f"expecting ${fc['expected_week_total']:,}")
+            if fc.get("required_available"):
+                print(f"      target needs ${fc['required_week_total']:,} "
+                      f"— {fc['verdict']}")
+                opportunity = best_opportunity(fc)
+                if opportunity:
+                    print(f"      best lever: {opportunity['weekday']} {opportunity['date']} "
+                          f"(SNP {opportunity['snp500']}, gap ${opportunity['gap']:,})")
         if not payload["weather"].get("tides", {}).get("available"):
             print("   Tides: not configured (set NOAA_TIDE_STATION) — SNP 500 tide factor inactive")
     except Exception as e:
@@ -170,12 +189,14 @@ def main():
             "recent_logs": brain.recent_logs(days=5),
             "open_threads": brain.open_threads(),
             "open_projects": brain.open_projects(),
+            "events": brain.events(around=report_date),
         }
         print(f"   context {len(brain_context['context']):,} chars | "
               f"{len(brain_context['recent_logs'])} recent logs | "
               f"{len(brain_context['open_threads'])} open threads | "
               f"{len(brain_context['open_projects'])} open projects"
-              f"{' | inbox has notes' if brain_context['inbox'] else ''}")
+              f"{' | inbox has notes' if brain_context['inbox'] else ''}"
+              f"{' | events logged' if brain_context['events'] else ''}")
         for project in brain_context["open_projects"]:
             print(f"     - {project['name']}: {project['status']}")
     except Exception as e:

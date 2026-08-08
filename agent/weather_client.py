@@ -133,7 +133,8 @@ class WeatherClient:
                 "precipitation_unit": "inch",
                 "timezone": "America/New_York",
                 "past_days": days_back,
-                "forecast_days": 2,
+                # A full week ahead so the report can project and say where effort pays.
+                "forecast_days": 8,
             },
             timeout=25,
         )
