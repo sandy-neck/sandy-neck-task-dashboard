@@ -253,28 +253,58 @@ class ShopifyClient:
     # ── Conversion funnel ──────────────────────────────────────────────────────
 
     def get_conversion_metrics(self) -> dict:
-        """Full conversion funnel: sessions → cart → checkout → purchased."""
+        """
+        Conversion funnel plus a week-over-week traffic trend.
+
+        Pulls 14 days rather than 7 so "is traffic up or down" is answerable. A single day's session
+        count says nothing on its own, and web traffic is the one online number worth reporting every
+        day regardless of whether anything converted.
+        """
         try:
             rows = self._shopifyql(
                 "FROM sessions "
                 "SHOW sessions, sessions_with_cart_additions, "
                 "sessions_that_reached_checkout, sessions_that_completed_checkout, "
                 "conversion_rate "
-                "TIMESERIES day SINCE -7d UNTIL today"
+                "TIMESERIES day SINCE -14d UNTIL today"
             )
             now_str = datetime.now(ET).strftime("%Y-%m-%d")
-            today_row = next((r for r in rows if r.get("day", "").startswith(now_str)), rows[-1] if rows else {})
+            today_row = next(
+                (r for r in rows if str(r.get("day", "")).startswith(now_str)),
+                rows[-1] if rows else {},
+            )
+
+            def sessions_in(subset):
+                return sum(int(r.get("sessions") or 0) for r in subset)
+
+            # Compare the last 7 complete days against the 7 before them.
+            ordered = sorted(rows, key=lambda r: str(r.get("day", "")))
+            recent, prior = ordered[-8:-1], ordered[-15:-8]
+            recent_total, prior_total = sessions_in(recent), sessions_in(prior)
+            change = (
+                round((recent_total - prior_total) / prior_total * 100, 1)
+                if prior_total else None
+            )
+
             return {
                 "sessions": today_row.get("sessions"),
                 "cart_additions": today_row.get("sessions_with_cart_additions"),
                 "reached_checkout": today_row.get("sessions_that_reached_checkout"),
                 "completed_checkout": today_row.get("sessions_that_completed_checkout"),
                 "conversion_rate": today_row.get("conversion_rate"),
+                "sessions_7d": recent_total,
+                "sessions_prior_7d": prior_total,
+                "sessions_change_pct": change,
+                "daily_sessions": [
+                    {"day": str(r.get("day", ""))[:10], "sessions": int(r.get("sessions") or 0)}
+                    for r in ordered
+                ],
                 "weekly_trend": rows,
             }
         except Exception:
             return {k: None for k in ["sessions", "cart_additions", "reached_checkout",
-                                       "completed_checkout", "conversion_rate"]}
+                                       "completed_checkout", "conversion_rate",
+                                       "sessions_7d", "sessions_prior_7d", "sessions_change_pct"]}
 
     # ── Top products ───────────────────────────────────────────────────────────
 
