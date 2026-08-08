@@ -5,12 +5,36 @@ Uses ShopifyQL (primary) with Admin GraphQL fallback for each metric.
 ShopifyQL syntax confirmed against live store: TIMESERIES / GROUP BY / SINCE / UNTIL.
 """
 import os
+import time
 import requests
 from datetime import datetime, timedelta
 import pytz
 
 API_VERSION = "2025-04"
 ET = pytz.timezone("America/New_York")
+
+# POS locations excluded from every sales query.
+#
+# The Snack Shack was a one-year 2025 experiment that isn't operating in 2026. Leaving it in makes
+# the store look like it's coasting: 2025 reads as $184k when the comparable store base was $149k,
+# turning a ~27% target into an apparent ~3% one. It was also high-volume and low-ticket (2,547
+# orders averaging ~$13.63), so it distorts basket size and order counts as well as revenue.
+EXCLUDED_POS_LOCATIONS = ["Snack Shack"]
+
+
+def _location_filter() -> str:
+    """WHERE fragment excluding retired locations. Empty string if nothing is excluded."""
+    if not EXCLUDED_POS_LOCATIONS:
+        return ""
+    return " AND ".join(
+        f"pos_location_name != '{name}'" for name in EXCLUDED_POS_LOCATIONS
+    )
+
+
+def _sales_where(extra: str = "") -> str:
+    """Build a WHERE clause combining the location exclusion with any query-specific condition."""
+    parts = [p for p in (_location_filter(), extra) if p]
+    return f"WHERE {' AND '.join(parts)} " if parts else ""
 
 
 class ShopifyClient:
@@ -23,80 +47,177 @@ class ShopifyClient:
             "X-Shopify-Access-Token": self.token,
             "Content-Type": "application/json",
         })
+        self.ql_errors = []
 
     # ── Low-level helpers ──────────────────────────────────────────────────────
 
-    def _gql(self, query: str, variables: dict = None) -> dict:
+    def _gql(self, query: str, variables: dict = None, attempts: int = 4) -> dict:
+        """
+        Run a GraphQL query, backing off on throttling.
+
+        A single run fires a couple of dozen ShopifyQL queries — more on the first run, which pulls
+        a full prior year — and Shopify throttles well before that finishes. Without a retry the
+        rate-limited query just falls back silently and its whole section goes missing.
+        """
         payload = {"query": query}
         if variables:
             payload["variables"] = variables
-        resp = self.session.post(self.endpoint, json=payload, timeout=30)
-        resp.raise_for_status()
-        result = resp.json()
-        if "errors" in result:
-            raise ValueError(f"GraphQL error: {result['errors'][0]['message']}")
-        return result["data"]
+
+        last_error = None
+        for attempt in range(attempts):
+            if attempt:
+                time.sleep(2 ** attempt)  # 2s, 4s, 8s
+            resp = self.session.post(self.endpoint, json=payload, timeout=30)
+
+            if resp.status_code == 429:
+                last_error = "HTTP 429 Too Many Requests"
+                continue
+            resp.raise_for_status()
+            result = resp.json()
+
+            if "errors" in result:
+                message = result["errors"][0].get("message", "")
+                if "throttl" in message.lower() or "rate limit" in message.lower():
+                    last_error = message
+                    continue
+                raise ValueError(f"GraphQL error: {message}")
+            return result["data"]
+
+        raise ValueError(f"GraphQL error after {attempts} attempts: {last_error}")
 
     def _shopifyql(self, query: str) -> list:
-        """Run a ShopifyQL query and return list of dicts (one per row)."""
+        """
+        Run a ShopifyQL query and return one dict per row.
+
+        The response shape changed from what this originally targeted: `parseErrors` is a scalar
+        rather than a list of {code, message}, and the data lives in `tableData.rows` rather than
+        `tableData.unformattedData`. Requesting the old fields made the whole GraphQL document
+        invalid, so every ShopifyQL call was rejected before executing and silently fell back to
+        raw order queries — which looked like a permissions problem and wasn't.
+        """
         gql = """
         query RunShopifyQL($q: String!) {
           shopifyqlQuery(query: $q) {
-            parseErrors { code message }
+            parseErrors
             tableData {
-              unformattedData
+              rows
               columns { name dataType }
             }
           }
         }
         """
-        data = self._gql(gql, {"q": query})
+        try:
+            data = self._gql(gql, {"q": query})
+        except Exception as e:
+            # Callers fall back on failure, which is right for resilience but hides breakage —
+            # a schema change looked like a permissions problem for days. Record it so the run
+            # reports what actually went wrong.
+            self.ql_errors.append(f"{query[:70]}... → {e}")
+            raise
         result = data["shopifyqlQuery"]
-        if result.get("parseErrors"):
-            raise ValueError(f"ShopifyQL: {result['parseErrors'][0]['message']}")
-        table = result.get("tableData")
-        if not table or not table.get("unformattedData"):
+
+        errors = result.get("parseErrors")
+        if errors:
+            self.ql_errors.append(f"{query[:70]}... → {errors}")
+            raise ValueError(f"ShopifyQL rejected query: {errors}")
+
+        table = result.get("tableData") or {}
+        rows = table.get("rows") or []
+        if not rows:
             return []
-        cols = [c["name"] for c in table["columns"]]
-        return [dict(zip(cols, row)) for row in table["unformattedData"]]
+
+        # rows arrive already keyed by column name; tolerate positional arrays just in case.
+        if isinstance(rows[0], dict):
+            return rows
+        cols = [c["name"] for c in table.get("columns", [])]
+        return [dict(zip(cols, row)) for row in rows]
 
     # ── Sales & revenue ────────────────────────────────────────────────────────
 
-    def get_sales_summary(self) -> dict:
-        """Daily revenue and order counts for last 7 days, with today highlighted."""
+    def _report_dates(self) -> dict:
+        """
+        The report runs in the morning, so the headline day is YESTERDAY — the last
+        complete sales day. Reporting "today" at 7 AM would describe an empty store.
+        """
         now_et = datetime.now(ET)
-        today_str = now_et.strftime("%Y-%m-%d")
-        yesterday_str = (now_et - timedelta(days=1)).strftime("%Y-%m-%d")
+        yesterday = (now_et - timedelta(days=1)).date()
+        return {
+            "today": now_et.date(),
+            "yesterday": yesterday,
+            "prior_day": yesterday - timedelta(days=1),
+            "last_week": yesterday - timedelta(days=7),
+        }
 
+    def get_sales_summary(self) -> dict:
+        """Sales for the last complete day, with prior-day and same-weekday context."""
+        dates = self._report_dates()
         try:
             rows = self._shopifyql(
                 "FROM sales "
                 "SHOW orders, gross_sales, net_sales, average_order_value "
-                "TIMESERIES day SINCE -7d UNTIL today"
+                f"{_sales_where()}"
+                "TIMESERIES day SINCE -14d UNTIL today"
             )
-            today_row = next((r for r in rows if r.get("day", "").startswith(today_str)), {})
-            yesterday_row = next((r for r in rows if r.get("day", "").startswith(yesterday_str)), {})
-            return {
-                "today_revenue": float(today_row.get("gross_sales") or 0),
-                "today_net_revenue": float(today_row.get("net_sales") or 0),
-                "today_orders": int(today_row.get("orders") or 0),
-                "today_aov": float(today_row.get("average_order_value") or 0),
-                "yesterday_revenue": float(yesterday_row.get("gross_sales") or 0),
-                "yesterday_orders": int(yesterday_row.get("orders") or 0),
-                "weekly_trend": rows,
-                "source": "shopifyql",
-            }
+            by_day = {str(r.get("day", ""))[:10]: r for r in rows}
+            return self._assemble_summary(by_day, dates, rows, "shopifyql")
         except Exception:
-            return self._sales_summary_fallback()
+            return self._sales_summary_fallback(dates)
 
-    def _sales_summary_fallback(self) -> dict:
-        now_et = datetime.now(ET)
-        today_start = now_et.replace(hour=0, minute=0, second=0, microsecond=0)
-        yesterday_start = today_start - timedelta(days=1)
+    def _assemble_summary(self, by_day: dict, dates: dict, rows: list, source: str) -> dict:
+        def field(day, name):
+            return (by_day.get(str(day)) or {}).get(name)
+
+        def revenue(day):
+            return float(field(day, "gross_sales") or 0)
+
+        def orders(day):
+            return int(field(day, "orders") or 0)
+
+        y_revenue = revenue(dates["yesterday"])
+        y_orders = orders(dates["yesterday"])
+        y_aov = float(field(dates["yesterday"], "average_order_value") or 0)
+        if not y_aov and y_orders:
+            y_aov = y_revenue / y_orders
+
+        # Trailing complete days ending yesterday — the baseline "normal day"
+        trailing = [revenue(dates["yesterday"] - timedelta(days=i)) for i in range(7)]
+        trailing = [t for t in trailing if t > 0]
+        week_avg = sum(trailing) / len(trailing) if trailing else 0
+
+        return {
+            "report_date": str(dates["yesterday"]),
+            "revenue": y_revenue,
+            "net_revenue": float(field(dates["yesterday"], "net_sales") or y_revenue),
+            "orders": y_orders,
+            "aov": y_aov,
+            "prior_day_revenue": revenue(dates["prior_day"]),
+            "prior_day_orders": orders(dates["prior_day"]),
+            "last_week_revenue": revenue(dates["last_week"]),
+            "last_week_orders": orders(dates["last_week"]),
+            "week_avg_revenue": round(week_avg, 2),
+            # Today is only hours old at send time — context, never the headline.
+            "today_so_far_revenue": revenue(dates["today"]),
+            "today_so_far_orders": orders(dates["today"]),
+            "weekly_trend": rows,
+            "source": source,
+        }
+
+    def _sales_summary_fallback(self, dates: dict) -> dict:
+        """
+        Raw order query for when ShopifyQL is unavailable.
+
+        Orders are bucketed into ET calendar days by parsing createdAt, which Shopify
+        returns in UTC. Comparing the raw ISO strings would misfile every evening
+        order into the following day.
+        """
+        since = ET.localize(
+            datetime.combine(dates["last_week"] - timedelta(days=1), datetime.min.time())
+        )
 
         gql = """
-        query($q: String!) {
-          orders(first: 250, query: $q, sortKey: CREATED_AT, reverse: true) {
+        query($q: String!, $after: String) {
+          orders(first: 250, query: $q, after: $after, sortKey: CREATED_AT) {
+            pageInfo { hasNextPage endCursor }
             edges {
               node {
                 createdAt
@@ -106,29 +227,28 @@ class ShopifyClient:
           }
         }
         """
-        q = f"created_at:>={yesterday_start.isoformat()}"
-        data = self._gql(gql, {"q": q})
-        orders = [e["node"] for e in data["orders"]["edges"]]
+        nodes, after = [], None
+        for _ in range(12):  # cap pagination so a bad filter can't loop forever
+            data = self._gql(gql, {"q": f"created_at:>={since.isoformat()}", "after": after})
+            conn = data["orders"]
+            nodes.extend(e["node"] for e in conn["edges"])
+            if not conn["pageInfo"]["hasNextPage"]:
+                break
+            after = conn["pageInfo"]["endCursor"]
 
-        today_orders = [o for o in orders if o["createdAt"] >= today_start.isoformat()]
-        yesterday_orders = [
-            o for o in orders
-            if yesterday_start.isoformat() <= o["createdAt"] < today_start.isoformat()
-        ]
+        by_day = {}
+        for o in nodes:
+            created = datetime.fromisoformat(
+                o["createdAt"].replace("Z", "+00:00")
+            ).astimezone(ET)
+            bucket = by_day.setdefault(str(created.date()), {"orders": 0, "gross_sales": 0.0})
+            bucket["orders"] += 1
+            # totalPrice includes tax and shipping, so this runs slightly above the
+            # gross_sales figure ShopifyQL reports.
+            bucket["gross_sales"] += float(o["totalPriceSet"]["shopMoney"]["amount"])
 
-        def revenue(ol):
-            return sum(float(o["totalPriceSet"]["shopMoney"]["amount"]) for o in ol)
-
-        return {
-            "today_revenue": revenue(today_orders),
-            "today_net_revenue": revenue(today_orders),
-            "today_orders": len(today_orders),
-            "today_aov": revenue(today_orders) / len(today_orders) if today_orders else 0,
-            "yesterday_revenue": revenue(yesterday_orders),
-            "yesterday_orders": len(yesterday_orders),
-            "weekly_trend": [],
-            "source": "graphql_fallback",
-        }
+        rows = [{"day": day, **vals} for day, vals in sorted(by_day.items())]
+        return self._assemble_summary(by_day, dates, rows, "graphql_fallback")
 
     # ── Conversion funnel ──────────────────────────────────────────────────────
 
@@ -192,6 +312,7 @@ class ShopifyClient:
             return self._shopifyql(
                 "FROM sales "
                 "SHOW orders, total_sales "
+                f"{_sales_where()}"
                 "GROUP BY order_referrer_source, order_referrer_name "
                 "SINCE -7d UNTIL today"
             )
@@ -201,22 +322,46 @@ class ShopifyClient:
     # ── Customer metrics ───────────────────────────────────────────────────────
 
     def get_customer_insights(self) -> dict:
+        """
+        New vs returning split.
+
+        Comes from the sales dataset grouped by new_or_returning_customer, not from `FROM customers`
+        — that dataset describes customer records (lifetime spend, RFM group) and has no per-day new
+        or returning counts. It also gives revenue per group, which counts alone wouldn't.
+        """
         try:
             rows = self._shopifyql(
-                "FROM customers "
-                "SHOW new_customers, returning_customers "
-                "TIMESERIES day SINCE -7d UNTIL today"
+                "FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
+                "GROUP BY new_or_returning_customer "
+                "SINCE -7d UNTIL today"
             )
-            total_new = sum(int(r.get("new_customers") or 0) for r in rows)
-            total_returning = sum(int(r.get("returning_customers") or 0) for r in rows)
+            buckets = {
+                (r.get("new_or_returning_customer") or "").strip().lower(): r
+                for r in rows
+            }
+            total_new = int(buckets.get("new", {}).get("orders") or 0)
+            total_returning = int(buckets.get("returning", {}).get("orders") or 0)
+            revenue_new = float(buckets.get("new", {}).get("gross_sales") or 0)
+            revenue_returning = float(buckets.get("returning", {}).get("gross_sales") or 0)
+            # POS walk-ins are often unattributed to any customer record — report it rather than
+            # letting it silently distort the ratio.
+            unattributed = int(buckets.get("", {}).get("orders") or 0)
+            attributed = total_new + total_returning
             return {
                 "new_customers_7d": total_new,
                 "returning_customers_7d": total_returning,
+                "new_revenue_7d": round(revenue_new, 2),
+                "returning_revenue_7d": round(revenue_returning, 2),
+                "unattributed_orders_7d": unattributed,
                 "returning_rate": (
-                    round(total_returning / (total_new + total_returning) * 100, 1)
-                    if (total_new + total_returning) > 0 else 0
+                    round(total_returning / attributed * 100, 1) if attributed else 0
                 ),
-                "weekly_trend": rows,
+                "note": (
+                    f"{unattributed} of {unattributed + attributed} orders had no customer "
+                    f"attached (typical for walk-in POS) — the split covers the rest."
+                    if unattributed else None
+                ),
             }
         except Exception:
             week_ago = (datetime.now(ET) - timedelta(days=7)).strftime("%Y-%m-%d")
@@ -241,6 +386,216 @@ class ShopifyClient:
                 }
             except Exception:
                 return {"new_customers_7d": None, "returning_customers_7d": None, "returning_rate": None}
+
+    # ── Channel split ──────────────────────────────────────────────────────────
+
+    def get_channel_split(self, since: str = "-7d") -> list:
+        """
+        Revenue by sales channel. This is the backbone of the whole report — in-store and online
+        are different businesses and get judged separately, never as one blended number.
+        """
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
+                f"GROUP BY sales_channel "
+                f"SINCE {since} UNTIL today"
+            )
+            total = sum(float(r.get("gross_sales") or 0) for r in rows) or 1
+            return [
+                {
+                    "channel": r.get("sales_channel") or "Unattributed",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                    "share_pct": round(float(r.get("gross_sales") or 0) / total * 100, 1),
+                }
+                for r in sorted(rows, key=lambda x: float(x.get("gross_sales") or 0), reverse=True)
+            ]
+        except Exception:
+            return []
+
+    def get_channel_day(self, day: str) -> list:
+        """Per-channel revenue for one specific day."""
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
+                f"GROUP BY sales_channel "
+                f"SINCE {day} UNTIL {day}"
+            )
+            return [
+                {
+                    "channel": r.get("sales_channel") or "Unattributed",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows
+            ]
+        except Exception:
+            return []
+
+    def get_top_products_by_channel(self, channel: str, since: str = "-7d", limit: int = 8) -> list:
+        """Top sellers within a single channel — 'what moved in the store' vs. 'what moved online'."""
+        safe = channel.replace("'", "")
+        try:
+            where = _sales_where(f"sales_channel = '{safe}'")
+            return self._shopifyql(
+                f"FROM sales SHOW gross_sales, net_items_sold, orders "
+                f"{where}"
+                f"GROUP BY product_title "
+                f"ORDER BY gross_sales DESC LIMIT {limit} "
+                f"SINCE {since} UNTIL today"
+            )
+        except Exception:
+            return []
+
+    # ── Season to date ─────────────────────────────────────────────────────────
+
+    def get_season_trend(self) -> dict:
+        """
+        Where the season stands. Peak runs Memorial Day → Labor Day, so a single day only means
+        something against the arc it sits on.
+        """
+        now = datetime.now(ET)
+        season_start = f"{now.year}-05-25"
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW orders, gross_sales "
+                f"{_sales_where()}"
+                f"TIMESERIES week "
+                f"SINCE {season_start} UNTIL today"
+            )
+            weeks = [
+                {
+                    "week": str(r.get("week", ""))[:10],
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows
+            ]
+            total = sum(w["revenue"] for w in weeks)
+            recent = weeks[-4:] if len(weeks) >= 4 else weeks
+            peak = max(weeks, key=lambda w: w["revenue"], default=None)
+            return {
+                "season_start": season_start,
+                "weeks": weeks,
+                "season_to_date_revenue": round(total, 2),
+                "recent_weeks": recent,
+                "peak_week": peak,
+                "weeks_elapsed": len(weeks),
+            }
+        except Exception:
+            return {}
+
+    # ── Annual pacing ──────────────────────────────────────────────────────────
+
+    def get_ytd_revenue(self) -> float:
+        """Total revenue banked so far this calendar year."""
+        year_start = f"{datetime.now(ET).year}-01-01"
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW gross_sales "
+                f"{_sales_where()}"
+                f"TIMESERIES month "
+                f"SINCE {year_start} UNTIL today"
+            )
+            return round(sum(float(r.get("gross_sales") or 0) for r in rows), 2)
+        except Exception:
+            return None
+
+    def get_daily_revenue_for_year(self, year: int) -> dict:
+        """
+        Daily revenue for a full year, as {YYYY-MM-DD: revenue}.
+
+        Only used to build the prior-year seasonality curve, which is then cached — last year's
+        numbers don't change, so this should run once rather than every morning.
+        """
+        try:
+            rows = self._shopifyql(
+                f"FROM sales SHOW gross_sales "
+                f"{_sales_where()}"
+                f"TIMESERIES day "
+                f"SINCE {year}-01-01 UNTIL {year}-12-31"
+            )
+            return {
+                str(r.get("day", ""))[:10]: float(r.get("gross_sales") or 0)
+                for r in rows if r.get("day")
+            }
+        except Exception:
+            return {}
+
+    # ── Reorder intelligence ───────────────────────────────────────────────────
+
+    def get_reorder_signals(self, lookback_days: int = 14, limit: int = 25) -> list:
+        """
+        Products at risk of running out, with enough context to make the reorder call.
+
+        Stock alone doesn't answer anything — 6 units is comfortable for a slow mover and an
+        emergency for something selling 4 a day. Pairing stock with recent velocity gives days of
+        cover, which is the number that actually matters against a vendor's lead time.
+        """
+        try:
+            sold = self._shopifyql(
+                f"FROM sales SHOW net_items_sold, gross_sales "
+                f"{_sales_where()}"
+                f"GROUP BY product_title "
+                f"SINCE -{lookback_days}d UNTIL today"
+            )
+        except Exception:
+            return []
+
+        velocity = {}
+        for row in sold:
+            title = row.get("product_title")
+            if not title:
+                continue
+            units = float(row.get("net_items_sold") or 0)
+            velocity[title] = {
+                "units_sold": units,
+                "revenue": float(row.get("gross_sales") or 0),
+                "per_day": units / lookback_days,
+            }
+
+        try:
+            stock_rows = self._shopifyql(
+                "FROM inventory SHOW ending_inventory_units "
+                "GROUP BY product_title "
+                "ORDER BY ending_inventory_units ASC LIMIT 250"
+            )
+        except Exception:
+            return []
+
+        signals = []
+        for row in stock_rows:
+            title = row.get("product_title")
+            if not title:
+                continue
+            on_hand = float(row.get("ending_inventory_units") or 0)
+            stats = velocity.get(title)
+            if not stats or stats["per_day"] <= 0:
+                continue  # not selling — a low count here isn't a reorder question
+
+            days_cover = on_hand / stats["per_day"]
+            if days_cover > 45:
+                continue  # comfortable
+
+            signals.append({
+                "title": title,
+                "on_hand": int(on_hand),
+                "units_sold_recent": round(stats["units_sold"], 1),
+                "units_per_day": round(stats["per_day"], 2),
+                "days_of_cover": round(days_cover, 1),
+                "revenue_recent": round(stats["revenue"], 2),
+                "urgency": (
+                    "out of stock" if on_hand <= 0
+                    else "critical" if days_cover <= 7
+                    else "low" if days_cover <= 21
+                    else "watch"
+                ),
+            })
+
+        signals.sort(key=lambda s: s["days_of_cover"])
+        return signals[:limit]
 
     # ── Inventory alerts ───────────────────────────────────────────────────────
 

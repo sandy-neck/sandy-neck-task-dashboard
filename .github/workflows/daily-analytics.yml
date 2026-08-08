@@ -5,6 +5,19 @@ on:
     # 7 AM ET = 12:00 UTC (EST, Nov–Mar) / 11:00 UTC (EDT, Mar–Nov)
     # Using 12:00 UTC ensures delivery by 7 AM ET year-round (7 AM EST / 8 AM EDT)
     - cron: '0 12 * * *'
+
+  # Run on every push to the development branch so changes can be exercised without clicking
+  # through the Actions UI. Remove this block once the agent is stable — it sends a real email
+  # on every push.
+  push:
+    branches:
+      - claude/shopify-ecommerce-agent-qzy33e
+    paths-ignore:
+      # The run commits its own journal here. GitHub already declines to trigger workflows from
+      # pushes made with GITHUB_TOKEN, but ignoring the path makes the loop impossible rather
+      # than merely unlikely — and skips pointless reruns on journal-only commits.
+      - 'brain/**'
+
   workflow_dispatch:
     inputs:
       dry_run:
@@ -18,9 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    # The agent writes its journal back into brain/, so the run needs push access.
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Needed so the journal commit can rebase onto any concurrent pushes.
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -43,12 +63,14 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
           # Email delivery — required
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST || 'smtp.gmail.com' }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT || '587' }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          REPORT_RECIPIENT: ${{ secrets.REPORT_RECIPIENT || 'goodvibes@sandyneckprovisions.com' }}
-          REPORT_SENDER_NAME: Sandy Neck Analytics
+          # Pinned deliberately rather than read from a secret: the secret's value can't be read
+          # back once set, so it was impossible to confirm where the report was actually going.
+          REPORT_RECIPIENT: goodvibes@sandyneckprovisions.com
+          REPORT_SENDER_NAME: Sandy
 
           # Klaviyo — optional (stub if missing)
           KLAVIYO_PRIVATE_KEY: ${{ secrets.KLAVIYO_PRIVATE_KEY }}
@@ -70,7 +92,37 @@ jobs:
           GOOGLE_BUSINESS_LOCATION: ${{ secrets.GOOGLE_BUSINESS_LOCATION }}
           SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
 
+          # Weather & tides — Open-Meteo needs no key. Tides stay off until a NOAA station
+          # is set; find the nearest at https://tidesandcurrents.noaa.gov/map/
+          STORE_LATITUDE: ${{ vars.STORE_LATITUDE || '41.7370' }}
+          STORE_LONGITUDE: ${{ vars.STORE_LONGITUDE || '-70.3870' }}
+          # Station resolves by name against NOAA's list at runtime; set NOAA_TIDE_STATION to
+          # pin a specific id instead.
+          NOAA_TIDE_STATION: ${{ vars.NOAA_TIDE_STATION }}
+          NOAA_TIDE_STATION_NAME: ${{ vars.NOAA_TIDE_STATION_NAME || 'Barnstable Harbor' }}
+
+          ANALYTICS_MODEL: ${{ vars.ANALYTICS_MODEL || 'claude-opus-5' }}
+
         run: python daily_analytics.py
+
+      - name: Commit journal entry
+        # Runs even if the email failed — a day's analysis is worth keeping either way.
+        if: always()
+        run: |
+          if [ -z "$(git status --porcelain brain/)" ]; then
+            echo "No brain changes to commit."
+            exit 0
+          fi
+          git config user.name  "Sandy Neck Analytics"
+          git config user.email "actions@github.com"
+          git add brain/
+          git commit -m "Daily journal: $(date -u +%Y-%m-%d)"
+          # The scheduled run and a human push can race; rebase rather than fail.
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && break
+            sleep $((attempt * 3))
+          done
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Upload logs on failure
         if: failure()
