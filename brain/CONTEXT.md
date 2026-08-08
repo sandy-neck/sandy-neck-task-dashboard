@@ -327,6 +327,14 @@ no framework at all.
 - What is the real margin picture per channel? TikTok's "not worth the effort" is a judgment we
   can't currently verify against numbers.
 - Vendor lead times for everything other than the Alibaba items.
+- ORV permit seasonality on Sandy Neck — needed to settle whether the tire deflators are worth
+  ordering for a shoulder-season arrival or holding to next spring.
+
+### Housekeeping, low priority
+- **Send the daily email from Sandy's own mailbox.** The From name says "Sandy" but the address is
+  whatever `SMTP_USERNAME` holds. BJ has a dedicated address for her; switching means setting
+  `SMTP_USERNAME` to it plus an App Password for that account. Cosmetic — deferred deliberately
+  (BJ, 2026-08-08: "not critical for this purpose but maybe I'll do that at some point").
 
 ---
 
