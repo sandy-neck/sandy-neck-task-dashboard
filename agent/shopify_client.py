@@ -62,41 +62,89 @@ class ShopifyClient:
 
     # ── Sales & revenue ────────────────────────────────────────────────────────
 
-    def get_sales_summary(self) -> dict:
-        """Daily revenue and order counts for last 7 days, with today highlighted."""
+    def _report_dates(self) -> dict:
+        """
+        The report runs in the morning, so the headline day is YESTERDAY — the last
+        complete sales day. Reporting "today" at 7 AM would describe an empty store.
+        """
         now_et = datetime.now(ET)
-        today_str = now_et.strftime("%Y-%m-%d")
-        yesterday_str = (now_et - timedelta(days=1)).strftime("%Y-%m-%d")
+        yesterday = (now_et - timedelta(days=1)).date()
+        return {
+            "today": now_et.date(),
+            "yesterday": yesterday,
+            "prior_day": yesterday - timedelta(days=1),
+            "last_week": yesterday - timedelta(days=7),
+        }
 
+    def get_sales_summary(self) -> dict:
+        """Sales for the last complete day, with prior-day and same-weekday context."""
+        dates = self._report_dates()
         try:
             rows = self._shopifyql(
                 "FROM sales "
                 "SHOW orders, gross_sales, net_sales, average_order_value "
-                "TIMESERIES day SINCE -7d UNTIL today"
+                "TIMESERIES day SINCE -14d UNTIL today"
             )
-            today_row = next((r for r in rows if r.get("day", "").startswith(today_str)), {})
-            yesterday_row = next((r for r in rows if r.get("day", "").startswith(yesterday_str)), {})
-            return {
-                "today_revenue": float(today_row.get("gross_sales") or 0),
-                "today_net_revenue": float(today_row.get("net_sales") or 0),
-                "today_orders": int(today_row.get("orders") or 0),
-                "today_aov": float(today_row.get("average_order_value") or 0),
-                "yesterday_revenue": float(yesterday_row.get("gross_sales") or 0),
-                "yesterday_orders": int(yesterday_row.get("orders") or 0),
-                "weekly_trend": rows,
-                "source": "shopifyql",
-            }
+            by_day = {str(r.get("day", ""))[:10]: r for r in rows}
+            return self._assemble_summary(by_day, dates, rows, "shopifyql")
         except Exception:
-            return self._sales_summary_fallback()
+            return self._sales_summary_fallback(dates)
 
-    def _sales_summary_fallback(self) -> dict:
-        now_et = datetime.now(ET)
-        today_start = now_et.replace(hour=0, minute=0, second=0, microsecond=0)
-        yesterday_start = today_start - timedelta(days=1)
+    def _assemble_summary(self, by_day: dict, dates: dict, rows: list, source: str) -> dict:
+        def field(day, name):
+            return (by_day.get(str(day)) or {}).get(name)
+
+        def revenue(day):
+            return float(field(day, "gross_sales") or 0)
+
+        def orders(day):
+            return int(field(day, "orders") or 0)
+
+        y_revenue = revenue(dates["yesterday"])
+        y_orders = orders(dates["yesterday"])
+        y_aov = float(field(dates["yesterday"], "average_order_value") or 0)
+        if not y_aov and y_orders:
+            y_aov = y_revenue / y_orders
+
+        # Trailing complete days ending yesterday — the baseline "normal day"
+        trailing = [revenue(dates["yesterday"] - timedelta(days=i)) for i in range(7)]
+        trailing = [t for t in trailing if t > 0]
+        week_avg = sum(trailing) / len(trailing) if trailing else 0
+
+        return {
+            "report_date": str(dates["yesterday"]),
+            "revenue": y_revenue,
+            "net_revenue": float(field(dates["yesterday"], "net_sales") or y_revenue),
+            "orders": y_orders,
+            "aov": y_aov,
+            "prior_day_revenue": revenue(dates["prior_day"]),
+            "prior_day_orders": orders(dates["prior_day"]),
+            "last_week_revenue": revenue(dates["last_week"]),
+            "last_week_orders": orders(dates["last_week"]),
+            "week_avg_revenue": round(week_avg, 2),
+            # Today is only hours old at send time — context, never the headline.
+            "today_so_far_revenue": revenue(dates["today"]),
+            "today_so_far_orders": orders(dates["today"]),
+            "weekly_trend": rows,
+            "source": source,
+        }
+
+    def _sales_summary_fallback(self, dates: dict) -> dict:
+        """
+        Raw order query for when ShopifyQL is unavailable.
+
+        Orders are bucketed into ET calendar days by parsing createdAt, which Shopify
+        returns in UTC. Comparing the raw ISO strings would misfile every evening
+        order into the following day.
+        """
+        since = ET.localize(
+            datetime.combine(dates["last_week"] - timedelta(days=1), datetime.min.time())
+        )
 
         gql = """
-        query($q: String!) {
-          orders(first: 250, query: $q, sortKey: CREATED_AT, reverse: true) {
+        query($q: String!, $after: String) {
+          orders(first: 250, query: $q, after: $after, sortKey: CREATED_AT) {
+            pageInfo { hasNextPage endCursor }
             edges {
               node {
                 createdAt
@@ -106,29 +154,28 @@ class ShopifyClient:
           }
         }
         """
-        q = f"created_at:>={yesterday_start.isoformat()}"
-        data = self._gql(gql, {"q": q})
-        orders = [e["node"] for e in data["orders"]["edges"]]
+        nodes, after = [], None
+        for _ in range(12):  # cap pagination so a bad filter can't loop forever
+            data = self._gql(gql, {"q": f"created_at:>={since.isoformat()}", "after": after})
+            conn = data["orders"]
+            nodes.extend(e["node"] for e in conn["edges"])
+            if not conn["pageInfo"]["hasNextPage"]:
+                break
+            after = conn["pageInfo"]["endCursor"]
 
-        today_orders = [o for o in orders if o["createdAt"] >= today_start.isoformat()]
-        yesterday_orders = [
-            o for o in orders
-            if yesterday_start.isoformat() <= o["createdAt"] < today_start.isoformat()
-        ]
+        by_day = {}
+        for o in nodes:
+            created = datetime.fromisoformat(
+                o["createdAt"].replace("Z", "+00:00")
+            ).astimezone(ET)
+            bucket = by_day.setdefault(str(created.date()), {"orders": 0, "gross_sales": 0.0})
+            bucket["orders"] += 1
+            # totalPrice includes tax and shipping, so this runs slightly above the
+            # gross_sales figure ShopifyQL reports.
+            bucket["gross_sales"] += float(o["totalPriceSet"]["shopMoney"]["amount"])
 
-        def revenue(ol):
-            return sum(float(o["totalPriceSet"]["shopMoney"]["amount"]) for o in ol)
-
-        return {
-            "today_revenue": revenue(today_orders),
-            "today_net_revenue": revenue(today_orders),
-            "today_orders": len(today_orders),
-            "today_aov": revenue(today_orders) / len(today_orders) if today_orders else 0,
-            "yesterday_revenue": revenue(yesterday_orders),
-            "yesterday_orders": len(yesterday_orders),
-            "weekly_trend": [],
-            "source": "graphql_fallback",
-        }
+        rows = [{"day": day, **vals} for day, vals in sorted(by_day.items())]
+        return self._assemble_summary(by_day, dates, rows, "graphql_fallback")
 
     # ── Conversion funnel ──────────────────────────────────────────────────────
 

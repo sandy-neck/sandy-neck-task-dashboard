@@ -27,6 +27,13 @@ CRITICAL TONE RULES:
 - If something needs urgent attention (inventory going to zero, revenue down 40%, checkout broken), say so plainly and put it first.
 - If it's a quiet day, say so. End it there. A brief email that respects their time is better than a long one they'll start skimming.
 
+WHAT THIS REPORT COVERS:
+- The email goes out early morning, so it reports on YESTERDAY — the last complete sales day.
+- Write about yesterday in the past tense: "yesterday did $1,468" not "today we're at $1,468".
+- Judge a day against the trailing average and the same weekday a week ago, not just the day before.
+  One Saturday vs. one Tuesday is not a trend; a Saturday down 40% against last Saturday is.
+- "Today so far" numbers are only a few hours old. Never headline them.
+
 CONTEXT ABOUT THE BUSINESS:
 - Seasonal peak: Memorial Day through Labor Day on Cape Cod
 - ~993 products: seafood, local provisions, Cape Cod specialties
@@ -80,11 +87,24 @@ class ClaudeSynthesizer:
         google = data.get("google_local", {})
         sales = shopify.get("sales", {})
 
-        today_rev = sales.get("today_revenue", 0) or 0
-        yesterday_rev = sales.get("yesterday_revenue", 0) or 0
-        rev_pct = ((today_rev - yesterday_rev) / yesterday_rev * 100) if yesterday_rev > 0 else 0
-        today_orders = sales.get("today_orders", 0) or 0
-        today_aov = sales.get("today_aov", 0) or 0
+        # The headline is the last COMPLETE day. At 7 AM, "today" is nearly empty.
+        report_date = sales.get("report_date", "yesterday")
+        revenue = sales.get("revenue", 0) or 0
+        n_orders = sales.get("orders", 0) or 0
+        aov = sales.get("aov", 0) or 0
+        prior_rev = sales.get("prior_day_revenue", 0) or 0
+        last_week_rev = sales.get("last_week_revenue", 0) or 0
+        week_avg = sales.get("week_avg_revenue", 0) or 0
+
+        def compare(label, baseline):
+            if not baseline:
+                return f"vs. {label}: no data"
+            delta = (revenue - baseline) / baseline * 100
+            return f"vs. {label} (${baseline:,.2f}): {delta:+.1f}%"
+
+        vs_prior = compare("the day before", prior_rev)
+        vs_last_week = compare("same weekday last week", last_week_rev)
+        vs_avg = compare("trailing 7-day average", week_avg)
 
         conv = shopify.get("conversion_metrics", {})
         customers = shopify.get("customer_insights", {})
@@ -93,6 +113,8 @@ class ClaudeSynthesizer:
         low_inventory = shopify.get("inventory_alerts", [])
 
         weekly_trend = sales.get("weekly_trend", [])
+        today_rev = sales.get("today_so_far_revenue", 0) or 0
+        today_orders = sales.get("today_so_far_orders", 0) or 0
 
         # Klaviyo
         kl_rev = klaviyo.get("revenue_7d") if klaviyo and not klaviyo.get("stub") else None
@@ -107,19 +129,18 @@ class ClaudeSynthesizer:
         sc = google_real.get("search_console", {})
         opp_terms = sc.get("low_ctr_opportunities", [])
 
-        # Weekly context: is today above or below the week's average?
-        if weekly_trend and len(weekly_trend) >= 3:
-            recent_revenues = [float(r.get("gross_sales") or 0) for r in weekly_trend[:-1]]
-            week_avg = sum(recent_revenues) / len(recent_revenues) if recent_revenues else 0
-            vs_week_avg = ((today_rev - week_avg) / week_avg * 100) if week_avg > 0 else 0
-        else:
-            vs_week_avg = None
+        return f"""Here's the data for Sandy Neck Provisions. You're writing on {data.get('date', 'today')}. Write the email now.
 
-        return f"""Here's today's data for Sandy Neck Provisions ({data.get('date', 'today')}). Write the email now.
+SHOPIFY STORE — {report_date} (the last complete sales day — this is the headline)
+Revenue: ${revenue:,.2f}
+  {vs_prior}
+  {vs_last_week}
+  {vs_avg}
+Orders: {n_orders}  |  AOV: ${aov:,.2f}
 
-SHOPIFY STORE — TODAY
-Revenue: ${today_rev:,.2f} ({rev_pct:+.1f}% vs yesterday ${yesterday_rev:,.2f}){f", {vs_week_avg:+.1f}% vs this week's daily avg" if vs_week_avg is not None else ""}
-Orders: {today_orders}  |  AOV: ${today_aov:,.2f}
+TODAY SO FAR: {today_orders} orders, ${today_rev:,.2f} — only a few hours old at send time.
+Never lead with this or treat it as a trend; mention it only if it's genuinely remarkable.
+
 Sessions: {conv.get('sessions', 'unavailable')}
 Conversion rate: {conv.get('conversion_rate', 'unavailable')}
 Cart → checkout → purchased: {conv.get('cart_additions','?')} → {conv.get('reached_checkout','?')} → {conv.get('completed_checkout','?')}

@@ -46,8 +46,10 @@ def main():
             "inventory_alerts": shopify.get_low_inventory(),
             "conversion_metrics": shopify.get_conversion_metrics(),
         }
-        print(f"   Revenue today:  ${sales.get('today_revenue', 0):,.2f}")
-        print(f"   Orders today:   {sales.get('today_orders', 0)}")
+        print(f"   Reporting on:   {sales.get('report_date', 'unknown')}")
+        print(f"   Revenue:        ${sales.get('revenue', 0):,.2f}")
+        print(f"   Orders:         {sales.get('orders', 0)}")
+        print(f"   7-day avg:      ${sales.get('week_avg_revenue', 0):,.2f}")
         print(f"   Data source:    {sales.get('source', 'unknown')}")
     except Exception as e:
         msg = f"Shopify: {e}"

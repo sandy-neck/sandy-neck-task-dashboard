@@ -13,12 +13,20 @@ FONT_STACK = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, 
 
 class EmailReporter:
     def __init__(self):
-        self.smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
-        self.smtp_port = int(os.environ.get("SMTP_PORT", "587"))
-        self.smtp_user = os.environ["SMTP_USERNAME"]
-        self.smtp_pass = os.environ["SMTP_PASSWORD"]
-        self.recipient = os.environ.get("REPORT_RECIPIENT", "goodvibes@sandyneckprovisions.com")
-        self.sender_name = os.environ.get("REPORT_SENDER_NAME", "Alex (Sandy Neck Analytics)")
+        # GitHub Actions passes unset secrets as empty strings, not as missing keys,
+        # so `or` is used instead of a get() default — otherwise "" wins over the default.
+        self.smtp_host = os.environ.get("SMTP_HOST") or "smtp.gmail.com"
+        self.smtp_port = int(os.environ.get("SMTP_PORT") or "587")
+        self.smtp_user = os.environ.get("SMTP_USERNAME") or ""
+        self.smtp_pass = os.environ.get("SMTP_PASSWORD") or ""
+        self.recipient = os.environ.get("REPORT_RECIPIENT") or "goodvibes@sandyneckprovisions.com"
+        self.sender_name = os.environ.get("REPORT_SENDER_NAME") or "Alex (Sandy Neck Analytics)"
+
+        if not self.smtp_user or not self.smtp_pass:
+            raise ValueError(
+                "SMTP_USERNAME and SMTP_PASSWORD must be set as GitHub secrets "
+                "for the daily email to send."
+            )
 
     def send(self, email_content: dict):
         subject = email_content.get("subject", "daily update")
