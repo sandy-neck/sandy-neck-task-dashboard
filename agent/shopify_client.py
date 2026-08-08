@@ -5,6 +5,7 @@ Uses ShopifyQL (primary) with Admin GraphQL fallback for each metric.
 ShopifyQL syntax confirmed against live store: TIMESERIES / GROUP BY / SINCE / UNTIL.
 """
 import os
+import time
 import requests
 from datetime import datetime, timedelta
 import pytz
@@ -27,16 +28,39 @@ class ShopifyClient:
 
     # ── Low-level helpers ──────────────────────────────────────────────────────
 
-    def _gql(self, query: str, variables: dict = None) -> dict:
+    def _gql(self, query: str, variables: dict = None, attempts: int = 4) -> dict:
+        """
+        Run a GraphQL query, backing off on throttling.
+
+        A single run fires a couple of dozen ShopifyQL queries — more on the first run, which pulls
+        a full prior year — and Shopify throttles well before that finishes. Without a retry the
+        rate-limited query just falls back silently and its whole section goes missing.
+        """
         payload = {"query": query}
         if variables:
             payload["variables"] = variables
-        resp = self.session.post(self.endpoint, json=payload, timeout=30)
-        resp.raise_for_status()
-        result = resp.json()
-        if "errors" in result:
-            raise ValueError(f"GraphQL error: {result['errors'][0]['message']}")
-        return result["data"]
+
+        last_error = None
+        for attempt in range(attempts):
+            if attempt:
+                time.sleep(2 ** attempt)  # 2s, 4s, 8s
+            resp = self.session.post(self.endpoint, json=payload, timeout=30)
+
+            if resp.status_code == 429:
+                last_error = "HTTP 429 Too Many Requests"
+                continue
+            resp.raise_for_status()
+            result = resp.json()
+
+            if "errors" in result:
+                message = result["errors"][0].get("message", "")
+                if "throttl" in message.lower() or "rate limit" in message.lower():
+                    last_error = message
+                    continue
+                raise ValueError(f"GraphQL error: {message}")
+            return result["data"]
+
+        raise ValueError(f"GraphQL error after {attempts} attempts: {last_error}")
 
     def _shopifyql(self, query: str) -> list:
         """
@@ -273,22 +297,45 @@ class ShopifyClient:
     # ── Customer metrics ───────────────────────────────────────────────────────
 
     def get_customer_insights(self) -> dict:
+        """
+        New vs returning split.
+
+        Comes from the sales dataset grouped by new_or_returning_customer, not from `FROM customers`
+        — that dataset describes customer records (lifetime spend, RFM group) and has no per-day new
+        or returning counts. It also gives revenue per group, which counts alone wouldn't.
+        """
         try:
             rows = self._shopifyql(
-                "FROM customers "
-                "SHOW new_customers, returning_customers "
-                "TIMESERIES day SINCE -7d UNTIL today"
+                "FROM sales SHOW orders, gross_sales "
+                "GROUP BY new_or_returning_customer "
+                "SINCE -7d UNTIL today"
             )
-            total_new = sum(int(r.get("new_customers") or 0) for r in rows)
-            total_returning = sum(int(r.get("returning_customers") or 0) for r in rows)
+            buckets = {
+                (r.get("new_or_returning_customer") or "").strip().lower(): r
+                for r in rows
+            }
+            total_new = int(buckets.get("new", {}).get("orders") or 0)
+            total_returning = int(buckets.get("returning", {}).get("orders") or 0)
+            revenue_new = float(buckets.get("new", {}).get("gross_sales") or 0)
+            revenue_returning = float(buckets.get("returning", {}).get("gross_sales") or 0)
+            # POS walk-ins are often unattributed to any customer record — report it rather than
+            # letting it silently distort the ratio.
+            unattributed = int(buckets.get("", {}).get("orders") or 0)
+            attributed = total_new + total_returning
             return {
                 "new_customers_7d": total_new,
                 "returning_customers_7d": total_returning,
+                "new_revenue_7d": round(revenue_new, 2),
+                "returning_revenue_7d": round(revenue_returning, 2),
+                "unattributed_orders_7d": unattributed,
                 "returning_rate": (
-                    round(total_returning / (total_new + total_returning) * 100, 1)
-                    if (total_new + total_returning) > 0 else 0
+                    round(total_returning / attributed * 100, 1) if attributed else 0
                 ),
-                "weekly_trend": rows,
+                "note": (
+                    f"{unattributed} of {unattributed + attributed} orders had no customer "
+                    f"attached (typical for walk-in POS) — the split covers the rest."
+                    if unattributed else None
+                ),
             }
         except Exception:
             week_ago = (datetime.now(ET) - timedelta(days=7)).strftime("%Y-%m-%d")

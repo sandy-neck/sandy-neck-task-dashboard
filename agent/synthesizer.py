@@ -11,6 +11,7 @@ Two structural commitments, both learned the hard way:
 """
 import os
 import re
+import sys
 import json
 import anthropic
 
@@ -142,11 +143,19 @@ class ClaudeSynthesizer:
     def generate(self, data: dict, brain_context: dict) -> dict:
         message = self.client.messages.create(
             model=MODEL,
-            max_tokens=8000,
+            # Generous because the response carries the email *and* the journal entry, and thinking
+            # tokens count against this too. Running out truncates the trailing blocks silently —
+            # the email arrives fine and the journal just never appears.
+            max_tokens=16000,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": self._build_prompt(data, brain_context)}],
         )
-        return self._parse(_response_text(message))
+        result = self._parse(_response_text(message))
+        result["stop_reason"] = getattr(message, "stop_reason", None)
+        if result["stop_reason"] == "max_tokens":
+            print("   WARNING: response hit max_tokens — trailing blocks may be truncated",
+                  file=sys.stderr)
+        return result
 
     # Retained so older callers keep working.
     def generate_email(self, data: dict) -> dict:

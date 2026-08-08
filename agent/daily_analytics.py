@@ -27,6 +27,51 @@ from email_report import EmailReporter
 ET = pytz.timezone("America/New_York")
 
 
+def _fallback_log(payload: dict, report_date: str, content: dict) -> str:
+    """
+    Bare-bones journal entry, written when the model didn't return one.
+
+    Deliberately records that it's a fallback: a thin entry that looks like a considered one would
+    quietly corrupt the record the agent reads back later.
+    """
+    sales = payload.get("shopify", {}).get("sales", {})
+    snp = (payload.get("snp500") or {}).get(report_date, {})
+    exp = payload.get("expectation") or {}
+    pacing = payload.get("pacing") or {}
+
+    lines = [
+        f"# {report_date}",
+        "",
+        "> Auto-generated fallback entry — the model returned an email but no journal block, so "
+        "this records the facts only. No analysis was captured for this day.",
+        "",
+        "## Conditions",
+        f"- SNP 500: {snp.get('score', 'unknown')} ({snp.get('rating', '?')}), "
+        f"confidence {snp.get('confidence', '?')}",
+        f"- {snp.get('headline', 'No conditions data.')}",
+        "",
+        "## What happened",
+        f"- Revenue ${sales.get('revenue', 0):,.2f} across {sales.get('orders', 0)} orders "
+        f"(AOV ${sales.get('aov', 0):,.2f})",
+    ]
+    for row in payload.get("channel_split", [])[:5]:
+        lines.append(f"  - {row['channel']}: ${row['revenue']:,.2f} ({row['share_pct']}%)")
+    if exp.get("available"):
+        lines.append(f"- Expected ~${exp['expected_revenue']:,} → {exp['pct_of_expected']}% "
+                     f"of that, {exp['verdict']}")
+    if pacing.get("available"):
+        lines.append(f"- YTD ${pacing['ytd_revenue']:,.0f} of ${pacing['target']:,} "
+                     f"({pacing['status']}), projecting ${pacing['projected_year_end']:,}")
+
+    lines += ["", "## Open threads",
+              "- No analysis captured for this day; re-read the numbers if this date matters later."]
+    if payload.get("errors"):
+        lines += ["", "## Data gaps"] + [f"- {e}" for e in payload["errors"]]
+    if content.get("subject"):
+        lines += ["", f"Email that went out: \"{content['subject']}\""]
+    return "\n".join(lines)
+
+
 def main():
     now = datetime.now(ET)
     run_date = now.strftime("%A, %B %-d, %Y")
@@ -219,6 +264,13 @@ def main():
         payload["errors"].append(msg)
 
     # ── Persist to brain ──────────────────────────────────────────────────────
+    # A day with no entry is a permanent hole in the record — the numbers can be re-queried, but
+    # what the conditions were and what was concluded cannot. If the model didn't return a log
+    # block, write the facts anyway.
+    if report_date and not content.get("daily_log"):
+        print("   No journal returned — writing a minimal entry from the data", file=sys.stderr)
+        content["daily_log"] = _fallback_log(payload, report_date, content)
+
     if content.get("daily_log") and report_date:
         try:
             path = brain.write_daily_log(report_date, content["daily_log"])
