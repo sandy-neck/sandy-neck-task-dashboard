@@ -108,3 +108,18 @@ Reading: the web audience is not the person driving to Sandy Neck. It looks more
 **To test:** pull the online product mix across a rain week and a heat week. If the mix is stable regardless of weather while in-store swings hard, the two audiences are genuinely separate. Also check whether the Jeep orders ship out of state.
 
 **What would kill it:** a run of online orders for ice-adjacent or beach-gear items, or evidence the Jeep buyers are local pickup.
+
+---
+
+### 2026-08-07 — Within a given week, weekday in-store revenue is a flat ceiling, not a function of weather quality
+**Confidence: medium** — three consecutive weekdays with a clean natural experiment, but one week only.
+
+Aug 4 (SNP 440) $1,226 · Aug 5 (425) $1,293 · Aug 6 (420) $1,184. A 20-point spread in day quality produced a $109 spread in revenue — noise. Aug 8 (450) did $3,023 and Aug 1 (410) did $1,910, so weekends respond to *something*, but midweek looks capped by how many people are on the Cape, not by the sky.
+
+This refines the 2026-08-08 weekday-term note. The right correction may not be a multiplier on the curve but a **cap**: expected = min(weather curve, weekday ceiling), where the ceiling is set by the week's visitor volume. Late July weekdays capped near $700; the Aug 3 week capped near $1,200.
+
+**Why it matters:** the week of Aug 9 has three Exceptional weekday-ish days (Sun 450, Mon 460, Tue 460) that the curve values at ~$1,900 each. Under a ceiling model they land nearer $1,300–1,900 with Sunday the only one likely to clear, and the week comes in $2–3k under forecast. That changes the target conversation from "push a little" to "the weather cannot save this week."
+
+**To test:** next week is the test and it arrives immediately. If Mon Aug 10 and Tue Aug 11 both land near $1,200–1,400 despite scoring 460 — the best weather of the period — the ceiling is real. If either clears $1,800, the ceiling is wrong and a smooth weekday multiplier fits better.
+
+**What would kill it:** a weekday that tracks its score upward inside a single week, or a weekend day that lands at the weekday level on a high score.
