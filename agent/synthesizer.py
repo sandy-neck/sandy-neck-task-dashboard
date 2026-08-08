@@ -230,13 +230,23 @@ class ClaudeSynthesizer:
             )
             sections.append(f"═══ YOUR RECENT JOURNAL ENTRIES ═══\n{recent}")
 
+        snp = (data.get("snp500") or {}).get(report_date, {})
         sections.append(f"""═══ CONDITIONS ON {report_date} ═══
+
+SNP 500: {snp.get('score', 'unavailable')}/100 — {snp.get('rating', '?')} (confidence {snp.get('confidence', '?')})
+{snp.get('headline', '')}
+  Strongest positives: {', '.join(snp.get('drivers_positive', [])) or 'none'}
+  Limiting factors:    {', '.join(str(d) for d in snp.get('drivers_negative', [])) or 'none'}
+
+This is the beach-quality score for the day. It is the denominator for judging sales: a big number
+on a 95 day can be an underperformance, and a modest number on a 40 day can be a good result. Do not
+report revenue without saying what kind of day it was.
+
 {f"Weather: {today_weather.get('conditions')}, high {today_weather.get('high_f')}°F, feels like {today_weather.get('feels_like_f')}°F" if today_weather else "Weather: unavailable"}
-{f"Beach score: {today_weather.get('beach_score')}/100 — {today_weather.get('beach_label')}" if today_weather else ""}
 {f"Precipitation: {today_weather.get('precip_in')} in | Wind: {today_weather.get('wind_mph')} mph | Sun: {today_weather.get('sunshine_hours')} hrs" if today_weather else ""}
 {f"Tides: {json.dumps(tide_day)}" if tide_day else "Tides: not configured"}
 
-COMPARABLE RECENT DAYS (similar conditions — compare against THESE, not against the calendar):
+COMPARABLE RECENT DAYS (similar SNP 500 — compare against THESE, not against the calendar):
 {chr(10).join(comparison_lines) if comparison_lines else "  none found in range"}""")
 
         sections.append(f"""═══ IN-STORE (Point of Sale) ═══

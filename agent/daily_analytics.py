@@ -16,7 +16,7 @@ from shopify_client import ShopifyClient
 from social_client import SocialClient
 from klaviyo_client import KlaviyoClient
 from google_local_client import GoogleLocalClient
-from weather_client import WeatherClient, comparable_days
+from weather_client import WeatherClient, comparable_days, score_days_with_snp500
 from brain import Brain
 from synthesizer import ClaudeSynthesizer
 from email_report import EmailReporter
@@ -68,18 +68,31 @@ def main():
         payload["errors"].append(msg)
 
     # ── Weather & tides ───────────────────────────────────────────────────────
-    print("Weather & tides...")
+    print("Weather, tides & SNP 500...")
     try:
         payload["weather"] = WeatherClient().get_context()
         days = payload["weather"].get("days", {})
-        if report_date and report_date in days:
-            day = days[report_date]
-            print(f"   {report_date}: {day['conditions']}, feels {day['feels_like_f']}°F "
-                  f"— {day['beach_label']} ({day['beach_score']}/100)")
+
+        # One environmental model, two consumers: the customer-facing score is also the
+        # denominator that makes "was yesterday actually good?" answerable.
+        snp = score_days_with_snp500(payload["weather"],
+                                     bugs=os.environ.get("BUG_LEVEL"),
+                                     access=os.environ.get("BEACH_ACCESS"))
+        payload["snp500"] = snp
+        for day, result in snp.items():
+            if day in days and result.get("score") is not None:
+                days[day]["beach_score"] = result["score"]
+                days[day]["beach_label"] = result["rating"]
+
+        if report_date and report_date in snp:
+            today = snp[report_date]
+            print(f"   {report_date}: SNP 500 = {today['score']} ({today['rating']}), "
+                  f"confidence {today['confidence']}")
+            print(f"      {today['headline']}")
             payload["comparable_days"] = comparable_days(days, report_date)
-            print(f"   Comparable days found: {len(payload['comparable_days'])}")
+            print(f"   Comparable days: {len(payload['comparable_days'])}")
         if not payload["weather"].get("tides", {}).get("available"):
-            print("   Tides: not configured (set NOAA_TIDE_STATION)")
+            print("   Tides: not configured (set NOAA_TIDE_STATION) — SNP 500 tide factor inactive")
     except Exception as e:
         msg = f"Weather: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)
