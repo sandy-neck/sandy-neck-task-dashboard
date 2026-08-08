@@ -188,12 +188,14 @@ stack did. Anecdotes like this belong in `INBOX.md` — they're data.
 
 Things the agent should not guess at. Answer these here and they stop being open.
 
-### SNP 500 — NEEDS DEFINITION
-Sandy referenced "the SNP 500 criteria" as an existing framework for in-store analysis. It is not
-defined anywhere in this repo or in the skills. **Until it's written down here, the agent must not
-invent or approximate it.**
+### SNP 500 — tracked as a project
+A framework Sandy built for in-store analysis (the name plays on the S&P 500). Developed primarily
+in ChatGPT, **not yet transferred here and not active.** It was meant to be ready for the 2026
+season and wasn't.
 
-<!-- Sandy: describe it here — what it is, what qualifies, and how it should shape the analysis. -->
+See `projects/snp-500.md`. Until the definition lands there, **the agent must not invent or
+approximate the criteria** — a guessed framework applied to real inventory decisions is worse than
+no framework at all.
 
 ### Others
 - Which tide stage actually correlates with beach traffic (if any)?

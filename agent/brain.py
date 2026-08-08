@@ -66,6 +66,40 @@ class Brain:
         )
         return [(p.stem, _read(p, limit=4_000)) for p in entries[:days]]
 
+    def open_projects(self) -> list[dict]:
+        """
+        Projects still in flight. These are the loops that fall through the cracks when they live
+        in someone's head — the agent surfaces one when the data gives it a reason to.
+        """
+        projects_dir = self.base / "projects"
+        if not projects_dir.is_dir():
+            return []
+
+        found = []
+        for path in sorted(projects_dir.glob("*.md")):
+            if path.stem.lower() == "readme":
+                continue
+            content = _read(path, limit=5_000)
+            if not content:
+                continue
+            status = "Unknown"
+            if match := re.search(r"^\*\*Status:\*\*\s*(.+)$", content, re.MULTILINE):
+                status = match.group(1).strip()
+            if status.lower().startswith("done"):
+                continue
+            next_action = ""
+            if match := re.search(
+                r"^##\s+Next action\s*$(.*?)(?=^##\s+|\Z)", content, re.MULTILINE | re.DOTALL
+            ):
+                next_action = re.sub(r"<!--.*?-->", "", match.group(1), flags=re.DOTALL).strip()
+            found.append({
+                "name": path.stem,
+                "status": status,
+                "next_action": next_action,
+                "content": content,
+            })
+        return found
+
     def open_threads(self, days: int = 7) -> list[str]:
         """
         Questions raised in recent logs that were never resolved, so a thread opened on Tuesday

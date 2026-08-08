@@ -116,11 +116,15 @@ def main():
             "learned": brain.learned(),
             "recent_logs": brain.recent_logs(days=5),
             "open_threads": brain.open_threads(),
+            "open_projects": brain.open_projects(),
         }
         print(f"   context {len(brain_context['context']):,} chars | "
               f"{len(brain_context['recent_logs'])} recent logs | "
-              f"{len(brain_context['open_threads'])} open threads"
+              f"{len(brain_context['open_threads'])} open threads | "
+              f"{len(brain_context['open_projects'])} open projects"
               f"{' | inbox has notes' if brain_context['inbox'] else ''}")
+        for project in brain_context["open_projects"]:
+            print(f"     - {project['name']}: {project['status']}")
     except Exception as e:
         msg = f"Brain read: {e}"
         print(f"   ERROR: {msg}", file=sys.stderr)

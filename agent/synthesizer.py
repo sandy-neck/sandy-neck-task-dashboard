@@ -202,6 +202,21 @@ class ClaudeSynthesizer:
                 f"{brain['learned']}"
             )
 
+        if brain.get("open_projects"):
+            projects = "\n\n".join(
+                f"### {p['name']} — {p['status']}\n"
+                f"Next action: {p['next_action'] or '(none recorded)'}"
+                for p in brain["open_projects"]
+            )
+            sections.append(
+                "═══ OPEN PROJECTS ═══\n"
+                "Loops that are started but not finished. Surface AT MOST ONE, and only when\n"
+                "today's data gives a real reason to — a project connected to something that\n"
+                "actually happened. A daily nag gets ignored, which defeats the point. If nothing\n"
+                "in today's numbers touches any of these, mention none.\n\n"
+                f"{projects}"
+            )
+
         if brain.get("open_threads"):
             sections.append(
                 "═══ OPEN THREADS FROM PREVIOUS DAYS ═══\n"
