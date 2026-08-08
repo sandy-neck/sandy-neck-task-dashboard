@@ -121,6 +121,20 @@ Most days this should be empty. Only real patterns go here.
 </learned>"""
 
 
+def _response_text(message) -> str:
+    """
+    Pull the text out of a response.
+
+    Thinking-capable models put a ThinkingBlock first, so indexing content[0] blindly raises
+    AttributeError and loses the whole email. Concatenate every text block instead.
+    """
+    parts = [
+        block.text for block in message.content
+        if getattr(block, "type", None) == "text" and getattr(block, "text", None)
+    ]
+    return "\n".join(parts).strip()
+
+
 class ClaudeSynthesizer:
     def __init__(self):
         self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
@@ -132,7 +146,7 @@ class ClaudeSynthesizer:
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": self._build_prompt(data, brain_context)}],
         )
-        return self._parse(message.content[0].text)
+        return self._parse(_response_text(message))
 
     # Retained so older callers keep working.
     def generate_email(self, data: dict) -> dict:

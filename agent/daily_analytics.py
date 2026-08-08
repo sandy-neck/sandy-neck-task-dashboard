@@ -117,11 +117,14 @@ def main():
         print(f"{label}...")
         try:
             payload[key] = fetch()
-            stubbed = (
-                payload[key].get("stub")
-                if isinstance(payload[key], dict)
-                else any(v.get("stub") for v in payload[key].values() if isinstance(v, dict))
-            )
+            value = payload[key]
+            if isinstance(value, dict) and "stub" in value:
+                stubbed = value["stub"]
+            elif isinstance(value, dict):
+                # Social is a dict *of* platforms, so the flag lives one level down.
+                stubbed = any(v.get("stub") for v in value.values() if isinstance(v, dict))
+            else:
+                stubbed = False
             print(f"   {'sample data (not connected)' if stubbed else 'live'}")
         except Exception as e:
             msg = f"{label}: {e}"
