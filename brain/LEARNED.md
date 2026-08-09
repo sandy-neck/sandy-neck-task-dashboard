@@ -132,3 +132,14 @@ This refines the 2026-08-08 weekday-term note. The right correction may not be a
 Jul 26 (SNP 425) did $1,159 / 32 orders. Aug 2 (SNP 395) did $859 / 34 orders. Both sit inside or below the midweek $1,200 band, nowhere near the Saturday band ($1,910 at score 410, $3,092 at 450). If Sunday really is a weekday for these purposes, the week-ahead forecast is overstating three days next week rather than two, and the Sun–Tue block should be planned around ~$1,200 each, not ~$1,860.
 
 **To test:** Sun Aug 9 is scored 450 — Exceptional, and the highest-quality Sunday in the record. If it lands near $1,200–1,400 the claim holds; if it clears $1,800 it dies and Sunday belongs with the weekend. That's a clean single-day test and it resolves tomorrow.
+
+---
+
+### 2026-08-08 — The Saturday-adjusted expectation ceiling may be set too high
+**Confidence: low-medium** — two Saturdays, one curve revision, no day has approached the top of the range.
+
+With the day-of-week factor added, a 450-score Saturday now expects $3,917. Aug 8 was the best day in the entire record — $3,091.95 on 100 orders, 62% above the previous Saturday — and still came in at 79%. Aug 1 (SNP 410, $1,910) would have been well under 60% of its adjusted number.
+
+If the best day the store has ever produced can't clear 80% of expected, the top anchor is describing a day that doesn't exist rather than a day being missed. The risk is the same inversion error the curve was built to prevent, running the other way: genuinely exceptional days get logged as underperformance and the signal stops meaning anything.
+
+**To test:** Aug 15 (455) and the two high-scored Sundays (Aug 9 at 465, Aug 16 at 470). If three or four more weekend days all land 75–85% of expected with no obvious fault, the anchor is wrong, not the days. **What would kill it:** any weekend day clearing 95%+ — which would mean $3,700+ is genuinely reachable and Aug 8 really did leave money on the floor.
