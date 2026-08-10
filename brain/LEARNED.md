@@ -143,3 +143,32 @@ With the day-of-week factor added, a 450-score Saturday now expects $3,917. Aug 
 If the best day the store has ever produced can't clear 80% of expected, the top anchor is describing a day that doesn't exist rather than a day being missed. The risk is the same inversion error the curve was built to prevent, running the other way: genuinely exceptional days get logged as underperformance and the signal stops meaning anything.
 
 **To test:** Aug 15 (455) and the two high-scored Sundays (Aug 9 at 465, Aug 16 at 470). If three or four more weekend days all land 75–85% of expected with no obvious fault, the anchor is wrong, not the days. **What would kill it:** any weekend day clearing 95%+ — which would mean $3,700+ is genuinely reachable and Aug 8 really did leave money on the floor.
+
+---
+
+### 2026-08-09 — Sunday is a weekend day for revenue purposes, not a weekday
+**Confidence: medium-high** — one strong data point, but it inverts a hypothesis I'd been building, and cleanly.
+
+I'd been leaning toward "Sunday behaves like a weekday" on the strength of Aug 2 (SNP 395, $859) and Jul 26 (SNP 425, $1,159), both sitting in the midweek band. Aug 9 at SNP 450 did **$3,153 on 77 orders** — above Aug 8's Saturday at the same score.
+
+The reconciliation is that Sundays appear **score-elastic** in a way midweek days are not. Aug 4/5/6 spanned 420–440 and produced $1,226 / $1,293 / $1,184 — a 20-point score spread moving revenue $109. Sundays spanned 395→450 and moved $859→$3,153. If that's right, weekends convert good weather into revenue and weekdays are capped by how many people are on the Cape at all.
+
+**To test:** Aug 16 (Sun, 445) is the immediate check — it should land near $3,000, not near $900. A Sunday at 445 doing $1,000 kills this.
+
+**Why it matters:** it changes where a promo or event is worth running. If Sundays respond to conditions and weekdays don't, spend the effort on weekend days that are already good, not on trying to rescue midweek.
+
+### 2026-08-09 — Same-day session counts are systematically undercounted and fill in later
+**Confidence: high** — direct observation of the same date reported twice.
+
+Aug 8 read as **17 sessions** on the Aug 9 run and I flagged it as a probable tracking break against a record in-store day. On the Aug 10 run the same date reads **146**. Aug 9 now reads 18 on the same trailing position.
+
+The trailing day in the sessions array is incomplete at read time, not broken. **Never comment on the most recent day's session count**; judge traffic on the prior day and back. This also means any week-over-week session comparison including the trailing day is understated by roughly one full day.
+
+### 2026-08-09 — % of expected is not comparable across days of the week under the current curve
+**Confidence: medium** — two adjacent days, near-identical scores, opposite verdicts.
+
+Aug 8 (Sat, SNP 450, $3,092) scored **79% of expected**. Aug 9 (Sun, SNP 450, $3,153) scored **134% of expected**. Nearly the same revenue and the same day quality, but the day-of-week factor priced Saturday at $3,917 and Sunday at $2,356.
+
+One of those two anchors is wrong — most likely the Saturday multiplier, since no day in the record has come near $3,917. Until the curve is refit, treat "% of expected" as a within-weekday measure only, and don't tell BJ a Saturday underperformed on that basis alone.
+
+**What would settle it:** three or four more Saturdays. If they cluster at 75–85%, the Saturday factor is too high and should come down.
