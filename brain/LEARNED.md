@@ -172,3 +172,21 @@ Aug 8 (Sat, SNP 450, $3,092) scored **79% of expected**. Aug 9 (Sun, SNP 450, $3
 One of those two anchors is wrong — most likely the Saturday multiplier, since no day in the record has come near $3,917. Until the curve is refit, treat "% of expected" as a within-weekday measure only, and don't tell BJ a Saturday underperformed on that basis alone.
 
 **What would settle it:** three or four more Saturdays. If they cluster at 75–85%, the Saturday factor is too high and should come down.
+
+---
+
+### 2026-08-10 — Midweek in-store revenue is flat against day quality across the entire top of the SNP 500 range
+**Confidence: high (upgraded from medium)** — two independent weeks, and the second one tested a 65-point spread in day quality.
+
+Aug 10 scored 485 — the highest day quality in the whole record, no limiting factors, near-ideal afternoon low tide — and did $1,260.46 on 25 orders. Aug 4 (440) $1,226, Aug 5 (425) $1,293, Aug 6 (420) $1,184. Four Mon–Thu days spanning 420–485 landed inside a $109 range. The previous week's version of this finding covered a 20-point spread and could be dismissed as noise; a 65-point spread producing the same flat line cannot.
+
+Meanwhile weekends at similar scores went $3,092 (Sat 450) and $3,153 (Sun 450) — 2.5x the weekday level. So the store clearly *can* do more; midweek is not capacity-limited at the register, it is limited by how many people are on the Cape.
+
+**What this changes:**
+1. The expectation curve's weather term should be treated as near-zero for Mon–Thu. A midweek day at 87% of a weather-derived expectation is the ceiling being hit, not a miss. Stop writing midweek gaps as shortfalls.
+2. Forward forecasting for midweek should use the weekday cluster level (~$1,300 in a strong vacation week, ~$700 in a weak one), not the score. This week's expected total of $12,432 contains roughly $2.5k of phantom revenue for that reason.
+3. The only midweek lever left is something that changes who is at the store, not something that responds to weather — i.e. events, or capturing more of the people already on the beach.
+
+**What would kill it:** a Mon–Thu day clearing $1,800+ without an event or a holiday. That has not happened in 12 weeks of data.
+
+**Still unknown:** whether the cluster level itself is predictable week to week (it moved $700 → $1,300 between late July and early August), and whether an event can break it. The second question has now gone untested twice — Aug 10 was the ideal slot and no class ran.
