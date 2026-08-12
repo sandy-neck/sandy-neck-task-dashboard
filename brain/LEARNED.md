@@ -190,3 +190,20 @@ Meanwhile weekends at similar scores went $3,092 (Sat 450) and $3,153 (Sun 450) 
 **What would kill it:** a Mon–Thu day clearing $1,800+ without an event or a holiday. That has not happened in 12 weeks of data.
 
 **Still unknown:** whether the cluster level itself is predictable week to week (it moved $700 → $1,300 between late July and early August), and whether an event can break it. The second question has now gone untested twice — Aug 10 was the ideal slot and no class ran.
+
+---
+
+### 2026-08-11 — Peak-season weekday in-store revenue is a hard flat ceiling around $1,250, independent of day quality
+**Confidence: high** — five weekday points across two separate weeks, 65-point SNP spread, $109 revenue spread.
+
+Aug 4 (440) $1,226 · Aug 5 (425) $1,293 · Aug 6 (420) $1,184 · Aug 10 (485) $1,260 · Aug 11 (475) $1,273. Two of those (Aug 10, 11) are the two highest-scored days in the entire record and neither beat a 420-score Thursday by more than $90.
+
+Mechanism: midweek in-store demand is set by how many people are on the Cape, not by the weather. Weekends are genuinely score-elastic (Aug 8 @450 → $3,092, Aug 9 @450 → $3,153, Aug 2 @395 → $859), so this is a weekday-specific ceiling, not a store-capacity ceiling.
+
+**Practical consequences, both of which change decisions:**
+1. Stop calling midweek days misses or wins on % of expected. A 475-score Tuesday doing $1,273 is the ceiling, not performance.
+2. Any forward forecast that prices midweek Exceptional days at $1,700–$2,000 overstates the week by ~$500 per weekday. For the week of Aug 13–19 that's ~$2k of phantom revenue, turning a stated $207 shortfall into ~$2.5k. Gaps must be closed on weekend days or not at all.
+
+**What would kill it:** a Mon–Thu day clearing $1,600+ during peak. Worth watching whether an event (a morning class) can break it — that's the only untested lever, and Aug 10 was meant to be that test but no class ran.
+
+**Scope limit:** peak season only, 420–485 band. Says nothing about shoulder-season weekdays or about marginal-weather weekdays (Aug 3 @275 did $297, so the floor drops away well below the ceiling).
