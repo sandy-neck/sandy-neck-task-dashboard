@@ -207,3 +207,16 @@ Mechanism: midweek in-store demand is set by how many people are on the Cape, no
 **What would kill it:** a Mon–Thu day clearing $1,600+ during peak. Worth watching whether an event (a morning class) can break it — that's the only untested lever, and Aug 10 was meant to be that test but no class ran.
 
 **Scope limit:** peak season only, 420–485 band. Says nothing about shoulder-season weekdays or about marginal-weather weekdays (Aug 3 @275 did $297, so the floor drops away well below the ceiling).
+
+---
+
+### 2026-08-12 — The midweek "flat ceiling" is a ceiling, not a floor: order count can collapse on a top-quality day
+**Confidence: medium** — one clean counter-example against five supporting days, cause unidentified.
+
+Mon–Thu peak days at SNP 420–485 had produced $1,226 / $1,293 / $1,184 / $1,260 / $1,273 — a $109 band across a 65-point score spread. I had begun treating ~$1,250 as a dependable midweek number and using it to discount the week-ahead forecast. Aug 12 (SNP 465) did $805.91 on **14 orders**, roughly half the transaction count of comparable days, while AOV hit a record $56.93.
+
+The direction of the AOV move is the informative part. If visitor volume simply thinned, the mix should have stayed ice-heavy and low-ticket; instead the ticket went up, which is the signature of fewer *hours* rather than fewer *people* — only committed buyers in the door.
+
+**What this changes:** midweek forecasting should use ~$1,250 as an upper bound with meaningful downside, not a point estimate. It also means an unexplained low-order day is worth asking about immediately, because the operational explanation and the demand explanation have opposite implications for the last nine days of peak.
+
+**To confirm or kill:** BJ's answer on Wednesday's hours. If hours were normal and Thu Aug 13 (425) also comes in under 20 orders, midweek footfall is genuinely falling as peak ends and the ceiling model needs a late-August decay term. If hours were short, this is a scratch and the five-day band stands.
