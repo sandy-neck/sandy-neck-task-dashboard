@@ -220,3 +220,18 @@ The direction of the AOV move is the informative part. If visitor volume simply 
 **What this changes:** midweek forecasting should use ~$1,250 as an upper bound with meaningful downside, not a point estimate. It also means an unexplained low-order day is worth asking about immediately, because the operational explanation and the demand explanation have opposite implications for the last nine days of peak.
 
 **To confirm or kill:** BJ's answer on Wednesday's hours. If hours were normal and Thu Aug 13 (425) also comes in under 20 orders, midweek footfall is genuinely falling as peak ends and the ceiling model needs a late-August decay term. If hours were short, this is a scratch and the five-day band stands.
+
+---
+
+### 2026-08-13 — The midweek revenue "ceiling" is a ceiling only; a floor can drop out with no weather cause
+**Confidence: medium** — two consecutive days, clear mechanism candidate, but cause unconfirmed.
+
+Aug 4–11 established Mon–Thu doing $1,250 ± $50 across a 65-point SNP spread (high confidence, held across two weeks). Aug 12 (SNP 465) did $806 and Aug 13 (SNP 420) did $922 — $330–450 below the bottom of that band, on days that scored inside or above it.
+
+The break is entirely in transaction count: 14 and 19 orders, versus 22–38 for every other August weekday. AOV moved the *opposite* way — $56.93 and $46.42, the two highest in the record.
+
+That divergence is diagnostic. A genuine drop in visitors should preserve the mix (ice at ~$6 a ticket is the highest-frequency line) and therefore hold AOV roughly flat or lower. Losing the cheap tickets while keeping the hard-goods buyers is what you'd see if the store were open fewer hours, or open only across the productive part of the day.
+
+**So the correct formulation is: weather sets a midweek ceiling of ~$1,250 that better weather cannot exceed, but operational factors can take a day well below it, and weather explains none of the downside.**
+
+**To confirm or kill:** BJ's answer on Wed/Thu hours. If hours were normal, this is a demand break nine days from the end of peak and the whole late-August read changes. If hours were short, log the hours alongside SNP going forward — open-hours is a missing input to the expectation curve and probably a bigger term than the weather.
