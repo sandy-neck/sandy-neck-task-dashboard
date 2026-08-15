@@ -235,3 +235,23 @@ That divergence is diagnostic. A genuine drop in visitors should preserve the mi
 **So the correct formulation is: weather sets a midweek ceiling of ~$1,250 that better weather cannot exceed, but operational factors can take a day well below it, and weather explains none of the downside.**
 
 **To confirm or kill:** BJ's answer on Wed/Thu hours. If hours were normal, this is a demand break nine days from the end of peak and the whole late-August read changes. If hours were short, log the hours alongside SNP going forward — open-hours is a missing input to the expectation curve and probably a bigger term than the weather.
+
+---
+
+### 2026-08-14 — The mid-August order-count trough was operational, not demand
+**Confidence: medium-high** — a clean rebound on a lower-quality day.
+
+Aug 12 (SNP 465) 14 orders, Aug 13 (420) 19 orders — both far under the 22–38 weekday band. Aug 14 (435, *lower* score than Aug 12) did 41 orders, the highest weekday count of the month. Demand does not collapse for two days and rebound 3x on a worse day; hours, staffing or a one-off closure does.
+
+Supporting detail: AOV moved *inverse* to order count across the trough ($56.93, $46.42, then $34.10 on the rebound). Fewer transactions with bigger baskets is the signature of a store open fewer hours serving committed buyers, not of thinner crowds — thinner crowds would preserve the ice-heavy low-ticket mix and pull AOV down, not up.
+
+**What would kill it:** BJ confirming the store was open normal hours on Aug 12–13, which would make it a genuine two-day demand hole and mean the mid-August rebound is luck rather than mechanism.
+
+### 2026-08-14 — TikTok reach is collapsing monotonically ahead of the off-season plan that depends on it
+**Confidence: high on the trend, unknown on the cause.**
+
+Eight consecutive weekly declines in TikTok revenue: $185.70 → $127.79 → $103.83 → $89.85 → $71.88 → $41.93 → $29.95 → $17.97. Down 90%. Every single order across the whole run is Sun Bum air fresheners — the mix has never diversified, so this is one product's algorithmic distribution decaying, not a channel broadening or narrowing.
+
+The dollars were never the point; the channel is held for reach. But the documented off-season plan (post-Labor Day: lean heavily into TikTok, online store, Instagram) assumes reach exists. On this curve it will be near zero by mid-September, which is precisely when it is needed.
+
+**What would confirm:** TikTok views/follower data, which is not currently wired in — that would separate "algorithm stopped pushing" from "product fatigue." **What would kill it:** a spurt in a non-air-freshener product (Waboba and salty gem rings are the historical candidates), which would show the account still has distribution and the decline is product-specific.
