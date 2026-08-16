@@ -255,3 +255,21 @@ Eight consecutive weekly declines in TikTok revenue: $185.70 → $127.79 → $10
 The dollars were never the point; the channel is held for reach. But the documented off-season plan (post-Labor Day: lean heavily into TikTok, online store, Instagram) assumes reach exists. On this curve it will be near zero by mid-September, which is precisely when it is needed.
 
 **What would confirm:** TikTok views/follower data, which is not currently wired in — that would separate "algorithm stopped pushing" from "product fatigue." **What would kill it:** a spurt in a non-air-freshener product (Waboba and salty gem rings are the historical candidates), which would show the account still has distribution and the decline is product-specific.
+
+---
+
+### 2026-08-15 — At matched SNP 500, a weekend day does roughly $750–1,100 more in-store than a weekday
+**Confidence: medium-high** — first clean matched-score weekend/weekday comparison, plus consistent supporting spread across the month.
+
+Aug 15 (Sat, SNP 420) $2,037.60 / 55 orders vs Aug 13 (Thu, SNP 420) $921.87 / 19 orders and Aug 6 (Thu, SNP 420) $1,184.00 / 25 orders. Identical score, same week, same phase — a $854–1,116 gap. This is the direct evidence the earlier weekday-multiplier note (2026-08-08) was missing, because it no longer relies on unscored Saturdays.
+
+Related and separable: weekends appear to *respond* to score while weekdays do not. Aug 8 (450) $3,092 vs Aug 15 (420) $2,038 — a 30-point gap producing ~$1,050 — against Mon–Thu Aug 4–13 sitting in a $806–1,293 band across scores 420–485.
+
+**What would confirm:** two or three more matched-score weekend/weekday pairs holding the same gap. **What would kill it:** a high-scored Saturday landing inside the weekday band, or the Aug 8 figure turning out to be event-driven rather than weather-driven (which would shrink the weekend response coefficient without touching the level difference).
+
+### 2026-08-15 — TikTok has declined monotonically to zero over nine weeks
+**Confidence: high on the fact.** $185.70 → $127.79 → $103.83 → $89.85 → $71.88 → $41.93 → $29.95 → $17.97 → $0. Nine consecutive weekly declines, no reversals.
+
+Every one of those orders was Sun Bum air fresheners, so what died is a single algorithmic push, not a channel with a diversified base. Cause unknown — could be the algorithm moving on, could be posting cadence falling off during peak season. That distinction matters a lot, because the off-season plan (CONTEXT.md) explicitly leans on TikTok reach.
+
+**To test:** compare posting frequency June vs August. If cadence collapsed, this is fixable and self-inflicted. If cadence held and reach still died, the product-level push is gone and the off-season plan needs a different anchor.
