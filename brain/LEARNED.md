@@ -273,3 +273,16 @@ Related and separable: weekends appear to *respond* to score while weekdays do n
 Every one of those orders was Sun Bum air fresheners, so what died is a single algorithmic push, not a channel with a diversified base. Cause unknown — could be the algorithm moving on, could be posting cadence falling off during peak season. That distinction matters a lot, because the off-season plan (CONTEXT.md) explicitly leans on TikTok reach.
 
 **To test:** compare posting frequency June vs August. If cadence collapsed, this is fixable and self-inflicted. If cadence held and reach still died, the product-level push is gone and the off-season plan needs a different anchor.
+
+---
+
+### 2026-08-16 — Sunday may be a Cape changeover day that underperforms Saturday, independent of weather
+**Confidence: low** — n=2 and the two Sundays are wildly split; a plausible mechanism but no real evidence yet.
+
+Aug 16 (SNP 415) did $788 / 19 orders — below every matched-score day this month including weekdays, and below Sat Aug 15 (SNP 420) by $1,250 on 36 fewer orders. That breaks the weekend premium that had held on every weekend day in the record. Aug 9 (SNP 450, $3,153 / 77) was the opposite, but it sat mid-run of the strongest weekend on file.
+
+Mechanism: Cape rental weeks turn over Saturday–Sunday. Departing renters are packing and driving, arriving renters aren't on the sand until Monday. If real, Sunday should look like a weekday in transaction count while Saturday carries the weekend premium.
+
+Confounded here by the ice collapse (weekly ice orders 54 → 39 → 24), which points at falling visitor volume generally, and by an unanswered question about Sunday store hours. Either could account for the whole gap.
+
+**To test:** bucket % -of-expected by Sat vs Sun at matched SNP scores. Only Aug 22/23 remain in peak, so this may have to wait for the shoulder or next season. **What would kill it:** a Sunday clearing the matched-score weekday set by the usual $750+, or BJ confirming reduced Sunday hours.
