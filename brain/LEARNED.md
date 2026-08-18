@@ -286,3 +286,18 @@ Mechanism: Cape rental weeks turn over Saturday–Sunday. Departing renters are 
 Confounded here by the ice collapse (weekly ice orders 54 → 39 → 24), which points at falling visitor volume generally, and by an unanswered question about Sunday store hours. Either could account for the whole gap.
 
 **To test:** bucket % -of-expected by Sat vs Sun at matched SNP scores. Only Aug 22/23 remain in peak, so this may have to wait for the shoulder or next season. **What would kill it:** a Sunday clearing the matched-score weekday set by the usual $750+, or BJ confirming reduced Sunday hours.
+
+---
+
+### 2026-08-17 — Ice order count is a leading indicator of visitor volume, and it turned down ~3 weeks before the calendar phase change
+**Confidence: medium-high** — seven consecutive weeks of data, clean monotonic decline, and the confound (the Aug 12/13 low-transaction days) has now been ruled out by a second mid-20s week.
+
+Weekly ice orders: 62 → 61 → 59 → 54 → 39 → 24 → 25. A −60% move across six weeks on days that have mostly continued to score 410–485 on the SNP 500. Ice is a near-pure beach-trip proxy (tiny ticket, high frequency, nobody buys it who isn't going out), so weather-controlled decline in ice orders is close to a direct measurement of how many people are on the Cape.
+
+Over the same window, total daily order counts fell from the 25–57 band to a 14–25 band on weekdays, while AOV held or rose. Revenue fell less than footfall because baskets got bigger — which means revenue alone masks the turn by two or three weeks.
+
+**Why it matters:** the phase table says Early shoulder starts Aug 23. Ice says it started around Aug 5–10. If ice leads reliably, it is the earliest signal available for when to cut hours, stop reordering consumables and shift to weekend-only — decisions that otherwise get made on the calendar or on a revenue drop that arrives late.
+
+**To test:** track weekly ice orders through the shoulder and into next season's ramp. If ice rises 2–3 weeks ahead of the June revenue climb the same way it fell ahead of the August decline, it's a genuine leading indicator in both directions. Compare against an independent footfall measure (beach permits, ORV counts) if one can be obtained.
+
+**What would kill it:** a supply-side explanation — a freezer outage, a price change, a competitor selling ice closer to the gate, or ice simply being out of stock on the low days. I have not checked stock levels against these weeks and should. Also killed if ice recovers to 50+ orders in a week while total footfall stays flat.
