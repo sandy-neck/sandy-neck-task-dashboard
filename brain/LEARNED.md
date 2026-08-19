@@ -301,3 +301,20 @@ Over the same window, total daily order counts fell from the 25–57 band to a 1
 **To test:** track weekly ice orders through the shoulder and into next season's ramp. If ice rises 2–3 weeks ahead of the June revenue climb the same way it fell ahead of the August decline, it's a genuine leading indicator in both directions. Compare against an independent footfall measure (beach permits, ORV counts) if one can be obtained.
 
 **What would kill it:** a supply-side explanation — a freezer outage, a price change, a competitor selling ice closer to the gate, or ice simply being out of stock on the low days. I have not checked stock levels against these weeks and should. Also killed if ice recovers to 50+ orders in a week while total footfall stays flat.
+
+---
+
+### 2026-08-18 — The expectation curve over-predicts systematically once visitor volume turns, independent of weather score
+**Confidence: medium** — six consecutive days of the same directional error, clean mechanism, but one season and one turn.
+
+Last six scored days, actual as % of expected: Aug 13 (420) ~?, Aug 14 (435) ~?, Aug 15 (420) 56%, Aug 16 (415) 37%, Aug 17 (410) 64%, Aug 18 (425) 53%. Every one materially under, across weekdays and weekends, across scores 410–435. Earlier in August the same curve was producing 67–80% on comparable scores, and in late July it produced a 36% outlier that I flagged as unexplained.
+
+The curve knows the sky and the weekday. It does not know how many people are on the Cape. As the season turns, the population term falls while the weather term stays high — Cape weather in late August is often better than July — so the curve keeps pricing days at peak-season levels while the actual customer base drains. That produces exactly this pattern: a widening, one-directional gap that correlates with date rather than score.
+
+Corroborating independent signal: ice weekly orders 62 → 61 → 59 → 54 → 39 → 24 → 25 → 24 across the same window, on days still scoring 410+. Ice is the beach-trip proxy and it is not weather-driven right now.
+
+**Why it matters:** if true, every "% of expected" figure from roughly Aug 13 onward is measuring the season turning, not the store underperforming. Emails that lead with "53% of expected" are quietly telling BJ he had a bad day when he had a normal shoulder day. That's the same inversion error the whole expectation framework exists to prevent, running in the opposite direction.
+
+**To test:** plot % -of-expected against date for all scored days since Aug 1 and check whether the trend is monotonic with date independent of score. If it is, the fix is a season-position multiplier in `agent/expectations.py` — but do not change the curve without BJ, and log any change in CONTEXT's curve-change table.
+
+**What would kill it:** a Great-rated day in the next week clearing 90%+ of expected. Thu Aug 20 (460) and Fri Aug 21 (465) are the immediate tests — if either lands near $1,900 the curve is fine and the last week was something else.
