@@ -15,15 +15,35 @@ BRAIN_DIR = Path(__file__).resolve().parent.parent / "brain"
 # Keeps a runaway file from crowding the model's context window.
 MAX_CHARS = 14_000
 
+# CONTEXT.md is the authoritative file and gets a much larger budget. It grew past the old 14k
+# ceiling unnoticed, which silently cut the Standing Instructions off the bottom — the agent was
+# running for days without ever seeing its own operating rules.
+CONTEXT_MAX_CHARS = 60_000
+
 
 def _read(path: Path, limit: int = MAX_CHARS) -> str:
+    """
+    Read a brain file, truncating from the MIDDLE if it's too long.
+
+    Head-only truncation is the wrong shape for these documents: the most operationally important
+    content — standing instructions, next actions, recent log entries — sits at the BOTTOM. Cutting
+    the tail silently discards exactly what matters most, and does it without any visible symptom.
+    """
     try:
         text = path.read_text(encoding="utf-8").strip()
     except (FileNotFoundError, OSError):
         return ""
-    if len(text) > limit:
-        return text[:limit] + "\n\n[...truncated...]"
-    return text
+    if len(text) <= limit:
+        return text
+
+    # Keep twice as much head as tail — narrative sets up the file, but the tail must survive.
+    head = int(limit * 0.65)
+    tail = limit - head
+    return (
+        text[:head]
+        + f"\n\n[...{len(text) - limit:,} characters omitted from the middle of this file...]\n\n"
+        + text[-tail:]
+    )
 
 
 class Brain:
@@ -34,7 +54,7 @@ class Brain:
     # ── Reading ───────────────────────────────────────────────────────────────
 
     def context(self) -> str:
-        return _read(self.base / "CONTEXT.md")
+        return _read(self.base / "CONTEXT.md", limit=CONTEXT_MAX_CHARS)
 
     def learned(self) -> str:
         return _read(self.base / "LEARNED.md", limit=8_000)

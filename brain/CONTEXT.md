@@ -54,6 +54,27 @@ Small — and that's a **problem we want to solve**, not a fact to accept. Two g
 Conversion-funnel metrics (cart abandonment, checkout completion) describe ~4% of the business.
 Report them, but never let them lead.
 
+#### Read this before commenting on organic traffic (from 2026-08-19)
+
+A large SEO / AI-legibility pass shipped on **2026-08-19**, and an automated Routine now edits the
+catalogue **every 3 days**. See `projects/seo-ai-legibility.md`. Two things follow, and getting them
+wrong would make the daily traffic line actively misleading:
+
+**Organic sessions are expected to decline through autumn, and that is not failure.** Three unrelated
+things are falling at once: the season, greenhead search interest (peaked late July), and plover
+closure searches (peak June–August, passing now). This was written down as a prediction *before* the
+decline, precisely so it wouldn't get re-interpreted later as evidence the work failed.
+
+So when traffic drops this autumn: **say it's happening, attribute it to seasonality, and do not
+treat it as a verdict on the SEO work.** The honest read is "down as expected for the time of year."
+
+**Judge it on the right metrics.** Year-over-year same-week rather than week-over-week. Impressions
+and average position rather than sessions — position can improve while traffic falls. The real test
+is **June–August 2027**.
+
+One attribution rule worth holding: the merchandising changes (collection reordering, menu rename,
+archives) affect **conversion, not acquisition**. Never explain a traffic change with them.
+
 ### TikTok
 
 Outperforms the web store on order count and it is **mostly one weird phenomenon: Sun Bum air
@@ -359,3 +380,8 @@ no framework at all.
 9. **Always exclude the Snack Shack.** Filter it out of every query (`pos_location_name !=
    'Snack Shack'`) and never compare against 2025 totals that include it — the comparable 2025
    base is $149,403.76, not the $184,128.96 headline.
+10. **Autumn organic traffic decline is expected, not failure.** It was predicted in advance, before
+    it started (`projects/seo-ai-legibility.md`). Report the drop and attribute it to seasonality.
+    Judge the SEO work on year-over-year same-week and average position — never on this autumn's
+    session counts, and never on the merchandising changes, which move conversion rather than
+    acquisition.

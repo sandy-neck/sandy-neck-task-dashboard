@@ -34,3 +34,12 @@ sit in the data looking like a trend.
   were small, but BJ's read was that it set the tone for the day. Store went on to a very strong
   Saturday. See `LEARNED.md` for the hourly comparison — the 8–10am window ran roughly double the
   previous Saturday's orders.
+
+- 2026-08-19 — **Large SEO / AI-legibility pass shipped.** 4 topic-authority shirts with factual
+  explainers, 60 descriptions written (59 live), 414 products given specific productType + topical
+  tags feeding JSON-LD, 2 URLs changed (both 301'd), 15 collections reordered by revenue plus a menu
+  rename and 6 archives. An automated Routine now edits the catalogue every 3 days from here, so
+  this is a continuous treatment rather than a step change — log each digest email as its own dated
+  entry or later movement gets misattributed to this initial pass. Control group of 356 untreated
+  products snapshotted the same day. See `projects/seo-ai-legibility.md`. Expect organic sessions to
+  fall through autumn on seasonality; that was predicted in advance and is not a verdict on the work.
