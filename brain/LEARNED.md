@@ -145,3 +145,18 @@ So the constraint on a good midweek day is not how many people come through the 
 **To test:** split each day's AOV into ice-containing and non-ice tickets across Aug 4 (low count), Aug 7 (high count) and Aug 8 (100 orders). If the non-ice basket is stable across all three and only the ice share moves, this is composition and the attachment play is right. If the non-ice basket itself falls on high-footfall days, something else is happening — queue length, staff attention, stockouts — and the fix is operational instead.
 
 **What would kill it:** a high-order-count day that also posts a high AOV, or finding the ice tickets already carry a second item.
+
+---
+
+### 2026-08-18 — Peak demand steps down around mid-August, roughly a week before the phase calendar says
+**Confidence: medium** — four consecutive weather-matched days, plus an independent footfall proxy, but only one season of data.
+
+Aug 15–19 ran $2,038 (Sat), $788, $789, $475, $773 on SNP scores of 410–425. Eight days earlier the same score band produced $1,260 (Aug 10, score 485), $1,273 (Aug 11, 475), $922 (Aug 13, 420). Realised revenue against the expectation curve fell from ~70–80% to ~50–55% with no change in weather quality.
+
+Ice confirms it independently and it's the better signal because it's a pure trip proxy: 26 orders / 57 units in the 7 days to Aug 18, against 56 orders / 133 units in the week to Aug 7. Order count more than halved. AOV held ($31.68 vs $25.68) — so this is fewer people, not thinner baskets. That distinguishes it from the midweek basket-ceiling effect logged Aug 8, which was the opposite shape.
+
+The context file puts early shoulder at Aug 23. The data says the transition began around Aug 15–16.
+
+**What would confirm it:** the week of Aug 24 has four Exceptional-rated days (455, 450, 465, 460 area). If those land at $700–1,000 rather than the $1,800–1,900 the curve expects, the step-down is real and the phase boundary needs moving. **What would kill it:** any of those days clearing $1,500, which would make this week a one-off — bad tides, a local event elsewhere, or noise.
+
+**Why it matters:** it changes staffing, hours, and the shoulder-season ordering window by a full week, and it means the expectation curve needs a season-position term, not just weather and weekday. Until then, every late-August day will read as a miss when it may be at the realistic ceiling.
