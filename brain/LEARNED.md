@@ -25,6 +25,8 @@ explanation and should be checked before concluding baskets are shrinking.
 
 ---
 
+---
+
 ### 2026-08-07 — Online store converts near zero at current traffic
 **Confidence: high on the fact, low on the cause.**
 
@@ -36,6 +38,8 @@ costs, or the checkout itself. Nothing here identifies which, and the numbers ar
 funnel analysis to say anything reliable.
 
 **To test:** what are those ~100 daily sessions landing on, and where are they coming from?
+
+---
 
 ---
 
@@ -73,6 +77,8 @@ weather. That makes it worth measuring properly rather than on vibes.
 
 ---
 
+---
+
 ### 2026-08-08 — The expectation curve has no weekday term, and weekday looks like a bigger factor than weather at the top of the range
 **Confidence: medium** — clean ordering across three scored days plus two unscored Saturdays, obvious mechanism, but n is small and the Saturdays lack SNP 500 scores.
 
@@ -98,6 +104,8 @@ The mechanism is unremarkable and that's a point in its favour: weekend visitor 
 
 ---
 
+---
+
 ### 2026-08-08 — The online store's proven sellers are Jeep apparel and off-season clothing, not beach goods
 **Confidence: low-medium** — consistent across the week's small order count, plausible mechanism, but 5 orders is not a sample.
 
@@ -108,6 +116,8 @@ Reading: the web audience is not the person driving to Sandy Neck. It looks more
 **To test:** pull the online product mix across a rain week and a heat week. If the mix is stable regardless of weather while in-store swings hard, the two audiences are genuinely separate. Also check whether the Jeep orders ship out of state.
 
 **What would kill it:** a run of online orders for ice-adjacent or beach-gear items, or evidence the Jeep buyers are local pickup.
+
+---
 
 ---
 
@@ -126,12 +136,16 @@ This refines the 2026-08-08 weekday-term note. The right correction may not be a
 
 ---
 
+---
+
 ### 2026-08-09 — Sunday behaves like a weekday, not a weekend day, for the revenue ceiling
 **Confidence: low** — two data points, and both had mediocre scores, so weather and weekday are confounded.
 
 Jul 26 (SNP 425) did $1,159 / 32 orders. Aug 2 (SNP 395) did $859 / 34 orders. Both sit inside or below the midweek $1,200 band, nowhere near the Saturday band ($1,910 at score 410, $3,092 at 450). If Sunday really is a weekday for these purposes, the week-ahead forecast is overstating three days next week rather than two, and the Sun–Tue block should be planned around ~$1,200 each, not ~$1,860.
 
 **To test:** Sun Aug 9 is scored 450 — Exceptional, and the highest-quality Sunday in the record. If it lands near $1,200–1,400 the claim holds; if it clears $1,800 it dies and Sunday belongs with the weekend. That's a clean single-day test and it resolves tomorrow.
+
+---
 
 ---
 
@@ -148,6 +162,8 @@ So the constraint on a good midweek day is not how many people come through the 
 
 ---
 
+---
+
 ### 2026-08-08 — The Saturday-adjusted expectation ceiling may be set too high
 **Confidence: low-medium** — two Saturdays, one curve revision, no day has approached the top of the range.
 
@@ -156,6 +172,8 @@ With the day-of-week factor added, a 450-score Saturday now expects $3,917. Aug 
 If the best day the store has ever produced can't clear 80% of expected, the top anchor is describing a day that doesn't exist rather than a day being missed. The risk is the same inversion error the curve was built to prevent, running the other way: genuinely exceptional days get logged as underperformance and the signal stops meaning anything.
 
 **To test:** Aug 15 (455) and the two high-scored Sundays (Aug 9 at 465, Aug 16 at 470). If three or four more weekend days all land 75–85% of expected with no obvious fault, the anchor is wrong, not the days. **What would kill it:** any weekend day clearing 95%+ — which would mean $3,700+ is genuinely reachable and Aug 8 really did leave money on the floor.
+
+---
 
 ---
 
@@ -170,12 +188,16 @@ The reconciliation is that Sundays appear **score-elastic** in a way midweek day
 
 **Why it matters:** it changes where a promo or event is worth running. If Sundays respond to conditions and weekdays don't, spend the effort on weekend days that are already good, not on trying to rescue midweek.
 
+---
+
 ### 2026-08-09 — Same-day session counts are systematically undercounted and fill in later
 **Confidence: high** — direct observation of the same date reported twice.
 
 Aug 8 read as **17 sessions** on the Aug 9 run and I flagged it as a probable tracking break against a record in-store day. On the Aug 10 run the same date reads **146**. Aug 9 now reads 18 on the same trailing position.
 
 The trailing day in the sessions array is incomplete at read time, not broken. **Never comment on the most recent day's session count**; judge traffic on the prior day and back. This also means any week-over-week session comparison including the trailing day is understated by roughly one full day.
+
+---
 
 ### 2026-08-09 — % of expected is not comparable across days of the week under the current curve
 **Confidence: medium** — two adjacent days, near-identical scores, opposite verdicts.
@@ -185,6 +207,8 @@ Aug 8 (Sat, SNP 450, $3,092) scored **79% of expected**. Aug 9 (Sun, SNP 450, $3
 One of those two anchors is wrong — most likely the Saturday multiplier, since no day in the record has come near $3,917. Until the curve is refit, treat "% of expected" as a within-weekday measure only, and don't tell BJ a Saturday underperformed on that basis alone.
 
 **What would settle it:** three or four more Saturdays. If they cluster at 75–85%, the Saturday factor is too high and should come down.
+
+---
 
 ---
 
@@ -206,6 +230,8 @@ Meanwhile weekends at similar scores went $3,092 (Sat 450) and $3,153 (Sun 450) 
 
 ---
 
+---
+
 ### 2026-08-11 — Peak-season weekday in-store revenue is a hard flat ceiling around $1,250, independent of day quality
 **Confidence: high** — five weekday points across two separate weeks, 65-point SNP spread, $109 revenue spread.
 
@@ -223,6 +249,8 @@ Mechanism: midweek in-store demand is set by how many people are on the Cape, no
 
 ---
 
+---
+
 ### 2026-08-12 — The midweek "flat ceiling" is a ceiling, not a floor: order count can collapse on a top-quality day
 **Confidence: medium** — one clean counter-example against five supporting days, cause unidentified.
 
@@ -233,6 +261,8 @@ The direction of the AOV move is the informative part. If visitor volume simply 
 **What this changes:** midweek forecasting should use ~$1,250 as an upper bound with meaningful downside, not a point estimate. It also means an unexplained low-order day is worth asking about immediately, because the operational explanation and the demand explanation have opposite implications for the last nine days of peak.
 
 **To confirm or kill:** BJ's answer on Wednesday's hours. If hours were normal and Thu Aug 13 (425) also comes in under 20 orders, midweek footfall is genuinely falling as peak ends and the ceiling model needs a late-August decay term. If hours were short, this is a scratch and the five-day band stands.
+
+---
 
 ---
 
@@ -251,6 +281,8 @@ That divergence is diagnostic. A genuine drop in visitors should preserve the mi
 
 ---
 
+---
+
 ### 2026-08-14 — The mid-August order-count trough was operational, not demand
 **Confidence: medium-high** — a clean rebound on a lower-quality day.
 
@@ -259,6 +291,8 @@ Aug 12 (SNP 465) 14 orders, Aug 13 (420) 19 orders — both far under the 22–3
 Supporting detail: AOV moved *inverse* to order count across the trough ($56.93, $46.42, then $34.10 on the rebound). Fewer transactions with bigger baskets is the signature of a store open fewer hours serving committed buyers, not of thinner crowds — thinner crowds would preserve the ice-heavy low-ticket mix and pull AOV down, not up.
 
 **What would kill it:** BJ confirming the store was open normal hours on Aug 12–13, which would make it a genuine two-day demand hole and mean the mid-August rebound is luck rather than mechanism.
+
+---
 
 ### 2026-08-14 — TikTok reach is collapsing monotonically ahead of the off-season plan that depends on it
 **Confidence: high on the trend, unknown on the cause.**
@@ -271,6 +305,8 @@ The dollars were never the point; the channel is held for reach. But the documen
 
 ---
 
+---
+
 ### 2026-08-15 — At matched SNP 500, a weekend day does roughly $750–1,100 more in-store than a weekday
 **Confidence: medium-high** — first clean matched-score weekend/weekday comparison, plus consistent supporting spread across the month.
 
@@ -280,12 +316,16 @@ Related and separable: weekends appear to *respond* to score while weekdays do n
 
 **What would confirm:** two or three more matched-score weekend/weekday pairs holding the same gap. **What would kill it:** a high-scored Saturday landing inside the weekday band, or the Aug 8 figure turning out to be event-driven rather than weather-driven (which would shrink the weekend response coefficient without touching the level difference).
 
+---
+
 ### 2026-08-15 — TikTok has declined monotonically to zero over nine weeks
 **Confidence: high on the fact.** $185.70 → $127.79 → $103.83 → $89.85 → $71.88 → $41.93 → $29.95 → $17.97 → $0. Nine consecutive weekly declines, no reversals.
 
 Every one of those orders was Sun Bum air fresheners, so what died is a single algorithmic push, not a channel with a diversified base. Cause unknown — could be the algorithm moving on, could be posting cadence falling off during peak season. That distinction matters a lot, because the off-season plan (CONTEXT.md) explicitly leans on TikTok reach.
 
 **To test:** compare posting frequency June vs August. If cadence collapsed, this is fixable and self-inflicted. If cadence held and reach still died, the product-level push is gone and the off-season plan needs a different anchor.
+
+---
 
 ---
 
@@ -299,6 +339,8 @@ Mechanism: Cape rental weeks turn over Saturday–Sunday. Departing renters are 
 Confounded here by the ice collapse (weekly ice orders 54 → 39 → 24), which points at falling visitor volume generally, and by an unanswered question about Sunday store hours. Either could account for the whole gap.
 
 **To test:** bucket % -of-expected by Sat vs Sun at matched SNP scores. Only Aug 22/23 remain in peak, so this may have to wait for the shoulder or next season. **What would kill it:** a Sunday clearing the matched-score weekday set by the usual $750+, or BJ confirming reduced Sunday hours.
+
+---
 
 ---
 
@@ -317,6 +359,8 @@ Over the same window, total daily order counts fell from the 25–57 band to a 1
 
 ---
 
+---
+
 ### 2026-08-18 — The expectation curve over-predicts systematically once visitor volume turns, independent of weather score
 **Confidence: medium** — six consecutive days of the same directional error, clean mechanism, but one season and one turn.
 
@@ -331,3 +375,18 @@ Corroborating independent signal: ice weekly orders 62 → 61 → 59 → 54 → 
 **To test:** plot % -of-expected against date for all scored days since Aug 1 and check whether the trend is monotonic with date independent of score. If it is, the fix is a season-position multiplier in `agent/expectations.py` — but do not change the curve without BJ, and log any change in CONTEXT's curve-change table.
 
 **What would kill it:** a Great-rated day in the next week clearing 90%+ of expected. Thu Aug 20 (460) and Fri Aug 21 (465) are the immediate tests — if either lands near $1,900 the curve is fine and the last week was something else.
+
+---
+
+### 2026-08-18 — Peak demand steps down around mid-August, roughly a week before the phase calendar says
+**Confidence: medium** — four consecutive weather-matched days, plus an independent footfall proxy, but only one season of data.
+
+Aug 15–19 ran $2,038 (Sat), $788, $789, $475, $773 on SNP scores of 410–425. Eight days earlier the same score band produced $1,260 (Aug 10, score 485), $1,273 (Aug 11, 475), $922 (Aug 13, 420). Realised revenue against the expectation curve fell from ~70–80% to ~50–55% with no change in weather quality.
+
+Ice confirms it independently and it's the better signal because it's a pure trip proxy: 26 orders / 57 units in the 7 days to Aug 18, against 56 orders / 133 units in the week to Aug 7. Order count more than halved. AOV held ($31.68 vs $25.68) — so this is fewer people, not thinner baskets. That distinguishes it from the midweek basket-ceiling effect logged Aug 8, which was the opposite shape.
+
+The context file puts early shoulder at Aug 23. The data says the transition began around Aug 15–16.
+
+**What would confirm it:** the week of Aug 24 has four Exceptional-rated days (455, 450, 465, 460 area). If those land at $700–1,000 rather than the $1,800–1,900 the curve expects, the step-down is real and the phase boundary needs moving. **What would kill it:** any of those days clearing $1,500, which would make this week a one-off — bad tides, a local event elsewhere, or noise.
+
+**Why it matters:** it changes staffing, hours, and the shoulder-season ordering window by a full week, and it means the expectation curve needs a season-position term, not just weather and weekday. Until then, every late-August day will read as a miss when it may be at the realistic ceiling.
