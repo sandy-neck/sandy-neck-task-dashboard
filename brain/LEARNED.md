@@ -390,3 +390,14 @@ The context file puts early shoulder at Aug 23. The data says the transition beg
 **What would confirm it:** the week of Aug 24 has four Exceptional-rated days (455, 450, 465, 460 area). If those land at $700–1,000 rather than the $1,800–1,900 the curve expects, the step-down is real and the phase boundary needs moving. **What would kill it:** any of those days clearing $1,500, which would make this week a one-off — bad tides, a local event elsewhere, or noise.
 
 **Why it matters:** it changes staffing, hours, and the shoulder-season ordering window by a full week, and it means the expectation curve needs a season-position term, not just weather and weekday. Until then, every late-August day will read as a miss when it may be at the realistic ceiling.
+
+---
+
+### 2026-08-18 — TikTok is small but not zero; earlier "structurally zero" read was wrong
+**Confidence: medium** — corrected by direct data, but the series is noisy at this volume.
+
+On Aug 16 and 17 I logged TikTok as absent two weeks running and drew a conclusion about the off-season plan losing its reach. The 7-day pull to Aug 18 shows 10 orders / $65.90 (7 Sun Bum air fresheners, 3 Lucky Bum figures). It was small, not gone, and the earlier weekly windows likely just clipped it.
+
+Lesson that generalises: at 1–3 orders/day, a channel can read as zero in a 7-day window purely from where the window boundary lands. **Do not declare a low-volume channel dead off weekly aggregates** — check daily counts before making a structural claim about it.
+
+**What would confirm the underlying decline is still real:** TikTok weekly order count staying under ~12 through September, against ~26 in early August.
