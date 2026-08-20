@@ -390,3 +390,16 @@ The context file puts early shoulder at Aug 23. The data says the transition beg
 **What would confirm it:** the week of Aug 24 has four Exceptional-rated days (455, 450, 465, 460 area). If those land at $700–1,000 rather than the $1,800–1,900 the curve expects, the step-down is real and the phase boundary needs moving. **What would kill it:** any of those days clearing $1,500, which would make this week a one-off — bad tides, a local event elsewhere, or noise.
 
 **Why it matters:** it changes staffing, hours, and the shoulder-season ordering window by a full week, and it means the expectation curve needs a season-position term, not just weather and weekday. Until then, every late-August day will read as a miss when it may be at the realistic ceiling.
+
+---
+
+### 2026-08-19 — The mid-August footfall drop is a step to a new level, not a continuing slide
+**Confidence: medium** — three weeks of a flat footfall proxy, one season of data.
+
+Ice order count (the cleanest trip proxy) ran 62 → 61 → 59 → 54 → 39 → 24 → 25 → 26 across weekly buckets. The fall happened between roughly Aug 5 and Aug 13; the last three weeks are flat at 24–26. Revenue behaves the same way: weekday in-store has sat at $475–$922 for six consecutive days on scores spanning 410–465, and Aug 19 ($871, score 420) beat Aug 12 ($806, score 465).
+
+I spent four days reporting this as a decline. It isn't one any more — it's a plateau roughly half the early-August level. That changes the framing on everything downstream: a $800 weekday is now *normal*, not a miss, and the expectation curve's weather term has near-zero explanatory power inside this band.
+
+**What would confirm it:** ice holding at 24–28 orders/week through the Aug 24 week, and the Aug 24–26 Exceptional block landing $700–1,000 rather than the ~$1,800 the curve expects. **What would kill it:** a second leg down — ice into the teens — or any Exceptional day clearing $1,500, which would mean weather still moves the number and the last fortnight was something else.
+
+**Why it matters:** if it's a plateau, the shoulder-season revenue base is predictable and can be planned against. If it's a slide, every forward projection including the $70k-to-target figure is too optimistic.
