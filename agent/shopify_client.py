@@ -268,10 +268,13 @@ class ShopifyClient:
                 "conversion_rate "
                 "TIMESERIES day SINCE -14d UNTIL today"
             )
-            now_str = datetime.now(ET).strftime("%Y-%m-%d")
+            # Report the last COMPLETE day, not today. The agent caught this in its own journal:
+            # the same date read 17 sessions on one run and 146 the next, because the trailing day
+            # is still filling in at read time. Reporting it makes traffic look broken every morning.
+            report_day = (datetime.now(ET) - timedelta(days=1)).strftime("%Y-%m-%d")
             today_row = next(
-                (r for r in rows if str(r.get("day", "")).startswith(now_str)),
-                rows[-1] if rows else {},
+                (r for r in rows if str(r.get("day", "")).startswith(report_day)),
+                rows[-2] if len(rows) > 1 else {},
             )
 
             def sessions_in(subset):
