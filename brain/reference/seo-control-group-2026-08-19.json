@@ -1,0 +1,1778 @@
+{
+  "snapshot_date": "2026-08-19",
+  "purpose": "Control group for the 2026-08-19 SEO / AI-legibility work. These active products had no productType and no enrichment at snapshot time — same site, same domain authority, same seasonality, no treatment. The automated Routine converts this cohort price-descending over time, so this list only shrinks. Compare treated vs untreated performance against this baseline.",
+  "query": "status:active AND product_type:''",
+  "count": 354,
+  "products": [
+    {
+      "handle": "security-bond",
+      "title": "Security Bond",
+      "price": 999.0
+    },
+    {
+      "handle": "sowkt-water-mat",
+      "title": "Sowkt Water Mat",
+      "price": 465.0
+    },
+    {
+      "handle": "turtlebox-gen-2-loud-outdoor-portable-bluetooth-speaker",
+      "title": "Turtlebox Gen 2: Loud! Outdoor Portable Bluetooth Speaker",
+      "price": 399.0
+    },
+    {
+      "handle": "premium-beach-cabana",
+      "title": "Premium Beach Cabana - Cape Cod Beach Chair Company",
+      "price": 325.0
+    },
+    {
+      "handle": "zap-large-wedge-skimboard-49",
+      "title": "ZAP Large Wedge Skimboard 49\"",
+      "price": 279.0
+    },
+    {
+      "handle": "zap-core-v2-skimboard-45",
+      "title": "ZAP Core V2 Skimboard",
+      "price": 264.0
+    },
+    {
+      "handle": "zap-core-skimboard-48",
+      "title": "ZAP Core Skimboard 48”",
+      "price": 215.0
+    },
+    {
+      "handle": "zap-medium-wedge-skimboard-45",
+      "title": "ZAP Medium Wedge Skimboard 45\"",
+      "price": 215.0
+    },
+    {
+      "handle": "sandy-neck-provisions-gift-card",
+      "title": "Sandy Neck Provisions Gift Card",
+      "price": 200.0
+    },
+    {
+      "handle": "the-wind-screen",
+      "title": "The Wind Screen",
+      "price": 199.99
+    },
+    {
+      "handle": "zap-core-skimboard-44",
+      "title": "ZAP Core Skimboard 44”",
+      "price": 180.0
+    },
+    {
+      "handle": "dune-high-beach-chair",
+      "title": "Dune High Beach Chair",
+      "price": 179.99
+    },
+    {
+      "handle": "zap-lazer-skimboard-40",
+      "title": "ZAP Lazer Skimboard 40\"",
+      "price": 179.0
+    },
+    {
+      "handle": "inflatable-wild-river-tube",
+      "title": "NRS Inflatable Wild River Tube",
+      "price": 174.95
+    },
+    {
+      "handle": "zap-mini-lazer-skimboard-35",
+      "title": "ZAP MINI Lazer Skimboard 35\"",
+      "price": 159.0
+    },
+    {
+      "handle": "zap-core-skimboard-40",
+      "title": "ZAP Core Skimboard 40\"",
+      "price": 149.0
+    },
+    {
+      "handle": "gci-slim-fold-table-xl",
+      "title": "GCI Slim Fold Table XL",
+      "price": 135.0
+    },
+    {
+      "handle": "sun-ninja-4-person-tent",
+      "title": "Sun Ninja 4 Person Tent",
+      "price": 119.0
+    },
+    {
+      "handle": "gully-child-beach-chair",
+      "title": "Gully Child Beach Chair",
+      "price": 104.99
+    },
+    {
+      "handle": "waboba-wingman-hitman-game",
+      "title": "Waboba Wingman Hitman Game",
+      "price": 100.0
+    },
+    {
+      "handle": "marloru-sand-cabana-xl-tote",
+      "title": "Marloru - Sand Cabana XL Tote",
+      "price": 88.0
+    },
+    {
+      "handle": "trailhead-tire-deflators-4-pack",
+      "title": "Trailhead Tire Deflators (4 pack)",
+      "price": 76.0
+    },
+    {
+      "handle": "sun-ninja-portable-shower",
+      "title": "Sun Ninja Portable Shower",
+      "price": 75.0
+    },
+    {
+      "handle": "2-water-saddles",
+      "title": "2 Water Saddles (Online Exclusive)",
+      "price": 69.99
+    },
+    {
+      "handle": "4x4-automatic-tyre-deflator",
+      "title": "4x4 Automatic tyre deflator",
+      "price": 65.0
+    },
+    {
+      "handle": "jeep-catch-a-wave-hoodie",
+      "title": "Jeep Catch A Wave Hoodie",
+      "price": 62.0
+    },
+    {
+      "handle": "suncloud-aviator-polarized-sunglasses",
+      "title": "Suncloud Aviator Polarized Sunglasses",
+      "price": 59.95
+    },
+    {
+      "handle": "suncloud-affect-polarized-sunglasses",
+      "title": "Suncloud Affect Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-beyond-polarized-sunglasses",
+      "title": "Suncloud Beyond Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-boone-polarized-sunglasses",
+      "title": "Suncloud Boone Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-lowkey-polarized-sunglasses",
+      "title": "Suncloud Lowkey Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-mayor-polarized-sunglasses",
+      "title": "Suncloud Mayor Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-rambler-polarized-sunglasses",
+      "title": "Suncloud Rambler Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-sashay-polarized-sunglasses",
+      "title": "Suncloud Sashay Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-sentry-polarized-sunglasses",
+      "title": "Suncloud Sentry Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-zephyr-polarized-sunglasses",
+      "title": "Suncloud Zephyr Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "suncloud-hull-sunglasses",
+      "title": "Suncloud Hull Polarized Sunglasses",
+      "price": 54.95
+    },
+    {
+      "handle": "snp-sweatshirt-the-tourist",
+      "title": "SNP Adult Sweatshirt - \"The Tourist\"",
+      "price": 50.0
+    },
+    {
+      "handle": "vineyard-crew-garment-dye-fleece-hoodie",
+      "title": "SNP Garment Dye Fleece Hoodie",
+      "price": 50.0
+    },
+    {
+      "handle": "mojave-sunrise-sunglasses",
+      "title": "Mojave Sunrise Sunglasses",
+      "price": 49.0
+    },
+    {
+      "handle": "snp-burnout-round-hem-crewneck",
+      "title": "SNP Womens Burnout Round Hem Crewneck",
+      "price": 49.0
+    },
+    {
+      "handle": "burnout-dip-dye-shorts",
+      "title": "SNP Womens Burnout Dip Dye Shorts",
+      "price": 45.0
+    },
+    {
+      "handle": "greenfield-coated-mushroom-anchor",
+      "title": "Coated Mushroom Anchor",
+      "price": 45.0
+    },
+    {
+      "handle": "mushroom-anchor",
+      "title": "Mushroom Anchor",
+      "price": 45.0
+    },
+    {
+      "handle": "inodsole-womens-flip-flops-easy-living",
+      "title": "Indosole Women's Flip Flops Easy Living",
+      "price": 45.0
+    },
+    {
+      "handle": "dog-anchor",
+      "title": "Dog Anchor",
+      "price": 45.0
+    },
+    {
+      "handle": "astro-ai-electric-air-pump",
+      "title": "Astro AI Electric Air Pump",
+      "price": 44.99
+    },
+    {
+      "handle": "noreast-ultralight-table",
+      "title": "NorEast Ultralight Table",
+      "price": 44.99
+    },
+    {
+      "handle": "cowrie-shell-ring-handmade-by-the-salty-gem",
+      "title": "Cowrie Shell Ring - Handmade by The Salty Gem",
+      "price": 44.0
+    },
+    {
+      "handle": "jeep-star-flag-blanket",
+      "title": "Jeep Star Flag Blanket",
+      "price": 42.0
+    },
+    {
+      "handle": "jeep-wrangler-beach-long-sleeve-garment-dyed-tee",
+      "title": "Jeep Wrangler Beach Long Sleeve Garment-Dyed Tee",
+      "price": 42.0
+    },
+    {
+      "handle": "endless-summer-mens-long-sleeve-sunshirt-with-flag-print",
+      "title": "Endless Summer Mens Long Sleeve Sunshirt with Flag Print",
+      "price": 40.0
+    },
+    {
+      "handle": "lifeguard-hat",
+      "title": "Lifeguard Hat",
+      "price": 40.0
+    },
+    {
+      "handle": "nautica-beach-towels",
+      "title": "Nautica Beach Towels",
+      "price": 40.0
+    },
+    {
+      "handle": "snp-uv-shirts",
+      "title": "SNP UV Shirts",
+      "price": 40.0
+    },
+    {
+      "handle": "thread-magnetic-wallet",
+      "title": "Thread Magnetic Wallet",
+      "price": 40.0
+    },
+    {
+      "handle": "vintage-havana-kids-burnout-zip-hoodie-sweatshirt",
+      "title": "SNP Kids Burnout Zip Hoodie Sweatshirt",
+      "price": 40.0
+    },
+    {
+      "handle": "mens-water-shoes-latitude",
+      "title": "Mens Water Shoes - Latitude",
+      "price": 39.99
+    },
+    {
+      "handle": "zap-lazer-tail-pad-skimboard-traction",
+      "title": "ZAP Lazer Tail Pad Skimboard Traction",
+      "price": 39.0
+    },
+    {
+      "handle": "snp-bucket-hat",
+      "title": "SNP Bucket Hat",
+      "price": 38.0
+    },
+    {
+      "handle": "zap-spark-arch-bar-skimboard-traction",
+      "title": "ZAP Spark Arch Bar Skimboard Traction",
+      "price": 38.0
+    },
+    {
+      "handle": "jeep-american-original-hat",
+      "title": "Jeep American Original Shield Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-beach-sunset-hat",
+      "title": "Jeep Beach Sunset Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-camo-flag-hat",
+      "title": "Jeep Camo Flag Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-grille-pom-hat",
+      "title": "Jeep Grille Pom Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-mountain-stripe-grey-hat",
+      "title": "Jeep Mountain Stripe Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-mountain-wave-hat",
+      "title": "Jeep Mountain Wave Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-star-patch-hat",
+      "title": "Jeep Star Patch Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-stars-and-stripes-hat",
+      "title": "Jeep Stars and Stripes Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "jeep-sunrise-hat",
+      "title": "Jeep Sunrise Hat",
+      "price": 35.0
+    },
+    {
+      "handle": "products-endless-summer-boys-long-sleeve-sunshirt-with-flag-print",
+      "title": "Products Endless Summer Boy's Long Sleeve Sunshirt with Flag Print",
+      "price": 35.0
+    },
+    {
+      "handle": "snp-kids-burnout-sweatpants",
+      "title": "SNP Kids Burnout Sweatpants",
+      "price": 35.0
+    },
+    {
+      "handle": "snp-kids-tie-dye-jogger",
+      "title": "SNP Kids Tie Dye Sweatpants",
+      "price": 35.0
+    },
+    {
+      "handle": "multitool-pro",
+      "title": "Multitool Pro",
+      "price": 35.0
+    },
+    {
+      "handle": "multitool-pro-1",
+      "title": "Multitool Pro",
+      "price": 35.0
+    },
+    {
+      "handle": "grazing-cape-cod-book-by-local-author-rachel-ruth",
+      "title": "Grazing Cape Cod - Book by Local Author Rachel Ruth",
+      "price": 35.0
+    },
+    {
+      "handle": "12v-high-output-air-pump",
+      "title": "12V High Output Air Pump",
+      "price": 34.99
+    },
+    {
+      "handle": "fmc-bronco-freedom-t-shirt",
+      "title": "FMC Bronco Freedom T-Shirt",
+      "price": 32.0
+    },
+    {
+      "handle": "jeep-usa-t-shirt",
+      "title": "Jeep USA T-Shirt",
+      "price": 32.0
+    },
+    {
+      "handle": "endless-summer-mens-straw-hat-with-flag-print",
+      "title": "Endless Summer Men's Straw Hat with Flag Print",
+      "price": 30.0
+    },
+    {
+      "handle": "the-tipsy-toy",
+      "title": "The Tipsy Toy",
+      "price": 30.0
+    },
+    {
+      "handle": "vintage-havana-kids-crewneck-burnout-long-sleeve-tee",
+      "title": "SNP Kids Crewneck Burnout Long Sleeve Tee",
+      "price": 30.0
+    },
+    {
+      "handle": "surf-cast-fishermans-caddy",
+      "title": "Surf Cast Fisherman's Caddy",
+      "price": 29.99
+    },
+    {
+      "handle": "sun-bum-pyla-beach-towel",
+      "title": "Sun Bum 'PYLA' Beach Towel",
+      "price": 29.99
+    },
+    {
+      "handle": "classy-cloth-round-beach-towel",
+      "title": "Classy Cloth Round Beach Towel",
+      "price": 28.0
+    },
+    {
+      "handle": "womens-pigment-dye-crop-tee",
+      "title": "SNP Womens Pigment Dye Crop Tee",
+      "price": 28.0
+    },
+    {
+      "handle": "snp-womens-ribbed-baby-tee",
+      "title": "SNP Womens Ribbed Baby Tee",
+      "price": 28.0
+    },
+    {
+      "handle": "charcoal",
+      "title": "Charcoal",
+      "price": 25.0
+    },
+    {
+      "handle": "kids-snorkel-set",
+      "title": "Kids Snorkel Set",
+      "price": 25.0
+    },
+    {
+      "handle": "snp-kids-crop-pocket-tee",
+      "title": "SNP Kids Crop Pocket Tee",
+      "price": 25.0
+    },
+    {
+      "handle": "sun-protection-hat-safety-headgear-floater-series",
+      "title": "Sun Protection Hat - Safety Headgear - Floater Series",
+      "price": 25.0
+    },
+    {
+      "handle": "trailhead-deflators-single",
+      "title": "Trailhead Deflators Single",
+      "price": 25.0
+    },
+    {
+      "handle": "10-coil-leash",
+      "title": "POP Board Co. 10' Coil Leash",
+      "price": 25.0
+    },
+    {
+      "handle": "quadratec-heavy-duty-folding-utility-shovel-with-storage-pouch",
+      "title": "Quadratec Heavy Duty Folding Utility Shovel with Storage Pouch",
+      "price": 24.0
+    },
+    {
+      "handle": "sun-bum-coconut-argan-oil-3oz",
+      "title": "Sun Bum Coconut Argan Oil (3oz)",
+      "price": 21.99
+    },
+    {
+      "handle": "sun-bum-daily-mineral-sunscreen-moisturizer-spf-30-1-7oz",
+      "title": "Sun Bum Daily Mineral Sunscreen Moisturizer SPF 30 (1.7oz)",
+      "price": 21.99
+    },
+    {
+      "handle": "sun-bum-mineral-spf-30-sunscreen-face-lotion-1-7oz",
+      "title": "Sun Bum Mineral SPF 30 Sunscreen Face Lotion (1.7oz)",
+      "price": 20.49
+    },
+    {
+      "handle": "sun-bum-mineral-spf-50-sunscreen-spray",
+      "title": "Sun Bum Mineral SPF 50 Sunscreen Spray",
+      "price": 20.49
+    },
+    {
+      "handle": "sun-bum-original-spf-30-sunscreen-oil-5oz",
+      "title": "Sun Bum Original SPF 30 Sunscreen Oil (5oz)",
+      "price": 20.49
+    },
+    {
+      "handle": "4ocean-reusable-stainless-steel-cup-4-pack",
+      "title": "4ocean Reusable Stainless Steel Cup (4 pack)",
+      "price": 20.0
+    },
+    {
+      "handle": "coffee-on-tap",
+      "title": "Coffee On Tap",
+      "price": 20.0
+    },
+    {
+      "handle": "endless-summer-mens-flip-flops-with-flag-print",
+      "title": "Endless Summer Mens Flip Flops with Flag Print",
+      "price": 20.0
+    },
+    {
+      "handle": "sandy-neck-beach-delivery",
+      "title": "Sandy Neck Beach Delivery",
+      "price": 20.0
+    },
+    {
+      "handle": "charlie-banana-swim-diapers",
+      "title": "Charlie Banana Swim Diapers",
+      "price": 19.99
+    },
+    {
+      "handle": "surfer-dudes-classics",
+      "title": "Surfer Dudes Classics",
+      "price": 19.99
+    },
+    {
+      "handle": "sun-bum-daily-50-face-lotion-1-7oz",
+      "title": "Sun Bum Daily 50 Face Lotion (1.7oz)",
+      "price": 19.99
+    },
+    {
+      "handle": "deposit",
+      "title": "Deposit",
+      "price": 19.8
+    },
+    {
+      "handle": "snowy-owl-coffee-roasters",
+      "title": "Snowy Owl Coffee Roasters Coffee",
+      "price": 19.0
+    },
+    {
+      "handle": "sun-bum-mineral-spf-50-sunscreen-roll-on-lotion-3oz",
+      "title": "Sun Bum Mineral SPF 50 Sunscreen Roll-On Lotion (3oz)",
+      "price": 18.49
+    },
+    {
+      "handle": "sun-bum-original-glow-spf-30-sunscreen-lotion-2oz",
+      "title": "Sun Bum Original Glow SPF 30 Sunscreen Lotion (2oz)",
+      "price": 18.49
+    },
+    {
+      "handle": "sun-bum-original-spf-30-sunscreen-spray-6-oz",
+      "title": "Sun Bum Original SPF 30 Sunscreen Spray (6oz)",
+      "price": 18.49
+    },
+    {
+      "handle": "snp-slim-can-koozie",
+      "title": "SNP Slim Can Koozie",
+      "price": 18.0
+    },
+    {
+      "handle": "upf-50-bucket-hat-sharky",
+      "title": "Flap Happy UPF 50 Bucket Hat - Sharky",
+      "price": 17.95
+    },
+    {
+      "handle": "spot-it",
+      "title": "Spot It Card Game",
+      "price": 17.0
+    },
+    {
+      "handle": "sun-bum-protecting-anti-frizz-oil-mist-3oz",
+      "title": "Sun Bum Protecting Anti-Frizz Oil Mist (3oz)",
+      "price": 16.99
+    },
+    {
+      "handle": "sun-bum-mineral-spf-50-sunscreen-lotion-fragrance-free-3oz",
+      "title": "Sun Bum Baby Bum Mineral SPF 50 Sunscreen Lotion (3oz)",
+      "price": 16.49
+    },
+    {
+      "handle": "sun-bum-mineral-spf-50-sunscreen-spray-fragrance-free-3oz",
+      "title": "Sun Bum Baby Bum Mineral SPF 50 Sunscreen Spray (3oz)",
+      "price": 16.49
+    },
+    {
+      "handle": "hape-beach-basic-sand-toy-set",
+      "title": "Hape Beach Basic Sand Toy Set",
+      "price": 16.0
+    },
+    {
+      "handle": "rv-toilet-paper",
+      "title": "Toilet Paper",
+      "price": 16.0
+    },
+    {
+      "handle": "dog-lead-15-teal",
+      "title": "Dog Leash - 15' Teal",
+      "price": 15.99
+    },
+    {
+      "handle": "waboba-beach-soccer-ball-pump",
+      "title": "Waboba Beach Soccer Ball and Pump",
+      "price": 15.99
+    },
+    {
+      "handle": "conscious-step-socks",
+      "title": "Conscious Step Socks",
+      "price": 15.95
+    },
+    {
+      "handle": "fresh-flowers",
+      "title": "Fresh Flowers",
+      "price": 15.0
+    },
+    {
+      "handle": "glow-floating-phone-pouch",
+      "title": "Glow Floating Phone Pouch",
+      "price": 14.99
+    },
+    {
+      "handle": "iced-tea-on-tap-peach-turmeric-black-tea",
+      "title": "Iced Tea On Tap - Peach Turmeric Black Tea",
+      "price": 14.0
+    },
+    {
+      "handle": "portable-phone-charger",
+      "title": "Portable Phone Charger",
+      "price": 14.0
+    },
+    {
+      "handle": "desitin®-ointment-2oz",
+      "title": "DESITIN® Ointment (2oz)",
+      "price": 13.99
+    },
+    {
+      "handle": "dog-tie-out-stake",
+      "title": "Dog Tie Out Stake",
+      "price": 13.99
+    },
+    {
+      "handle": "neosporin-ointment-5oz",
+      "title": "Neosporin Ointment (.5oz)",
+      "price": 13.99
+    },
+    {
+      "handle": "plastic-cutlery",
+      "title": "Plastic Cutlery",
+      "price": 13.99
+    },
+    {
+      "handle": "sun-bum-mineral-spf-50-sunscreen-face-stick-53oz",
+      "title": "Sun Bum Mineral SPF 50 Sunscreen Face Stick (.53oz)",
+      "price": 13.49
+    },
+    {
+      "handle": "waboba-big-wing-flying-disk",
+      "title": "Waboba Big Wing Flying Disc",
+      "price": 13.0
+    },
+    {
+      "handle": "waboba-light-up-moon-ball-moonshine",
+      "title": "Waboba Light Up Moon Ball (Moonshine)",
+      "price": 12.99
+    },
+    {
+      "handle": "tuna-wrap",
+      "title": "Tuna Wrap",
+      "price": 12.5
+    },
+    {
+      "handle": "turkey-avo-blt-wrap",
+      "title": "Turkey Avo-BLT Sandwich",
+      "price": 12.5
+    },
+    {
+      "handle": "ham-and-cheese-sub",
+      "title": "Ham and Cheese Sub",
+      "price": 12.5
+    },
+    {
+      "handle": "roast-beef-and-cheese-sub",
+      "title": "Pastrami and Cheese Sub",
+      "price": 12.5
+    },
+    {
+      "handle": "cranberry-chicken-salad-sub",
+      "title": "Cranberry Chicken Salad Sub",
+      "price": 12.5
+    },
+    {
+      "handle": "egg-salad-sub",
+      "title": "Egg Salad Sub",
+      "price": 12.5
+    },
+    {
+      "handle": "meatball-and-cheese-sub",
+      "title": "Meatball and Cheese Sub",
+      "price": 12.5
+    },
+    {
+      "handle": "turkey-and-cheese-sandwich",
+      "title": "Turkey and Cheese Sandwich",
+      "price": 12.5
+    },
+    {
+      "handle": "quinoa-mediterranean-grain-bowl",
+      "title": "Quinoa Mediterranean Grain Bowl",
+      "price": 12.5
+    },
+    {
+      "handle": "italian-sandwich",
+      "title": "Italian Sandwich",
+      "price": 12.5
+    },
+    {
+      "handle": "turkey-and-cheese",
+      "title": "Turkey and Cheese",
+      "price": 12.5
+    },
+    {
+      "handle": "sun-bum-mineral-spf-50-sunscreen-face-stick-fragrance-free-45oz",
+      "title": "Sun Bum Baby Bum SPF 50 Sunscreen Face Stick (.45oz)",
+      "price": 12.49
+    },
+    {
+      "handle": "sun-bum-original-spf-30-sunscreen-face-stick-53oz",
+      "title": "Sun Bum Original SPF 30 Sunscreen Face Stick (.53oz)",
+      "price": 12.49
+    },
+    {
+      "handle": "waboba-stars-stripes-pro-ball",
+      "title": "Waboba Stars & Stripes Pro Ball",
+      "price": 11.99
+    },
+    {
+      "handle": "playtex-tampons-sport-regular-8ct",
+      "title": "Playtex Tampons Sport Regular (8ct)",
+      "price": 11.98
+    },
+    {
+      "handle": "sun-bum-original-spf-30-sunscreen-lotion-3oz",
+      "title": "Sun Bum Original SPF 30 Sunscreen Lotion (3oz)",
+      "price": 11.49
+    },
+    {
+      "handle": "sun-bum-original-spf-70-sunscreen-lotion-3oz",
+      "title": "Sun Bum Original SPF 70 Sunscreen Lotion (3oz)",
+      "price": 11.49
+    },
+    {
+      "handle": "compostable-round-plates",
+      "title": "Compostable Round Plates",
+      "price": 11.0
+    },
+    {
+      "handle": "fruit-cup",
+      "title": "Fruit cup",
+      "price": 11.0
+    },
+    {
+      "handle": "parfait",
+      "title": "Parfait",
+      "price": 11.0
+    },
+    {
+      "handle": "dry-brew",
+      "title": "Dry Brew Chewable Coffee Bites | Portable Coffee Energy Boost",
+      "price": 11.0
+    },
+    {
+      "handle": "gradient-moon-ball-assorted-colors",
+      "title": "Waboba Gradient Moon Ball - Assorted Colors",
+      "price": 10.99
+    },
+    {
+      "handle": "waboba-original-tropical-ball",
+      "title": "Waboba Original Tropical Ball",
+      "price": 10.99
+    },
+    {
+      "handle": "the-local-scoop-pints",
+      "title": "The Local Scoop Pints",
+      "price": 10.0
+    },
+    {
+      "handle": "swimmers-ear-drops",
+      "title": "Swimmers Ear Drops",
+      "price": 10.0
+    },
+    {
+      "handle": "caesar-salad",
+      "title": "Caesar Salad",
+      "price": 10.0
+    },
+    {
+      "handle": "turkey-and-cheese-small",
+      "title": "Turkey and Cheese Small",
+      "price": 10.0
+    },
+    {
+      "handle": "the-slim-retainer-basic-colors",
+      "title": "The SLIM Retainer - Basic Colors",
+      "price": 9.99
+    },
+    {
+      "handle": "waboba-zag-ball",
+      "title": "Waboba Zag Ball",
+      "price": 9.99
+    },
+    {
+      "handle": "bye-bye-blackfly-waterproof-insect-repellent-beeswax-based",
+      "title": "Bye-Bye Blackfly Waterproof Insect Repellent Stick",
+      "price": 9.95
+    },
+    {
+      "handle": "the-old-farmers-almanac-insect-repellent-for-people",
+      "title": "The Old Farmer's Almanac All-Natural Insect Repellent",
+      "price": 9.95
+    },
+    {
+      "handle": "batiste-dry-shampoo-original-1-6oz",
+      "title": "Batiste Dry Shampoo - Original (1.6oz)",
+      "price": 9.5
+    },
+    {
+      "handle": "polaroid-aaa-batteries",
+      "title": "Polaroid AAA Batteries",
+      "price": 9.5
+    },
+    {
+      "handle": "wet-brush®-mini-detangler-pink",
+      "title": "Wet Brush® Mini Detangler Hair Brush (purple)",
+      "price": 9.5
+    },
+    {
+      "handle": "monomoy-mochaccino-chocolate-bar",
+      "title": "Monomoy Mochaccino Chocolate Bar",
+      "price": 9.0
+    },
+    {
+      "handle": "wellfleet-sea-salt-bar",
+      "title": "Wellfleet Sea Salt Chocolate Bar",
+      "price": 9.0
+    },
+    {
+      "handle": "salami-genoa-fontina-snack-pack",
+      "title": "Salami Genoa Fontina Snack Pack",
+      "price": 9.0
+    },
+    {
+      "handle": "ham-prosciutto-mozzarella-snack-pack",
+      "title": "Ham Prosciutto Mozzarella Snack Pack",
+      "price": 9.0
+    },
+    {
+      "handle": "mack-s®-dry-n-clear®-ear-drying-aid-1oz",
+      "title": "Mack’s® Dry-n-Clear® Ear Drying Aid (1oz)",
+      "price": 8.99
+    },
+    {
+      "handle": "cape-and-islands-magazine",
+      "title": "Cape Cod & The Islands Magazine",
+      "price": 8.99
+    },
+    {
+      "handle": "suncloud-active-sunglasses-case-black-woven",
+      "title": "Suncloud Active Sunglasses Case (Black Woven)",
+      "price": 8.95
+    },
+    {
+      "handle": "suncloud-explorer-sunglasses-case-green-woven",
+      "title": "Suncloud Explorer Sunglasses Case (Green Woven)",
+      "price": 8.95
+    },
+    {
+      "handle": "hellmanns-real-mayonnaise",
+      "title": "Hellmann's Real Mayonnaise",
+      "price": 8.5
+    },
+    {
+      "handle": "hudson-valley-graham-crackers",
+      "title": "Hudson Valley Graham Crackers",
+      "price": 8.5
+    },
+    {
+      "handle": "halls-minis-cough-drops",
+      "title": "Halls Minis Cough Drops",
+      "price": 8.5
+    },
+    {
+      "handle": "cortizone-10-ointment-1oz",
+      "title": "Cortizone-10 Ointment (1oz)",
+      "price": 8.0
+    },
+    {
+      "handle": "trailhead-tire-gauge",
+      "title": "Trailhead Tire Gauge",
+      "price": 8.0
+    },
+    {
+      "handle": "parchment-paper",
+      "title": "parchment paper",
+      "price": 8.0
+    },
+    {
+      "handle": "pepto-bismol",
+      "title": "Pepto Bismol",
+      "price": 8.0
+    },
+    {
+      "handle": "kid-16-sand-shovels-assorted-colors",
+      "title": "Kid 16\" Sand Shovels (Assorted Colors)",
+      "price": 7.99
+    },
+    {
+      "handle": "dramamine®-tablets-2-doses",
+      "title": "Dramamine® Tablets (2 doses)",
+      "price": 7.5
+    },
+    {
+      "handle": "macks-silicone-earplugs-kids-orange-6-pair",
+      "title": "Mack's Silicone Earplugs Kids Orange (6 pair)",
+      "price": 7.5
+    },
+    {
+      "handle": "nantucket-crisps",
+      "title": "Nantucket Crisps",
+      "price": 7.5
+    },
+    {
+      "handle": "hamburger-buns",
+      "title": "Hamburger Buns",
+      "price": 7.0
+    },
+    {
+      "handle": "hot-dog-rolls",
+      "title": "Hot Dog Rolls",
+      "price": 7.0
+    },
+    {
+      "handle": "jeep-wave-decal",
+      "title": "Jeep Wave Decal",
+      "price": 7.0
+    },
+    {
+      "handle": "pavilion-dog-bandana",
+      "title": "Pavilion Dog Bandana",
+      "price": 7.0
+    },
+    {
+      "handle": "phillips-chocolate-bars",
+      "title": "Phillips Chocolate Bars",
+      "price": 7.0
+    },
+    {
+      "handle": "aa-battery",
+      "title": "AA Battery",
+      "price": 7.0
+    },
+    {
+      "handle": "lunchable-fun-pack",
+      "title": "Lunchable Fun Pack",
+      "price": 7.0
+    },
+    {
+      "handle": "sweet-relish",
+      "title": "Heinz Sweet Relish (12.7oz)",
+      "price": 6.99
+    },
+    {
+      "handle": "tretap-cbd-sparkling-water",
+      "title": "Tretap CBD Sparkling Water",
+      "price": 6.99
+    },
+    {
+      "handle": "vybes-cbd-wellness-juice",
+      "title": "VYBES CBD Wellness Juice",
+      "price": 6.99
+    },
+    {
+      "handle": "milk",
+      "title": "Milk",
+      "price": 6.5
+    },
+    {
+      "handle": "secret-powder-fresh-anti-perspirant-deodorant-5oz",
+      "title": "Secret Powder Fresh Anti-Perspirant & Deodorant (.5oz)",
+      "price": 6.5
+    },
+    {
+      "handle": "compostable-trash-bags-by-the-roll-13-gallon",
+      "title": "Compostable Trash Bags - 13 Gallon",
+      "price": 6.0
+    },
+    {
+      "handle": "heinz-tomato-ketchup",
+      "title": "Heinz Tomato Ketchup",
+      "price": 6.0
+    },
+    {
+      "handle": "hot-dogs",
+      "title": "Hot Dogs",
+      "price": 6.0
+    },
+    {
+      "handle": "nail-files",
+      "title": "Nail Files",
+      "price": 6.0
+    },
+    {
+      "handle": "phone-charger-cord-and-block",
+      "title": "Phone Charger - Cord and Block",
+      "price": 6.0
+    },
+    {
+      "handle": "reynolds-wrap-aluminum-foil",
+      "title": "Reynolds Wrap Aluminum Foil",
+      "price": 6.0
+    },
+    {
+      "handle": "snowy-owl-canned-cold-brew",
+      "title": "Snowy Owl Canned Cold Brew",
+      "price": 6.0
+    },
+    {
+      "handle": "snack-shack-top-shelf-drink",
+      "title": "Snack Shack Special Drink",
+      "price": 6.0
+    },
+    {
+      "handle": "croissant",
+      "title": "Croissant",
+      "price": 6.0
+    },
+    {
+      "handle": "triscuit-original-whole-grain-wheat-vegan-crackers",
+      "title": "Triscuit Original Whole Grain Wheat Vegan Crackers",
+      "price": 6.0
+    },
+    {
+      "handle": "floating-neo-keychain",
+      "title": "Floating Neo Keychain",
+      "price": 5.99
+    },
+    {
+      "handle": "silk-almond-milk",
+      "title": "Silk Almond Milk",
+      "price": 5.79
+    },
+    {
+      "handle": "old-spice-high-endurance-anti-perspirant-deodorant-5oz",
+      "title": "Old Spice High Endurance Anti-Perspirant & Deodorant (.5oz)",
+      "price": 5.5
+    },
+    {
+      "handle": "salt-and-pepper",
+      "title": "Salt and Pepper",
+      "price": 5.5
+    },
+    {
+      "handle": "vita-coco-coconut-water",
+      "title": "Vita Coco - Coconut Water",
+      "price": 5.5
+    },
+    {
+      "handle": "gramies-gluten-free-graham-crackers-snack-pack-2-crackers",
+      "title": "Gramies Gluten Free Graham Crackers Snack Pack (2 Crackers)",
+      "price": 5.5
+    },
+    {
+      "handle": "katalyst-kombucha-sparkling-probiotic-tea",
+      "title": "Katalyst Kombucha Sparkling Probiotic Tea",
+      "price": 5.5
+    },
+    {
+      "handle": "frenchs-classic-yellow-mustard",
+      "title": "French's Classic Yellow Mustard",
+      "price": 5.0
+    },
+    {
+      "handle": "jeep-car-coaster",
+      "title": "Jeep Car Coaster",
+      "price": 5.0
+    },
+    {
+      "handle": "jeep-tie-dye-cj-sticker",
+      "title": "Jeep Tie Dye CJ Sticker",
+      "price": 5.0
+    },
+    {
+      "handle": "nobl-cold-pressed-juice",
+      "title": "NOBL Cold Pressed Juice(",
+      "price": 5.0
+    },
+    {
+      "handle": "nobl-latte-cans",
+      "title": "NOBL Latte Cans",
+      "price": 5.0
+    },
+    {
+      "handle": "nuk-baby-pacifier",
+      "title": "NUK Baby Pacifier",
+      "price": 5.0
+    },
+    {
+      "handle": "pupster-bakery-smores-organic-dog-treats",
+      "title": "Pupster Bakery Pup'mores Organic Dog Treats",
+      "price": 5.0
+    },
+    {
+      "handle": "reading-glasses",
+      "title": "Reading Glasses",
+      "price": 5.0
+    },
+    {
+      "handle": "spicy-brown-mustard",
+      "title": "French's Spicy Brown Mustard (12oz)",
+      "price": 5.0
+    },
+    {
+      "handle": "tide-sink-packs-laundry-detergent",
+      "title": "Tide Sink Packs Laundry Detergent",
+      "price": 5.0
+    },
+    {
+      "handle": "travel-kit-colgate",
+      "title": "Colgate Toothpaste/Toothbrush Travel Kit",
+      "price": 5.0
+    },
+    {
+      "handle": "local-scoop-mini-ice-cream-pints",
+      "title": "Local Scoop Mini Ice Cream Cups",
+      "price": 5.0
+    },
+    {
+      "handle": "vita-coco-coconut-juice-pina-colada",
+      "title": "Vita Coco Coconut Juice - Pina Colada",
+      "price": 5.0
+    },
+    {
+      "handle": "ice-cream-bar-vanilla-milk-chocolate-haagen-dazs",
+      "title": "Ice Cream Bar Vanilla Milk Chocolate Haagen Dazs",
+      "price": 5.0
+    },
+    {
+      "handle": "macaroni-salad",
+      "title": "Macaroni Salad",
+      "price": 5.0
+    },
+    {
+      "handle": "rotini-pasta-salad",
+      "title": "Rotini Pasta Salad",
+      "price": 5.0
+    },
+    {
+      "handle": "muffin",
+      "title": "Muffin",
+      "price": 5.0
+    },
+    {
+      "handle": "fatboy-ice-cream-sandwich",
+      "title": "FatBoy Ice Cream Sandwich",
+      "price": 5.0
+    },
+    {
+      "handle": "lunchables",
+      "title": "Lunchables",
+      "price": 5.0
+    },
+    {
+      "handle": "honey-maid-grahams",
+      "title": "Honey Maid Grahams",
+      "price": 4.99
+    },
+    {
+      "handle": "huggies-baby-wipes-travel-pack-16ct",
+      "title": "Huggies Baby Wipes Travel Pack (16ct)",
+      "price": 4.99
+    },
+    {
+      "handle": "simply-lemonade",
+      "title": "Simply Lemonade",
+      "price": 4.99
+    },
+    {
+      "handle": "simply-orange-juice",
+      "title": "Simply Orange Juice",
+      "price": 4.99
+    },
+    {
+      "handle": "sun-bum-premium-zinc-spf-30-sunscreen-lip-balm",
+      "title": "Sun Bum Signature Zinc SPF 30 Sunscreen Lip Balm",
+      "price": 4.99
+    },
+    {
+      "handle": "sea-nuts",
+      "title": "Sea Nuts",
+      "price": 4.99
+    },
+    {
+      "handle": "tractor-beverage",
+      "title": "Tractor Beverage",
+      "price": 4.99
+    },
+    {
+      "handle": "clear-eyes-eye-drops-2oz",
+      "title": "Clear Eyes Eye Drops (.2oz)",
+      "price": 4.5
+    },
+    {
+      "handle": "garlic-powder",
+      "title": "Happy Belly Granulated Garlic Powder (3.9oz)",
+      "price": 4.5
+    },
+    {
+      "handle": "lens-cleaner",
+      "title": "Lens Cleaner",
+      "price": 4.5
+    },
+    {
+      "handle": "nobl-tea-cans",
+      "title": "NOBL Tea Cans",
+      "price": 4.5
+    },
+    {
+      "handle": "polariod-aa-batteries",
+      "title": "Polariod AA batteries",
+      "price": 4.5
+    },
+    {
+      "handle": "ice-cream-drumstick-vanilla",
+      "title": "Ice Cream Drumstick Vanilla",
+      "price": 4.5
+    },
+    {
+      "handle": "sun-bum-hand-sanitizer-2oz",
+      "title": "Sun Bum Hand Sanitizer (2oz)",
+      "price": 4.49
+    },
+    {
+      "handle": "gallon-water",
+      "title": "Gallon of Poland Spring Water",
+      "price": 4.0
+    },
+    {
+      "handle": "jeep-catch-a-wave-sticker",
+      "title": "Jeep Catch A Wave Sticker",
+      "price": 4.0
+    },
+    {
+      "handle": "jeep-flag-grille-sticker",
+      "title": "Jeep Flag Grille Sticker",
+      "price": 4.0
+    },
+    {
+      "handle": "jeep-freedom-logo-sticker",
+      "title": "Jeep Freedom Logo Sticker",
+      "price": 4.0
+    },
+    {
+      "handle": "jeep-point-break-sticker",
+      "title": "Jeep Point Break Sticker",
+      "price": 4.0
+    },
+    {
+      "handle": "jet-puffed-marshmallows-12oz",
+      "title": "Jet-Puffed Marshmallows (12oz)",
+      "price": 4.0
+    },
+    {
+      "handle": "nuk-baby-bottles",
+      "title": "NUK Baby Bottles",
+      "price": 4.0
+    },
+    {
+      "handle": "pricklee-cactus-water",
+      "title": "Pricklee Cactus Watero",
+      "price": 4.0
+    },
+    {
+      "handle": "swimming-earplugs",
+      "title": "Swimming Earplugs (6 pairs)",
+      "price": 4.0
+    },
+    {
+      "handle": "zap-skimboard-wax-cool-58-68-̊f-14-20-̊c",
+      "title": "ZAP Skimboard Wax - Cool (58-68 ̊F | 14-20 ̊C)",
+      "price": 4.0
+    },
+    {
+      "handle": "uncrustables",
+      "title": "Uncrustables",
+      "price": 4.0
+    },
+    {
+      "handle": "swedish-fish",
+      "title": "Swedish Fish",
+      "price": 4.0
+    },
+    {
+      "handle": "ice-cream-sandwich-chips-galore",
+      "title": "Ice Cream Sandwich Chips Galore",
+      "price": 4.0
+    },
+    {
+      "handle": "ice-cream-sandwich-cookies-cream",
+      "title": "Ice Cream Sandwich Cookies & Cream",
+      "price": 4.0
+    },
+    {
+      "handle": "ice-cream-bar-snickers",
+      "title": "Ice Cream Bar Snickers",
+      "price": 4.0
+    },
+    {
+      "handle": "character-apple-juice",
+      "title": "Character Apple Juice",
+      "price": 4.0
+    },
+    {
+      "handle": "snack-shack-premium-drink",
+      "title": "Snack Shack Large Can",
+      "price": 4.0
+    },
+    {
+      "handle": "kindling",
+      "title": "Kindling",
+      "price": 4.0
+    },
+    {
+      "handle": "cheese-and-cracker-snack-packs",
+      "title": "Cheese and cracker snack packs",
+      "price": 4.0
+    },
+    {
+      "handle": "jack-links-beef-jerky",
+      "title": "Jack Link's Beef Jerky",
+      "price": 3.99
+    },
+    {
+      "handle": "mati-tea-energy-cans",
+      "title": "MATI Tea Energy Cans",
+      "price": 3.99
+    },
+    {
+      "handle": "rold-gold-thin-original-pretzels",
+      "title": "Rold Gold Thin Original Pretzels",
+      "price": 3.99
+    },
+    {
+      "handle": "tums-ultra-strength-tablets-12-ct",
+      "title": "TUMS Ultra Strength Tablets (12 ct)",
+      "price": 3.99
+    },
+    {
+      "handle": "zen-water",
+      "title": "Zen Water",
+      "price": 3.99
+    },
+    {
+      "handle": "huggies-little-swimmers-swim-diaper",
+      "title": "Huggies Little Swimmers Swim Diaper",
+      "price": 3.5
+    },
+    {
+      "handle": "johnson-johnson-first-aid-to-go-mini-first-aid-kit",
+      "title": "Johnson & Johnson First Aid To Go Mini First Aid Kit",
+      "price": 3.5
+    },
+    {
+      "handle": "kombucha-cans",
+      "title": "Kombucha Cans",
+      "price": 3.5
+    },
+    {
+      "handle": "paper-towels",
+      "title": "Paper Towels",
+      "price": 3.5
+    },
+    {
+      "handle": "revlon-elastics",
+      "title": "Revlon Hair Elastics",
+      "price": 3.5
+    },
+    {
+      "handle": "similac-360-total-care-infant-formula-with-iron-10-2-oz-bottles",
+      "title": "Similac 360 Total Care Infant Formula with Iron",
+      "price": 3.5
+    },
+    {
+      "handle": "te-pache-drink",
+      "title": "Tepache Drink",
+      "price": 3.5
+    },
+    {
+      "handle": "smartfood-popcorn",
+      "title": "Smartfood popcorn",
+      "price": 3.5
+    },
+    {
+      "handle": "haribo-gummy-bears",
+      "title": "Haribo Gummy bears",
+      "price": 3.5
+    },
+    {
+      "handle": "stonyfield-probiotic-yogurt-smoothie",
+      "title": "Stonyfield probiotic yogurt smoothie",
+      "price": 3.5
+    },
+    {
+      "handle": "cotton-balls-swabs",
+      "title": "Cotton Balls & Swabs",
+      "price": 3.0
+    },
+    {
+      "handle": "dental-floss",
+      "title": "Dental Floss",
+      "price": 3.0
+    },
+    {
+      "handle": "ice-5-lb-bag",
+      "title": "Ice 5 lb Bag",
+      "price": 3.0
+    },
+    {
+      "handle": "shout-wipes-wipe-and-go-instant-stain-remover",
+      "title": "Shout Wipes, Wipe and Go Instant Stain Remover",
+      "price": 3.0
+    },
+    {
+      "handle": "poppi-soda",
+      "title": "Poppi Soda",
+      "price": 3.0
+    },
+    {
+      "handle": "m-m",
+      "title": "M&M",
+      "price": 3.0
+    },
+    {
+      "handle": "kind-snack-bar",
+      "title": "Kind Snack Bar",
+      "price": 3.0
+    },
+    {
+      "handle": "arizona-ice-tea-cans",
+      "title": "Arizona Ice Tea Cans",
+      "price": 3.0
+    },
+    {
+      "handle": "snack-shack-regular-drink",
+      "title": "Snack Shack Small Can / Slim",
+      "price": 3.0
+    },
+    {
+      "handle": "pringles",
+      "title": "Pringles",
+      "price": 3.0
+    },
+    {
+      "handle": "culture-pop-soda",
+      "title": "Culture Pop Soda",
+      "price": 3.0
+    },
+    {
+      "handle": "go-go-squeeze-applesauce",
+      "title": "Go Go Squeeze Applesauce",
+      "price": 3.0
+    },
+    {
+      "handle": "dels-sparkling-lemonade",
+      "title": "Del's Sparkling Lemonade",
+      "price": 3.0
+    },
+    {
+      "handle": "johnson-johnsons-band-aid-travel-pack-8ct",
+      "title": "Johnson & Johnson's Band-Aid Travel Pack (8ct)",
+      "price": 2.99
+    },
+    {
+      "handle": "open-water-16oz-purified-still-water-aluminum-water-bottle",
+      "title": "Open Water - 16oz Purified Still Water Aluminum Water Bottle",
+      "price": 2.99
+    },
+    {
+      "handle": "open-water-16oz-aluminum-sparkling-water-bottle",
+      "title": "Open Water 16oz Aluminum Sparkling Water Bottle",
+      "price": 2.99
+    },
+    {
+      "handle": "polar-seltzers",
+      "title": "Polar Seltzers",
+      "price": 2.99
+    },
+    {
+      "handle": "nail-clipper-with-file",
+      "title": "Nail Clipper with File",
+      "price": 2.5
+    },
+    {
+      "handle": "spindrift",
+      "title": "Spindrift",
+      "price": 2.5
+    },
+    {
+      "handle": "kitkat-and-hersey-bar-pack",
+      "title": "Kitkat and Hersey Bar pack",
+      "price": 2.5
+    },
+    {
+      "handle": "polar-seltzer-watermelon-lemonade",
+      "title": "Polar seltzer watermelon lemonade",
+      "price": 2.5
+    },
+    {
+      "handle": "polar-seltzer-blueberry-lemonade",
+      "title": "Polar seltzer blueberry lemonade",
+      "price": 2.5
+    },
+    {
+      "handle": "snyders-100-calorie-pretzel-mini-snack-pack",
+      "title": "Snyder's 100 Calorie Pretzel Mini Snack Pack",
+      "price": 2.5
+    },
+    {
+      "handle": "aluminum-steam-table-pan",
+      "title": "Aluminum Steam Table Pan",
+      "price": 2.0
+    },
+    {
+      "handle": "kleenex-pocket-packs",
+      "title": "Kleenex Pocket Packs",
+      "price": 2.0
+    },
+    {
+      "handle": "orbit-peppermint-gum",
+      "title": "Orbit Peppermint Gum",
+      "price": 2.0
+    },
+    {
+      "handle": "orbit-spearmint-gum",
+      "title": "Orbit Spearmint Gum",
+      "price": 2.0
+    },
+    {
+      "handle": "orbit-sweet-mint-gum",
+      "title": "Orbit Sweet Mint Gum",
+      "price": 2.0
+    },
+    {
+      "handle": "orbit-winter-mint-gum",
+      "title": "Orbit Winter Mint Gum",
+      "price": 2.0
+    },
+    {
+      "handle": "tylenol-extra-strength-caplets-2-dose",
+      "title": "Tylenol Extra Strength Caplets",
+      "price": 2.0
+    },
+    {
+      "handle": "cookie-sandwich-oreo-mini",
+      "title": "Cookie Sandwich Oreo Mini",
+      "price": 2.0
+    },
+    {
+      "handle": "ice-cream-orange-dream-bar",
+      "title": "Ice Cream Orange Dream Bar",
+      "price": 2.0
+    },
+    {
+      "handle": "ice-cream-bar-fudge",
+      "title": "Ice Cream Bar Fudge",
+      "price": 2.0
+    },
+    {
+      "handle": "bar-fruit-2-dozen-cream-coconut-bar",
+      "title": "Bar Fruit 2 Dozen Cream Coconut Bar",
+      "price": 2.0
+    },
+    {
+      "handle": "ice-cream-bar-sundae-strawberry-krunch",
+      "title": "Ice Cream Bar Sundae Strawberry Krunch",
+      "price": 2.0
+    },
+    {
+      "handle": "ice-cream-bomb-pop",
+      "title": "Ice Cream Bomb Pop",
+      "price": 2.0
+    },
+    {
+      "handle": "blue-ribbon-classics-ice-cream-vanilla-sandwich",
+      "title": "Blue Ribbon Classics Ice Cream Vanilla Sandwich",
+      "price": 2.0
+    },
+    {
+      "handle": "mozzarella-cheese-stick",
+      "title": "Mozzarella Cheese Stick",
+      "price": 2.0
+    },
+    {
+      "handle": "bunny-grahams",
+      "title": "Bunny Grahams",
+      "price": 2.0
+    },
+    {
+      "handle": "goldfish",
+      "title": "Goldfish",
+      "price": 2.0
+    },
+    {
+      "handle": "italian-ice-lemon",
+      "title": "Italian Ice (lemon)",
+      "price": 2.0
+    },
+    {
+      "handle": "hummus-single-serve",
+      "title": "Hummus Single Serve",
+      "price": 2.0
+    },
+    {
+      "handle": "idf-brie-cheese-bites",
+      "title": "IDF Brie Cheese Bites",
+      "price": 2.0
+    },
+    {
+      "handle": "cranberry-juice",
+      "title": "Ocean Spray Cranberry Juice",
+      "price": 1.99
+    },
+    {
+      "handle": "pineapple-juice",
+      "title": "Pineapple Juice",
+      "price": 1.99
+    },
+    {
+      "handle": "tic-tac-freshmints",
+      "title": "Tic Tac Freshmints",
+      "price": 1.99
+    },
+    {
+      "handle": "hersheys-milk-chocolate",
+      "title": "Hershey's Milk Chocolate Bar",
+      "price": 1.79
+    },
+    {
+      "handle": "carabiner-d-ring-aluminum-clip",
+      "title": "Carabiner D Ring Aluminum Clip",
+      "price": 1.75
+    },
+    {
+      "handle": "snyder-s-gluten-free-pretzel-sticks",
+      "title": "Snyder’s Gluten Free Pretzel Sticks",
+      "price": 1.75
+    },
+    {
+      "handle": "razors",
+      "title": "Disposable Razors",
+      "price": 1.5
+    },
+    {
+      "handle": "under-eye-patches-masks",
+      "title": "Under Eye Patches/Masks (25 pairs)",
+      "price": 1.5
+    },
+    {
+      "handle": "toothbrush-and-toothpaste",
+      "title": "Toothbrush and Toothpaste",
+      "price": 1.5
+    },
+    {
+      "handle": "pirates-booty",
+      "title": "Pirate's Booty",
+      "price": 1.25
+    },
+    {
+      "handle": "crayons",
+      "title": "Crayons",
+      "price": 1.0
+    },
+    {
+      "handle": "liquid-iv",
+      "title": "Liquid IV",
+      "price": 1.0
+    },
+    {
+      "handle": "neutrogena-makeup-remover-wipes",
+      "title": "Neutrogena Makeup Remover Wipes",
+      "price": 1.0
+    },
+    {
+      "handle": "plastic-serving-tong",
+      "title": "Plastic Serving Tong",
+      "price": 1.0
+    },
+    {
+      "handle": "gummy-bears",
+      "title": "gummy bears",
+      "price": 1.0
+    },
+    {
+      "handle": "cabot-snacks-cheese",
+      "title": "Cabot Snacks Cheese",
+      "price": 1.0
+    },
+    {
+      "handle": "kleenex-tissue",
+      "title": "Kleenex Tissue",
+      "price": 0.0
+    },
+    {
+      "handle": "blue-ribbon-classic-homemade-ice-cream-bar-homemade-vanilla",
+      "title": "Blue Ribbon Classic Homemade Ice Cream Bar Homemade Vanilla",
+      "price": 0.0
+    },
+    {
+      "handle": "sprite-soda-cans",
+      "title": "Sprite Soda Cans",
+      "price": 0.0
+    },
+    {
+      "handle": "diet-coke-soda",
+      "title": "Diet Coke Soda",
+      "price": 0.0
+    },
+    {
+      "handle": "coke-zero-soda",
+      "title": "Coke Zero Soda",
+      "price": 0.0
+    },
+    {
+      "handle": "schweppes-ginger-ale-soda",
+      "title": "Schweppes Ginger Ale Soda",
+      "price": 0.0
+    },
+    {
+      "handle": "gatorade-raspberry-cool-blue-wide-mouth-ready-to",
+      "title": "Gatorade Raspberry Cool Blue Wide Mouth Ready To",
+      "price": 0.0
+    },
+    {
+      "handle": "gatorade-frost-riptide-rush-wide-mouth",
+      "title": "Gatorade Frost Riptide Rush Wide Mouth",
+      "price": 0.0
+    },
+    {
+      "handle": "gatorade-orange-wide-mouth-plastic-ready-to-drink",
+      "title": "Gatorade Orange Wide Mouth Plastic Ready To Drink",
+      "price": 0.0
+    },
+    {
+      "handle": "gatorade-lemon-lime-wide-mouth-plastic",
+      "title": "Gatorade Lemon/lime Wide Mouth Plastic",
+      "price": 0.0
+    },
+    {
+      "handle": "gatorade-fruit-punch-g2",
+      "title": "Gatorade Fruit Punch G2",
+      "price": 0.0
+    },
+    {
+      "handle": "red-bull-energy-drink",
+      "title": "Red Bull Energy Drink",
+      "price": 0.0
+    },
+    {
+      "handle": "sunchip-multigrain-large-single-serving-bags",
+      "title": "SunChip Multigrain Large Single Serving Bags",
+      "price": 0.0
+    }
+  ]
+}

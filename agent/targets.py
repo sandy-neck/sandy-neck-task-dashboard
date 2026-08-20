@@ -48,10 +48,12 @@ def current_phase(day: date = None):
     return {"phase": "Unknown", "note": "", "days_remaining": None, "ends": None}
 
 
-# Bumped whenever the underlying query changes shape. A curve built before the Snack Shack was
-# excluded describes a different business, and silently pacing against it would understate the
-# target by about 20%.
-CURVE_VERSION = 2
+# Bumped whenever the curve's shape or normalisation changes. v2 excluded the Snack Shack; v3
+# re-anchored weekday factors on Friday. A stale curve silently mis-scales every expectation, so an
+# old one is rebuilt rather than reused.
+FRIDAY = 4  # date.weekday(): Monday=0 … Sunday=6
+
+CURVE_VERSION = 3
 
 
 def load_prior_year_curve():
@@ -97,10 +99,22 @@ def save_prior_year_curve(year: int, daily_revenue: dict):
         wd: weekday_totals[wd] / weekday_counts[wd]
         for wd in weekday_totals if weekday_counts.get(wd)
     }
-    overall = sum(averages.values()) / len(averages) if averages else 0
+
+    # Normalise against FRIDAY, not the overall average.
+    #
+    # BJ's anchors describe a specific day: "a great beach Friday like yesterday I would hope to be
+    # at 2000." Dividing by the all-days mean makes Friday ~1.3 and Saturday ~2.1, so a Saturday got
+    # a weekend premium stacked on a number that already was a weekend-ish day — a 450 Saturday
+    # expected $3,917 when the best day ever recorded was $3,092. Every weekend day then read as a
+    # miss, which is the same inversion error the curve exists to prevent, running backwards.
+    #
+    # Anchoring on Friday makes the anchors mean what they were meant to mean: Friday = 1.0.
+    baseline = averages.get(FRIDAY) or (
+        sum(averages.values()) / len(averages) if averages else 0
+    )
     weekday_factor = {
-        str(wd): round(avg / overall, 3) for wd, avg in averages.items()
-    } if overall else {}
+        str(wd): round(avg / baseline, 3) for wd, avg in averages.items()
+    } if baseline else {}
 
     payload = {
         "version": CURVE_VERSION,
@@ -108,7 +122,7 @@ def save_prior_year_curve(year: int, daily_revenue: dict):
         "excludes": "Snack Shack",
         "total_revenue": round(total, 2),
         "cumulative_by_doy": cumulative,
-        # Monday=0 … Sunday=6, relative to an average in-season day.
+        # Monday=0 … Sunday=6, relative to FRIDAY (=1.0), which is what the anchors describe.
         "weekday_factor": weekday_factor,
     }
     CACHE.parent.mkdir(parents=True, exist_ok=True)
