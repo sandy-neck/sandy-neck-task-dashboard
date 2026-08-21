@@ -403,3 +403,18 @@ I spent four days reporting this as a decline. It isn't one any more — it's a 
 **What would confirm it:** ice holding at 24–28 orders/week through the Aug 24 week, and the Aug 24–26 Exceptional block landing $700–1,000 rather than the ~$1,800 the curve expects. **What would kill it:** a second leg down — ice into the teens — or any Exceptional day clearing $1,500, which would mean weather still moves the number and the last fortnight was something else.
 
 **Why it matters:** if it's a plateau, the shoulder-season revenue base is predictable and can be planned against. If it's a slide, every forward projection including the $70k-to-target figure is too optimistic.
+
+---
+
+### 2026-08-20 — Inside the late-August plateau, SNP 500 has no predictive power on in-store revenue
+**Confidence: medium-high** — five consecutive days spanning 55 score points with zero rank correlation, plus a clean falsification test.
+
+Aug 16–20: scores 415/410/425/420/465 → revenue $788/$789/$573/$871/$757. The highest-scoring day of the five produced the second-lowest revenue. Aug 20 (465, Exceptional) also came in below Aug 13 (420) and Aug 19 (420), and at 46% of expected — the worst realised ratio recorded.
+
+This was a real test rather than more of the same. The plateau claim logged Aug 19 predicted that an Exceptional day would land in the $700–1,000 band; Aug 20 was that day and landed at $757. A $1,500+ result would have killed the hypothesis and didn't.
+
+Reading: once footfall drops to the shoulder level, the store is serving a residual base whose size is set by how many people are on the Cape, not by whether it's a nice day. The weather term matters when there's a large marginal population deciding whether to go to the beach; it stops mattering when that population has gone home.
+
+**What would confirm:** Aug 24–28 carries five Great/Exceptional days (425–475). If they land $700–1,000, this holds and the expectation curve needs a season-position multiplier applied from mid-August. **What would kill it:** any of them clearing $1,500.
+
+**Consequence if true:** stop weather-adjusting daily in-store comparisons after ~Aug 15 and compare against the band instead; and treat every "the week ahead should comfortably beat target" verdict from the forecast tool as wrong by roughly a factor of two until the curve is fixed.
