@@ -418,3 +418,18 @@ Reading: once footfall drops to the shoulder level, the store is serving a resid
 **What would confirm:** Aug 24–28 carries five Great/Exceptional days (425–475). If they land $700–1,000, this holds and the expectation curve needs a season-position multiplier applied from mid-August. **What would kill it:** any of them clearing $1,500.
 
 **Consequence if true:** stop weather-adjusting daily in-store comparisons after ~Aug 15 and compare against the band instead; and treat every "the week ahead should comfortably beat target" verdict from the forecast tool as wrong by roughly a factor of two until the curve is fixed.
+
+---
+
+### 2026-08-21 — The SNP 500 under-weights precipitation and can rate a rainy, sunless day as "Great"
+**Confidence: high on the fact, medium on the scope.**
+
+Aug 21: 0.13 in of rain, 0.0 hours of sun, 69.3°F, 18.7 mph wind — scored **400 / Great**, expected revenue $1,636. The listed positives were `day_extension` and `access`; the only limiting factor flagged was `wind`. Precipitation and sun hours appear either absent from the model or heavily outweighed by the sunset/bonfire and access terms.
+
+Actual was $359.31, 22% of expected — the worst ratio in the record, and almost certainly an artefact of the score rather than a store failure. Judged against BJ's own rainy-day anchor (~$500) the day is merely soft.
+
+**Why it matters beyond one day:** I am accumulating an expected-vs-actual record intended to eventually replace the gut curve with a fitted one. Mis-scored days injected into that record will bias the fit toward "the store always underperforms." Aug 21 should be tagged as excluded.
+
+**What would confirm:** any future day with measurable precip and <2 sun hours scoring above ~350. **What would kill it:** the scorer turning out to have a precip term that simply didn't trigger at 0.13 in, in which case the fix is a threshold change rather than a missing feature.
+
+**Action:** check `agent/` for the precip and sun-hours inputs to the SNP scorer; cap any day with measurable precip and near-zero sun below the Great band regardless of tide, access or sunset factors.
