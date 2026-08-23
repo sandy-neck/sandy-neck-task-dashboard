@@ -433,3 +433,29 @@ Actual was $359.31, 22% of expected — the worst ratio in the record, and almos
 **What would confirm:** any future day with measurable precip and <2 sun hours scoring above ~350. **What would kill it:** the scorer turning out to have a precip term that simply didn't trigger at 0.13 in, in which case the fix is a threshold change rather than a missing feature.
 
 **Action:** check `agent/` for the precip and sun-hours inputs to the SNP scorer; cap any day with measurable precip and near-zero sun below the Great band regardless of tide, access or sunset factors.
+
+---
+
+### 2026-08-22 — Rain cuts footfall but raises basket; wet days are apparel-and-hard-goods days
+**Confidence: medium** — two consecutive rain days plus a consistent mechanism, but weekend/weekday is confounded with the outcome.
+
+Aug 21 (Fri, 0.13 in rain, 0.0 sun): $359.31 / 14 orders / AOV $25.67.
+Aug 22 (Sat, 0.185 in rain, 0.0 sun): $1,642.29 / 30 orders / AOV $50.44 — against a dry trailing AOV of ~$35 and a dry Saturday (Aug 15) at $36.16.
+
+The wet Saturday's basket was ~40% above the dry-Saturday basket despite far fewer tickets. The 7-day board that day contained zero consumables — a bodyboard, two ponchos, three hat lines, propane, burnout sweats. CONTEXT already says "rain → apparel and gifts hold up better than beach consumables"; the new part is that the *basket goes up*, not merely holds, because ice (~$6) drops out of the mix and durable goods replace it.
+
+Reading: rain removes the beach-trip population (ice, low ticket, high frequency) and leaves a smaller browsing population that buys higher-ticket keepables. Revenue per visitor rises; visitor count falls further.
+
+**What would confirm:** any further rain day with measurable precip showing AOV above the dry trailing average and a consumables-free top-sellers board. **What would kill it:** a rain day with AOV at or below dry baseline, which would mean Aug 22 was just one hard-goods sale flattering a 30-order day.
+
+**Action if it holds:** on a forecast wet weekend day, front apparel, ponchos, hats, bodyboards and chairs rather than the beach consumables display. This is a lever the business can actually pull, unlike the weather itself.
+
+### 2026-08-22 — The SNP precipitation blind spot is systematic, not a one-off
+**Confidence: high.** Second consecutive occurrence.
+
+Aug 21: 0.13 in rain, 0.0 sun → 400 / Great, only `wind` flagged as limiting.
+Aug 22: 0.185 in rain, 0.0 sun → 445 / Great, **no limiting factors at all**, positives `tide`, `day_extension`, `wind`.
+
+Precipitation and sun hours are either absent from the model or swamped by the tide / sunset-window terms. Both days must be excluded from the expected-vs-actual record or the eventual fitted curve will be biased toward "the store always underperforms" — Aug 22 in particular would enter the record as a 39% miss when it was one of the better weather-adjusted days of the month.
+
+**Fix:** cap any day with measurable precipitation and <2 sun hours below the Great band regardless of tide, access or sunset factors. Confirmed as a pattern; no longer needs more evidence, needs a code change.
