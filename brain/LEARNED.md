@@ -459,3 +459,18 @@ Aug 22: 0.185 in rain, 0.0 sun → 445 / Great, **no limiting factors at all**, 
 Precipitation and sun hours are either absent from the model or swamped by the tide / sunset-window terms. Both days must be excluded from the expected-vs-actual record or the eventual fitted curve will be biased toward "the store always underperforms" — Aug 22 in particular would enter the record as a 39% miss when it was one of the better weather-adjusted days of the month.
 
 **Fix:** cap any day with measurable precipitation and <2 sun hours below the Great band regardless of tide, access or sunset factors. Confirmed as a pattern; no longer needs more evidence, needs a code change.
+
+---
+
+### 2026-08-23 — The SNP blind spot is sky-condition generally, not precipitation specifically
+**Confidence: high** — third occurrence in four days, and this one had zero precipitation.
+
+Aug 21 (0.13 in rain, 0.0 sun) → 400/Great. Aug 22 (0.185 in rain, 0.0 sun) → 445/Great, no limiting factors. Aug 23 (**0.0 in precip**, fog, **1.8 hrs sun**) → 465/Exceptional, no limiting factors, positives tide/wind/day_extension.
+
+Aug 23 kills the narrower "precip isn't weighted" reading: there was no precipitation. The model is scoring the *geometry* of the day — tide stage, wind, sunset window, day length — and barely scoring whether the sun was visible at all. Fog is the clean case, because every geometric input was genuinely favourable and the day still wasn't a beach day.
+
+**Fix:** the gate should be sun hours, not precipitation. Cap any day with <2 hrs sun below the Great band regardless of tide, wind, access or day-extension terms. Precip becomes a secondary penalty on top.
+
+**What would confirm:** a day with good sun hours and poor tide/wind scoring low — i.e. the model behaving correctly when sun is present. **What would kill it:** finding sun hours already in the scorer with a sensible weight, which would make this a data-feed problem instead.
+
+Consequence for the record: Aug 21, 22 and 23 must all be excluded from expected-vs-actual history, or the fitted curve inherits a bias toward "the store always underperforms."
