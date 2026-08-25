@@ -474,3 +474,21 @@ Aug 23 kills the narrower "precip isn't weighted" reading: there was no precipit
 **What would confirm:** a day with good sun hours and poor tide/wind scoring low — i.e. the model behaving correctly when sun is present. **What would kill it:** finding sun hours already in the scorer with a sensible weight, which would make this a data-feed problem instead.
 
 Consequence for the record: Aug 21, 22 and 23 must all be excluded from expected-vs-actual history, or the fitted curve inherits a bias toward "the store always underperforms."
+
+---
+
+### 2026-08-24 — In the shoulder, weather stops predicting in-store revenue; visitor population takes over
+**Confidence: medium-high** — one clean natural experiment, strong mechanism, needs a second instance.
+
+Aug 24 scored 495 (top of the season) on genuinely clean inputs: 12.5 hrs sun, 0.0 precip, 83.4°F, ideal afternoon low tide, no limiting factors. It produced **$720.92 / 22 orders**. Mon Aug 17 scored 410 on a dry overcast day and produced **$789.30 / 22 orders**. Same weekday, same order count, 85 SNP points apart, and the *worse* day earned more.
+
+Every other high-score miss this month (Aug 21, 22, 23) was contaminated by the sun-hours blind spot in the scorer. Aug 24 has no such excuse — the score is right and the revenue still didn't follow. That makes this the first clean evidence that the weather→revenue link has broken rather than the model being wrong.
+
+Mechanism is obvious and that's a point in its favour: perfect beach weather only converts if there are people on the Cape to convert. Post-Aug-15 the visitor population is falling ~30% a week, and it has become the binding constraint. The sky can no longer add customers who aren't here.
+
+**Consequences:**
+1. The expectation curve needs a **phase/population term**, not just weather and weekday. Without it, every remaining Exceptional day this season logs as a 35–50% miss and the fitted curve inherits a permanent "the store always underperforms" bias.
+2. **Never pass the week-ahead tool's number through unadjusted in the shoulder.** It is forecasting $13.3k off seven Exceptional days; the realistic figure is $7–8k. The tool is scoring the sky in a period when the sky doesn't matter.
+3. Judge shoulder days against the **same weekday, prior week** and the weekday band, not against SNP-derived expectation.
+
+**What would confirm:** the rest of this week — six more Exceptional/Great days forecast. If they land in the $550–900 weekday band regardless of score spread (445 to 485), that's decisive. **What would kill it:** any of them clearing $1,500 on score alone, which would mean Aug 24 was just a bad Monday.
