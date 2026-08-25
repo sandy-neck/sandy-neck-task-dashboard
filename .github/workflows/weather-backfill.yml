@@ -1,0 +1,82 @@
+name: Weather & Tide Historical Backfill
+
+# Manual, on demand — this is a one-off (or occasionally re-run) data pull, not a recurring job.
+# Needs no store credentials: it only talks to Open-Meteo and NOAA, both free and keyless, and
+# writes its result into brain/reference/ for the analysis session to read and join against sales
+# separately. See agent/weather_backfill.py for why this has to run here rather than in the agent
+# session — that session sits behind an egress allowlist that blocks both providers.
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Start date (YYYY-MM-DD)'
+        required: true
+        default: '2024-01-01'
+      end_date:
+        description: 'End date (YYYY-MM-DD)'
+        required: true
+        default: '2026-08-20'
+
+jobs:
+  backfill:
+    name: Backfill weather & tide history
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # The run commits its result straight into brain/reference/.
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run backfill
+        working-directory: agent
+        env:
+          # Same location/station resolution as the daily agent, so scores land on the same
+          # station and are directly comparable to what it already logs.
+          STORE_LATITUDE: ${{ vars.STORE_LATITUDE || '41.7370' }}
+          STORE_LONGITUDE: ${{ vars.STORE_LONGITUDE || '-70.3870' }}
+          NOAA_TIDE_STATION: ${{ vars.NOAA_TIDE_STATION }}
+          NOAA_TIDE_STATION_NAME: ${{ vars.NOAA_TIDE_STATION_NAME || 'Barnstable Harbor' }}
+        run: |
+          python weather_backfill.py \
+            --start "${{ inputs.start_date }}" \
+            --end "${{ inputs.end_date }}" \
+            --out ../brain/reference/historical-weather.json
+
+      - name: Commit result
+        if: always()
+        run: |
+          if [ -z "$(git status --porcelain brain/reference/)" ]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name  "Sandy Neck Analytics"
+          git config user.email "actions@github.com"
+          git add brain/reference/historical-weather.json
+          git commit -m "Backfill weather/tide history: ${{ inputs.start_date }} to ${{ inputs.end_date }}"
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && break
+            sleep $((attempt * 3))
+          done
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backfill-failure-log
+          path: agent/
+          retention-days: 7
