@@ -100,6 +100,35 @@ is expected, not alarming.
 
 ---
 
+## Platform history — 2024 data is Square, migrated (treat as directional only)
+
+Shopify's own record makes 2024 look like a data gap (no `pos_location_name` at all that year,
+every order tagged with the generic channel "MP - Store Migration & Import"), and it's tempting to
+read that as just a pre-multi-location quirk. It isn't — the real history, from BJ (2026-08-25):
+
+- **2023** (the shop's first year): Shopify.
+- **2024**: **Square**, a full year. BJ didn't like it and switched back.
+- **2025 onward**: Shopify again. The Square year got migrated in afterward.
+
+So every 2024 figure in Shopify is an import from a different platform, not native Shopify data.
+BJ's own words: **"directionally true but I don't want to treat it as gospel or true
+apples-to-apples with the true Shopify data."**
+
+**What this means for analysis:**
+- 2024 can show the rough shape of the year (it existed, revenue was roughly this order of
+  magnitude, the season peaked in summer) — fine for "was there a store back then and roughly how
+  big," never fine for a precise year-over-year comparison against 2025/2026.
+- It cannot be split by location or channel (store vs. online vs. in-person) — Square's categories
+  don't map cleanly onto Shopify's, and the migration collapsed them all into one unlabeled bucket.
+- **Do not use 2024 to build or calibrate the prior-year seasonality curve, the fitted
+  expectation model, or any pacing baseline.** 2025 is the earliest year that's native Shopify data
+  and safe to treat as a real comparison point.
+- When 2024 appears in a chart or table alongside 2025/2026, flag it clearly as Square-era/migrated
+  and blended (can't isolate store-only) — never present it with the same confidence as the later
+  years.
+
+---
+
 ## The Snack Shack (excluded from all analysis)
 
 The Snack Shack was a separate location run as a one-off, single-year experiment in 2025. It is
@@ -385,3 +414,7 @@ no framework at all.
     Judge the SEO work on year-over-year same-week and average position — never on this autumn's
     session counts, and never on the merchandising changes, which move conversion rather than
     acquisition.
+11. **Treat 2024 as directional only, never apples-to-apples.** It's a Square-era migration import,
+    not native Shopify data (see "Platform history" above) — fine for rough shape/scale, never for
+    precise YoY comparison, and never as an input to the prior-year seasonality curve or any fitted
+    model. 2025 is the earliest year safe to calibrate against.
