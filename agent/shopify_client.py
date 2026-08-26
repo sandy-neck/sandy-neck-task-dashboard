@@ -716,6 +716,60 @@ class ShopifyClient:
         signals.sort(key=lambda s: s["days_of_cover"])
         return signals[:limit]
 
+    # ── Abandoned checkouts ─────────────────────────────────────────────────────
+
+    def get_abandoned_checkouts(self, hours_back: int = 48, limit: int = 15) -> list:
+        """
+        Recent abandoned checkouts -- contact info given, purchase never completed -- that
+        haven't already been recovered. Not part of the ShopifyQL sales surface (there's no
+        `FROM abandoned_checkouts`), so this goes straight at the Admin GraphQL AbandonedCheckout
+        resource. In-store POS sales have no checkout-abandonment step, so this is online-only.
+        """
+        cutoff = (datetime.now(ET) - timedelta(hours=hours_back)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        gql = """
+        query RecentAbandoned($q: String!, $first: Int!) {
+          abandonedCheckouts(first: $first, query: $q, sortKey: CREATED_AT, reverse: true) {
+            edges {
+              node {
+                name
+                createdAt
+                customer { firstName lastName email }
+                totalPriceSet { shopMoney { amount } }
+                lineItems(first: 5) { edges { node { title quantity } } }
+                abandonedCheckoutUrl
+              }
+            }
+          }
+        }
+        """
+        try:
+            data = self._gql(gql, {
+                "q": f"created_at:>={cutoff} recovery_state:not_recovered",
+                "first": limit,
+            })
+            edges = (data.get("abandonedCheckouts") or {}).get("edges") or []
+            out = []
+            for e in edges:
+                n = e["node"]
+                customer = n.get("customer") or {}
+                name = " ".join(filter(None, [customer.get("firstName"), customer.get("lastName")]))
+                items = [
+                    f"{li['node']['title']} x{li['node']['quantity']}"
+                    for li in (n.get("lineItems") or {}).get("edges", [])
+                ]
+                out.append({
+                    "name": n.get("name"),
+                    "created_at": n.get("createdAt"),
+                    "customer_name": name or None,
+                    "customer_email": customer.get("email"),
+                    "total": float((n.get("totalPriceSet") or {}).get("shopMoney", {}).get("amount") or 0),
+                    "items": items,
+                    "recovery_url": n.get("abandonedCheckoutUrl"),
+                })
+            return out
+        except Exception:
+            return []
+
     # ── Inventory alerts ───────────────────────────────────────────────────────
 
     def get_low_inventory(self, threshold: int = 10) -> list:

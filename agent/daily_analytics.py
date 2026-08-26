@@ -140,6 +140,9 @@ def main():
         payload["tiktok_products"] = shopify.get_top_products_by_channel("TikTok")
         payload["season"] = shopify.get_season_trend()
         payload["reorder_signals"] = shopify.get_reorder_signals()
+        payload["abandoned_checkouts"] = shopify.get_abandoned_checkouts()
+        if payload["abandoned_checkouts"]:
+            print(f"   Abandoned:    {len(payload['abandoned_checkouts'])} checkout(s), last 48h")
         if report_date:
             try:
                 inventory_db.upsert_day(report_date, payload["reorder_signals"])
