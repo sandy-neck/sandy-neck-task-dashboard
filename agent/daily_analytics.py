@@ -23,6 +23,7 @@ from expectations import assess
 from targets import pace, load_prior_year_curve, save_prior_year_curve
 from forecast import project_week, best_opportunity
 from brain import Brain
+from reply_ingest import ingest_replies
 from synthesizer import ClaudeSynthesizer
 from email_report import EmailReporter, build_subject
 
@@ -270,6 +271,21 @@ def main():
             msg = f"{label}: {e}"
             print(f"   ERROR: {msg}", file=sys.stderr)
             payload["errors"].append(msg)
+
+    # ── Email replies ────────────────────────────────────────────────────────
+    # Runs before the brain is read, so a reply that arrived overnight lands in INBOX.md's
+    # Unprocessed section in time for this same run's Brain().inbox() call.
+    print("Checking for email replies...")
+    try:
+        reply_result = ingest_replies()
+        if reply_result["available"]:
+            n = reply_result["ingested"]
+            print(f"   Ingested {n} new repl{'y' if n == 1 else 'ies'}" if n else "   No new replies")
+        else:
+            print(f"   Reply check unavailable: {reply_result['reason']}", file=sys.stderr)
+    except Exception as e:
+        print(f"   ERROR: {e}", file=sys.stderr)
+        payload["errors"].append(f"Reply ingest: {e}")
 
     # ── Brain ─────────────────────────────────────────────────────────────────
     print("Reading brain...")

@@ -36,20 +36,28 @@ instead, and you promote anything worth keeping.
 
 ## How to give feedback
 
-Three ways, in increasing order of effort:
+Four ways, in increasing order of effort:
 
-**1. Jot it in `INBOX.md`.** One line is fine. The next run reads it and folds it into the analysis.
+**1. Reply to the daily email.** The lowest-effort option — hit reply, write a sentence, send.
+`agent/reply_ingest.py` reads it over IMAP each morning and drops it straight into `INBOX.md`'s
+Unprocessed section as if you'd typed it there yourself, tagged with which address it came from.
+Works on any reply to a "SNP Daily" thread, whether or not the email actually asked a question that
+day — a stray thought counts too. (One-time setup: IMAP has to be turned on in the sending Gmail
+account's own settings — Settings → Forwarding and POP/IMAP → Enable IMAP — before this can read
+anything.)
+
+**2. Jot it in `INBOX.md`.** One line is fine. The next run reads it and folds it into the analysis.
 
 ```markdown
 - 2026-08-08 — Customer said she found us googling "swim suits near me". Ask more people this.
 - 2026-08-08 — Yesterday's "strong day" call was wrong. Hot beach day, should've done better.
 ```
 
-**2. Correct `CONTEXT.md` directly.** If the agent keeps making the same wrong assumption, this is
+**3. Correct `CONTEXT.md` directly.** If the agent keeps making the same wrong assumption, this is
 where you fix it permanently.
 
-**3. Tell Claude in a session.** Say what was wrong and it'll write the correction into the right
-file. Usually the fastest option.
+**4. Tell Claude in a session.** Say what was wrong and it'll write the correction into the right
+file. Best for anything that needs real back-and-forth rather than a quick note.
 
 ## What makes a daily entry good
 

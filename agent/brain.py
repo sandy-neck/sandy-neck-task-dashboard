@@ -189,6 +189,47 @@ class Brain:
             existing = "# Learned\n"
         path.write_text(f"{existing}\n\n---\n\n{entry}\n", encoding="utf-8")
 
+    def append_inbox(self, entries: list[str]) -> None:
+        """
+        Add new dated notes to Unprocessed -- the same section inbox() reads and
+        mark_inbox_processed() clears once a run has folded them in. Written for reply_ingest.py
+        (email replies to the daily report land here), but usable by anything that wants to feed
+        INBOX.md a note programmatically rather than BJ typing it in by hand.
+
+        Mirrors mark_inbox_processed()'s own section-matching regex on purpose -- same shape of
+        edit, same file, so both stay easy to reason about together.
+        """
+        entries = [e.strip() for e in entries if e and e.strip()]
+        if not entries:
+            return
+
+        path = self.base / "INBOX.md"
+        try:
+            raw = path.read_text(encoding="utf-8")
+        except (FileNotFoundError, OSError):
+            raw = "# Inbox\n\n---\n\n## Unprocessed\n\n---\n\n## Processed\n"
+
+        addition = "\n".join(entries)
+        section = re.search(
+            r"(^##\s+Unprocessed\s*$)(.*?)(?=^##\s+|\Z)", raw, re.MULTILINE | re.DOTALL
+        )
+        if section:
+            # group(1)'s trailing `\s*$` greedily swallows the heading's own newline, so rstrip it
+            # back to the bare heading and rebuild spacing explicitly rather than doubling it up.
+            heading = section.group(1).rstrip()
+            existing = "\n".join(
+                line for line in section.group(2).splitlines()
+                if line.strip() not in ("---", "***", "___")
+            ).strip()
+            body = f"{existing}\n\n{addition}" if existing else addition
+            raw = (
+                raw[:section.start(1)] + heading + "\n\n" + body + "\n\n"
+                + raw[section.end(2):]
+            )
+        else:
+            raw = raw.rstrip() + "\n\n## Unprocessed\n\n" + addition + "\n"
+        path.write_text(raw, encoding="utf-8")
+
     def mark_inbox_processed(self, day: str) -> None:
         """
         Move everything in Unprocessed to Processed, stamped with the date it was read.

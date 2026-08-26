@@ -72,6 +72,12 @@ jobs:
           REPORT_RECIPIENT: goodvibes@sandyneckprovisions.com
           REPORT_SENDER_NAME: Sandy
 
+          # Email replies — optional. A Gmail App Password (same kind as SMTP_PASSWORD) grants
+          # IMAP access too, so reply_ingest.py reuses SMTP_USERNAME/SMTP_PASSWORD by default;
+          # only set these if replies should be read from a different mailbox or credential.
+          IMAP_USERNAME: ${{ secrets.IMAP_USERNAME }}
+          IMAP_PASSWORD: ${{ secrets.IMAP_PASSWORD }}
+
           # Klaviyo — optional (stub if missing)
           KLAVIYO_PRIVATE_KEY: ${{ secrets.KLAVIYO_PRIVATE_KEY }}
           KLAVIYO_STUB_MODE: ${{ secrets.KLAVIYO_PRIVATE_KEY == '' && 'true' || 'false' }}
