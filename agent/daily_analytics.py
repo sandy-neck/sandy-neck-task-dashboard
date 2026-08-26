@@ -9,7 +9,7 @@ ones learned.
 """
 import os
 import sys
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import pytz
 
 from shopify_client import ShopifyClient
@@ -17,7 +17,8 @@ from social_client import SocialClient
 from klaviyo_client import KlaviyoClient
 from google_local_client import GoogleLocalClient
 from weather_client import WeatherClient, comparable_days, score_days_with_snp500
-from sales_db import upsert_day
+from sales_db import upsert_day, reconcile, RECONCILE_LOOKBACK_DAYS
+import inventory_db
 from expectations import assess
 from targets import pace, load_prior_year_curve, save_prior_year_curve
 from forecast import project_week, best_opportunity
@@ -112,11 +113,39 @@ def main():
             except Exception as e:
                 print(f"   Sales cache update failed: {e}", file=sys.stderr)
                 payload["errors"].append(f"Sales cache: {e}")
+
+            # Shopify's own totals for recent days can still change after the fact -- a late
+            # refund, a chargeback, a test/draft order cleaned up afterward. Re-check a trailing
+            # window against live data and self-heal the cache rather than let it silently drift.
+            try:
+                lookback_start = (
+                    date.fromisoformat(report_date) - timedelta(days=RECONCILE_LOOKBACK_DAYS - 1)
+                ).isoformat()
+                recon = reconcile(
+                    shopify.get_location_range(lookback_start, report_date),
+                    shopify.get_channel_range(lookback_start, report_date),
+                    lookback_start, report_date,
+                )
+                if recon.get("skipped"):
+                    print(f"   Sales cache:  reconcile skipped -- {recon['skipped']}", file=sys.stderr)
+                elif recon["revised_count"]:
+                    print(f"   Sales cache:  reconciled {lookback_start} -> {report_date}, "
+                          f"{recon['revised_count']} rows revised "
+                          f"(brain/reference/reconciliation-log.csv)")
+            except Exception as e:
+                print(f"   Sales cache reconcile failed: {e}", file=sys.stderr)
+                payload["errors"].append(f"Sales cache reconcile: {e}")
         payload["instore_products"] = shopify.get_top_products_by_channel("Point of Sale")
         payload["online_products"] = shopify.get_top_products_by_channel("Online Store")
         payload["tiktok_products"] = shopify.get_top_products_by_channel("TikTok")
         payload["season"] = shopify.get_season_trend()
         payload["reorder_signals"] = shopify.get_reorder_signals()
+        if report_date:
+            try:
+                inventory_db.upsert_day(report_date, payload["reorder_signals"])
+            except Exception as e:
+                print(f"   Inventory cache update failed: {e}", file=sys.stderr)
+                payload["errors"].append(f"Inventory cache: {e}")
 
         # Pace against the annual target using prior year's shape. The curve is cached because
         # last year's numbers don't change — no point re-pulling a full year every morning.

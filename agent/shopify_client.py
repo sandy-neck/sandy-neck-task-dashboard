@@ -510,6 +510,49 @@ class ShopifyClient:
         except Exception:
             return []
 
+    def get_location_range(self, start: str, end: str) -> list:
+        """
+        Daily, per-location revenue for a date range in one call -- the same shape
+        `sales_db.reconcile()` compares against the cache. Unfiltered, like get_location_day.
+        """
+        try:
+            rows = self._shopifyql(
+                "FROM sales SHOW orders, gross_sales "
+                "GROUP BY pos_location_name TIMESERIES day "
+                f"SINCE {start} UNTIL {end}"
+            )
+            return [
+                {
+                    "date": str(r.get("day", ""))[:10],
+                    "location": r.get("pos_location_name") or "",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows if r.get("day")
+            ]
+        except Exception:
+            return []
+
+    def get_channel_range(self, start: str, end: str) -> list:
+        """Daily, per-channel revenue for a date range in one call. Unfiltered."""
+        try:
+            rows = self._shopifyql(
+                "FROM sales SHOW orders, gross_sales "
+                "GROUP BY sales_channel TIMESERIES day "
+                f"SINCE {start} UNTIL {end}"
+            )
+            return [
+                {
+                    "date": str(r.get("day", ""))[:10],
+                    "channel": r.get("sales_channel") or "",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows if r.get("day")
+            ]
+        except Exception:
+            return []
+
     def get_top_products_by_channel(self, channel: str, since: str = "-7d", limit: int = 8) -> list:
         """Top sellers within a single channel — 'what moved in the store' vs. 'what moved online'."""
         safe = channel.replace("'", "")
