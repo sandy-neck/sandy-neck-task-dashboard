@@ -220,6 +220,8 @@ already sitting in git.
 | `prior-year-seasonality.json` | Cumulative revenue-by-day-of-year curve, 2025 only, Snack Shack excluded. | Built once, cached (see above). |
 | `daily_sales_by_location.csv` | Every day since 2023-06-01, revenue + orders by `pos_location_name` (Sandy Neck Provisions / Snack Shack / blank = non-POS). **Unfiltered** — Snack Shack and all channels included, on purpose, so exclusion rules live in one place (this file, not the cache) rather than being silently baked into stored numbers. | `agent/daily_analytics.py`, one upsert per run via `agent/sales_db.py`. |
 | `daily_sales_by_channel.csv` | Same days, split by `sales_channel` instead (Point of Sale / Online Store / TikTok / Shop / etc.) — same total as the location file, finer-grained on the non-POS side. Also unfiltered. | Same daily upsert. |
+| `reconciliation-log.csv` | Audit trail of every time a cached day's total_sales/orders no longer matched a fresh re-pull (late refund, chargeback, test/draft order cleaned up afterward, etc.) — old value, new value, when it was caught. Empty file/no rows is the healthy state. | `agent/sales_db.reconcile()`, run over a trailing 30-day window every morning. |
+| `daily_reorder_signals.csv` | Daily snapshot of on-hand stock, recent sell-through velocity, days of cover, and urgency per product — the same numbers `get_reorder_signals()` already computes for the daily email, kept over time so a trend ("has this product's velocity been rising or falling") is answerable without re-deriving it live. No backfill — starts empty, accumulates from whenever it was added onward. | `agent/daily_analytics.py`, one upsert per run via `agent/inventory_db.py`. |
 | `historical-weather.json` | Daily weather + tide + SNP 500 score, backfilled via `.github/workflows/weather-backfill.yml` (manual dispatch — the agent session's network egress can't reach Open-Meteo/NOAA directly). Not yet populated as of 2026-08-26; run the workflow to fill it in. | Manual re-run of that workflow. |
 
 **Applying exclusions when reading the sales CSVs:** filter to `pos_location_name == 'Sandy Neck
@@ -227,6 +229,12 @@ Provisions'` for store-only, or `!= 'Snack Shack'` for store+online — same rul
 ShopifyQL query in this codebase (see "The Snack Shack" and "Platform history" above). 2024 rows
 are Square-migration data and carry the same directional-only caveat regardless of which cache file
 they're read from.
+
+**Trusting the sales cache:** it self-heals daily (see `reconciliation-log.csv` above), so a day
+inside the last 30 days that doesn't match what Shopify shows live almost certainly hasn't been
+reconciled yet — check the log before assuming the cache is wrong. A day older than that not
+matching live Shopify would be unusual; check the log first, and if it's not there, re-run
+`sales_db.reconcile()` over that specific range by hand.
 
 ---
 
