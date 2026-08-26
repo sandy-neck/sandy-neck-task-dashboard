@@ -492,3 +492,30 @@ Mechanism is obvious and that's a point in its favour: perfect beach weather onl
 3. Judge shoulder days against the **same weekday, prior week** and the weekday band, not against SNP-derived expectation.
 
 **What would confirm:** the rest of this week — six more Exceptional/Great days forecast. If they land in the $550–900 weekday band regardless of score spread (445 to 485), that's decisive. **What would kill it:** any of them clearing $1,500 on score alone, which would mean Aug 24 was just a bad Monday.
+
+---
+
+### 2026-08-25 — Confirmed: in the shoulder, SNP 500 no longer predicts in-store revenue; visitor population is the binding constraint
+**Confidence: high on the fact, medium on the mechanism.** Upgraded from medium-high (2026-08-24) on a second clean instance.
+
+Two consecutive days with sound scorer inputs — Mon Aug 24 (SNP 495, 12.5 hrs sun, 0.0 precip) and Tue Aug 25 (SNP 480, 11.3 hrs sun, 0.0 precip) — produced $721/22 and $410/17, the two **lowest** results in the season's entire 465–495 band:
+
+| Day | SNP | Revenue | Orders |
+|---|---:|---:|---:|
+| Aug 11 | 465 | $1,273 | 38 |
+| Aug 12 | 465 | $806 | 14 |
+| Aug 20 | 465 | $757 | 25 |
+| Aug 23 | 465 | $922 | 24 |
+| Aug 24 | 495 | $721 | 22 |
+| Aug 25 | 480 | $410 | 17 |
+
+The two highest scores in the band are the two worst outcomes. Unlike Aug 21/22/23, neither day is contaminated by the sun-hours blind spot in the scorer — the scores are correct and revenue still didn't follow. Same-weekday comparison says the same thing: Tue Aug 18 (SNP 425) $573 → Tue Aug 25 (SNP 480) $410, −28% on a substantially better day, which is exactly the observed ~30% weekly decay arriving regardless of conditions.
+
+**Mechanism (inferred, not measured):** perfect beach weather only converts if there are people on the Cape. Post-Aug-15 the visitor population is falling ~30%/week and has become the binding constraint. Caveat worth holding: I am explaining the revenue decay with a population decline that I only infer *from* the revenue decay. That's circular. It needs a non-revenue measure.
+
+**Three consequences, all operational:**
+1. The expectation curve needs a **phase/population term**. Weather + weekday is insufficient after mid-August. Aug 24/25 are valid data points for that fit; Aug 21/22/23 must be excluded (scorer bug).
+2. **Never pass the week-ahead tool's number through unadjusted in the shoulder.** It forecast $12.2k for Aug 27–Sep 2 off six Great/Exceptional days. Realistic on decay: $5–6k. It is scoring the sky in a period when the sky doesn't matter.
+3. Judge shoulder days against **same weekday, prior week** and the weekday band. Reporting SNP-vs-expected produces a meaningless string of 35–50% misses.
+
+**What would confirm the mechanism:** Sandy Neck gatehouse permit counts or Barnstable occupancy data tracking the ~30%/week decline independently of sales. **What would kill the whole thing:** any remaining August day clearing ~$1,500 on score alone — which would mean Aug 24 and 25 were just two bad weekdays. Five more Great/Exceptional days forecast through Aug 31 will settle it.
