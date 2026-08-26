@@ -467,6 +467,49 @@ class ShopifyClient:
         except Exception:
             return []
 
+    def get_location_day(self, day: str) -> list:
+        """
+        Per-POS-location revenue for one specific day, every location included (unlike everywhere
+        else in this client, `sales_db.upsert_day` needs the raw split, not the store-only filtered
+        view, so the local cache stays a complete record rather than one with today's exclusion
+        rules already baked in).
+        """
+        try:
+            rows = self._shopifyql(
+                "FROM sales SHOW orders, gross_sales "
+                "GROUP BY pos_location_name "
+                f"SINCE {day} UNTIL {day}"
+            )
+            return [
+                {
+                    "location": r.get("pos_location_name") or "",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows
+            ]
+        except Exception:
+            return []
+
+    def get_channel_day_all(self, day: str) -> list:
+        """Same as get_channel_day, but unfiltered -- see get_location_day for why."""
+        try:
+            rows = self._shopifyql(
+                "FROM sales SHOW orders, gross_sales "
+                "GROUP BY sales_channel "
+                f"SINCE {day} UNTIL {day}"
+            )
+            return [
+                {
+                    "channel": r.get("sales_channel") or "",
+                    "orders": int(r.get("orders") or 0),
+                    "revenue": float(r.get("gross_sales") or 0),
+                }
+                for r in rows
+            ]
+        except Exception:
+            return []
+
     def get_top_products_by_channel(self, channel: str, since: str = "-7d", limit: int = 8) -> list:
         """Top sellers within a single channel — 'what moved in the store' vs. 'what moved online'."""
         safe = channel.replace("'", "")

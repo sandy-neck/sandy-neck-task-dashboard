@@ -17,6 +17,7 @@ from social_client import SocialClient
 from klaviyo_client import KlaviyoClient
 from google_local_client import GoogleLocalClient
 from weather_client import WeatherClient, comparable_days, score_days_with_snp500
+from sales_db import upsert_day
 from expectations import assess
 from targets import pace, load_prior_year_curve, save_prior_year_curve
 from forecast import project_week, best_opportunity
@@ -97,6 +98,20 @@ def main():
         }
         payload["channel_split"] = shopify.get_channel_split()
         payload["channel_day"] = shopify.get_channel_day(report_date) if report_date else []
+
+        # Keep the local sales cache (brain/reference/daily_sales_by_*.csv) current so repeat
+        # analysis reads a local file instead of re-querying Shopify history every time.
+        if report_date:
+            try:
+                upsert_day(
+                    report_date,
+                    shopify.get_location_day(report_date),
+                    shopify.get_channel_day_all(report_date),
+                )
+                print(f"   Sales cache:  updated {report_date}")
+            except Exception as e:
+                print(f"   Sales cache update failed: {e}", file=sys.stderr)
+                payload["errors"].append(f"Sales cache: {e}")
         payload["instore_products"] = shopify.get_top_products_by_channel("Point of Sale")
         payload["online_products"] = shopify.get_top_products_by_channel("Online Store")
         payload["tiktok_products"] = shopify.get_top_products_by_channel("TikTok")

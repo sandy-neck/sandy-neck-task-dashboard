@@ -209,6 +209,27 @@ documented guess, not measured history.
 
 ---
 
+## Local data caches (`brain/reference/`)
+
+Read from these first instead of re-querying Shopify for numbers that don't change — a chat session
+answering a historical question should read a file, not spend a round trip re-deriving something
+already sitting in git.
+
+| File | What it is | Kept current by |
+|---|---|---|
+| `prior-year-seasonality.json` | Cumulative revenue-by-day-of-year curve, 2025 only, Snack Shack excluded. | Built once, cached (see above). |
+| `daily_sales_by_location.csv` | Every day since 2023-06-01, revenue + orders by `pos_location_name` (Sandy Neck Provisions / Snack Shack / blank = non-POS). **Unfiltered** — Snack Shack and all channels included, on purpose, so exclusion rules live in one place (this file, not the cache) rather than being silently baked into stored numbers. | `agent/daily_analytics.py`, one upsert per run via `agent/sales_db.py`. |
+| `daily_sales_by_channel.csv` | Same days, split by `sales_channel` instead (Point of Sale / Online Store / TikTok / Shop / etc.) — same total as the location file, finer-grained on the non-POS side. Also unfiltered. | Same daily upsert. |
+| `historical-weather.json` | Daily weather + tide + SNP 500 score, backfilled via `.github/workflows/weather-backfill.yml` (manual dispatch — the agent session's network egress can't reach Open-Meteo/NOAA directly). Not yet populated as of 2026-08-26; run the workflow to fill it in. | Manual re-run of that workflow. |
+
+**Applying exclusions when reading the sales CSVs:** filter to `pos_location_name == 'Sandy Neck
+Provisions'` for store-only, or `!= 'Snack Shack'` for store+online — same rules as every live
+ShopifyQL query in this codebase (see "The Snack Shack" and "Platform history" above). 2024 rows
+are Square-migration data and carry the same directional-only caveat regardless of which cache file
+they're read from.
+
+---
+
 ## Product intelligence
 
 Things that are true about specific products and would otherwise take months to re-learn.
