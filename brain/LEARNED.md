@@ -519,3 +519,16 @@ The two highest scores in the band are the two worst outcomes. Unlike Aug 21/22/
 3. Judge shoulder days against **same weekday, prior week** and the weekday band. Reporting SNP-vs-expected produces a meaningless string of 35–50% misses.
 
 **What would confirm the mechanism:** Sandy Neck gatehouse permit counts or Barnstable occupancy data tracking the ~30%/week decline independently of sales. **What would kill the whole thing:** any remaining August day clearing ~$1,500 on score alone — which would mean Aug 24 and 25 were just two bad weekdays. Five more Great/Exceptional days forecast through Aug 31 will settle it.
+
+---
+
+### 2026-08-26 — In the shoulder, order count falls but average basket rises; the decay is footfall, not demand
+**Confidence: low-medium** — one clean same-weekday instance, plausible mechanism, easily explained by a single large item.
+
+Wed Aug 19: $871 / 23 orders / AOV $37.56. Wed Aug 26: $966 / 21 orders / AOV $45.60. Revenue **up 11%** on **two fewer orders** — the first same-weekday increase since the start of August, in a stretch where every other same-weekday comparison ran −17% to −28%.
+
+The composition supports it: a $134.99 Anchor Works beach umbrella (new to the 7-day board) plus GCI Big Surf chairs at $98 each. Late-August buyers are fewer but are buying hard goods at full price, where peak-season days were high-count and consumable-heavy (ice, drinks).
+
+If true, two things follow. (1) The pure "−30% a week" projection understates the shoulder floor, because basket growth partially offsets footfall loss — year-end may land above the $166k projection. (2) Discounting beach hardware to clear it before Labor Day would be leaving money on the table; it's still moving at full price.
+
+**What would confirm it:** AOV continuing to rise against falling order counts through Aug 28–31, and hard goods staying on the 7-day board. **What would kill it:** AOV reverting to the ~$32–37 trailing band this weekend, which would mean Aug 26 was one umbrella and nothing more.
