@@ -532,3 +532,16 @@ The composition supports it: a $134.99 Anchor Works beach umbrella (new to the 7
 If true, two things follow. (1) The pure "−30% a week" projection understates the shoulder floor, because basket growth partially offsets footfall loss — year-end may land above the $166k projection. (2) Discounting beach hardware to clear it before Labor Day would be leaving money on the table; it's still moving at full price.
 
 **What would confirm it:** AOV continuing to rise against falling order counts through Aug 28–31, and hard goods staying on the 7-day board. **What would kill it:** AOV reverting to the ~$32–37 trailing band this weekend, which would mean Aug 26 was one umbrella and nothing more.
+
+---
+
+### 2026-08-27 — Shoulder-season day-to-day revenue swings are single-item lumpiness, not demand signal
+**Confidence: medium-high** — four consecutive days with an identifiable big-ticket cause, and it cleanly kills the opposite hypothesis I logged yesterday.
+
+Aug 24 AOV $32.17 · Aug 25 $24.14 · Aug 26 $45.60 · Aug 27 $23.50, on order counts of 22/17/21/18. Aug 26 contained the $134.99 Anchor Works umbrella plus GCI Big Surf chairs; Aug 27 contained no hard good at all. At ~20 orders a day, one $100–135 item is 15–20% of gross sales, which is larger than the entire weather effect appears to be at this point in the season (Aug 24 scored 495 and did $721; Aug 26 scored 480 and did $966).
+
+This supersedes the 2026-08-26 entry ("order count falls but AOV rises; the decay is footfall not demand"). That entry named its own kill condition — AOV reverting to the $32–37 band — and Aug 27 went straight through it to $23.50. Basket is not trending up; it's oscillating with hard-goods incidence.
+
+**What follows:** (1) before commenting on any AOV move in the shoulder, check the hard-goods lines first — this is the shoulder analogue of the peak-season ice-mix rule. (2) Don't build a year-end projection off basket growth. (3) Beach hardware is still clearing at full price, so the correct Labor Day play is placement, not discount.
+
+**What would kill this:** a run of days where AOV moves substantially with no change in big-ticket composition — that would point back at genuine customer-mix change.
