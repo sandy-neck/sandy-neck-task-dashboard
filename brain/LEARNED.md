@@ -545,3 +545,26 @@ This supersedes the 2026-08-26 entry ("order count falls but AOV rises; the deca
 **What follows:** (1) before commenting on any AOV move in the shoulder, check the hard-goods lines first — this is the shoulder analogue of the peak-season ice-mix rule. (2) Don't build a year-end projection off basket growth. (3) Beach hardware is still clearing at full price, so the correct Labor Day play is placement, not discount.
 
 **What would kill this:** a run of days where AOV moves substantially with no change in big-ticket composition — that would point back at genuine customer-mix change.
+
+---
+
+### 2026-08-28 — In the shoulder, the expectation curve fails on weekdays and roughly holds on weekends
+**Confidence: medium** — clean separation across ten scored days, obvious mechanism, but only three weekend days in the sample.
+
+Actual as % of expected, Aug 20–28, split by weekday:
+
+| Mon–Thu | | Fri–Sat | |
+|---|---:|---|---:|
+| Aug 20 (465) | 41% | Aug 22 Sat (445) | ~93% |
+| Aug 24 (495) | 48% | Aug 28 Fri (425) | **85%** |
+| Aug 25 (480) | 37% | Aug 21 Fri (400, rain) | 22% |
+| Aug 26 (480) | 65% | | |
+| Aug 27 (445) | 29% | | |
+
+Excluding the rained-out Aug 21, weekend days run 85–93% of expected while Mon–Thu run 29–65%. Aug 28 is the strongest case: a *lower* score (425) than four of the five weekday misses, and it nearly hit its number on 34 orders — the highest count since Aug 15.
+
+This refines the Aug 25 note ("stop reporting SNP-vs-expected in the shoulder"). The ratio isn't uniformly dead — it's dead Mon–Thu and still informative Fri–Sat. Mechanism is the one from Aug 8: the curve's weekday factor was fitted on peak-season data, when midweek still had visitor volume. In the shoulder the weekday/weekend gap widens, so a factor calibrated in July under-corrects badly in late August.
+
+**Practical consequence:** the operational number to track is the midweek mean vs the Fri/Sat pair, not the daily total. Aug 24–27 averaged $639; Aug 28 did $1,496. That ratio, not revenue level, is what tells BJ when to go weekends-only.
+
+**What would confirm it:** Sat Aug 29 and Sun Aug 30 landing above ~75% of expected while Sep 1–3 stay under 50%. **What would kill it:** a weekend day coming in at 40% of expected on clean conditions, which would mean Aug 22 and Aug 28 were just two good days.
