@@ -568,3 +568,16 @@ This refines the Aug 25 note ("stop reporting SNP-vs-expected in the shoulder").
 **Practical consequence:** the operational number to track is the midweek mean vs the Fri/Sat pair, not the daily total. Aug 24–27 averaged $639; Aug 28 did $1,496. That ratio, not revenue level, is what tells BJ when to go weekends-only.
 
 **What would confirm it:** Sat Aug 29 and Sun Aug 30 landing above ~75% of expected while Sep 1–3 stay under 50%. **What would kill it:** a weekend day coming in at 40% of expected on clean conditions, which would mean Aug 22 and Aug 28 were just two good days.
+
+---
+
+### 2026-08-29 — Cooling evenings open a firewood/bonfire category in the shoulder, and its complements are unstocked
+**Confidence: medium** — one week of firewood data, but 9 separate orders and a clear mechanism.
+
+Bundle of Firewood entered the 7-day board at $119 / 17 units / **9 orders** in the week ending Aug 29, alongside three cool-weather apparel lines (Coastal Varsity Crewneck, Sweatshirt Poncho, Jeep Duck Fuzzy Lounge Pants). Over the same stretch the SNP 500 headline cited the "sunset and bonfire window" as a positive on Aug 27, 28 and 29 as feels-like temperature fell from 88.8°F to 76.5°F.
+
+The complements are all showing sold out: Jet-Puffed Marshmallows (6 sold), Honey Maid Grahams (5), Hershey's Milk Chocolate (19). Firewood sells at ~$7; a s'mores add-on is roughly the same again per basket at what should be ordinary grocery margin and near-zero lead time.
+
+This is the shoulder-season analogue of the ice question from peak. Ice was the beach-trip proxy in July; **firewood may be the evening proxy in September–October**, and the same "what sits within arm's reach" question applies to the wood stack.
+
+**What would confirm it:** firewood holding or growing on the board through Labor Day and into the late shoulder, with the three s'mores SKUs converting once restocked and placed adjacent. **What would kill it:** firewood proving to be an August-camping artifact that dies with the campground season, or the s'mores items sitting unsold beside the wood — which would mean firewood buyers are locals with their own supplies, not impulse baskets.
