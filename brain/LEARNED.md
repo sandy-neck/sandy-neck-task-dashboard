@@ -581,3 +581,18 @@ The complements are all showing sold out: Jet-Puffed Marshmallows (6 sold), Hone
 This is the shoulder-season analogue of the ice question from peak. Ice was the beach-trip proxy in July; **firewood may be the evening proxy in September–October**, and the same "what sits within arm's reach" question applies to the wood stack.
 
 **What would confirm it:** firewood holding or growing on the board through Labor Day and into the late shoulder, with the three s'mores SKUs converting once restocked and placed adjacent. **What would kill it:** firewood proving to be an August-camping artifact that dies with the campground season, or the s'mores items sitting unsold beside the wood — which would mean firewood buyers are locals with their own supplies, not impulse baskets.
+
+---
+
+### 2026-08-30 — In the shoulder, daily revenue is driven by hard-goods incidence, not footfall
+**Confidence: medium-high** — three clean instances now, clear arithmetic mechanism, but all within one 10-day window.
+
+Aug 28–30 ran 34 → 46 → 26 orders against $1,496 → $1,685 → $576. Order count fell 43% on Sunday; revenue fell 66%. AOV went $40.28 → $34.84 → $22.17. Aug 28 and 29 both carried beach hardware (GCI Big Surf, Anchor Works umbrella, firewood volume); Aug 30 carried none of the big-ticket lines.
+
+Same pattern earlier: Aug 26 $966 on 21 orders (umbrella + chairs) vs Aug 27 $458 on 18 orders (neither). Aug 30 vs Sun Aug 23: *more* orders (26 vs 24), 37% less revenue.
+
+Mechanism is just arithmetic — at 18–26 orders a day, one $135 item is 15–20% of gross, and two or three are the difference between a $600 day and a $1,500 day. In July at 50+ orders/day this averaged out; it doesn't now.
+
+**Practical consequence:** stop reading a soft revenue day as falling demand without checking the hard-goods lines first. And the reverse — placement of high-ticket items becomes a disproportionate revenue lever in the shoulder, because a single extra chair sale is worth ~10 consumable baskets.
+
+**What would confirm it:** a day in September with below-band order count but two or more hard-goods sales landing above $1,000. **What would kill it:** a run of days where revenue tracks order count cleanly regardless of what's on the top-seller board.
