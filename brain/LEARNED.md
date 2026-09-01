@@ -596,3 +596,14 @@ Mechanism is just arithmetic — at 18–26 orders a day, one $135 item is 15–
 **Practical consequence:** stop reading a soft revenue day as falling demand without checking the hard-goods lines first. And the reverse — placement of high-ticket items becomes a disproportionate revenue lever in the shoulder, because a single extra chair sale is worth ~10 consumable baskets.
 
 **What would confirm it:** a day in September with below-band order count but two or more hard-goods sales landing above $1,000. **What would kill it:** a run of days where revenue tracks order count cleanly regardless of what's on the top-seller board.
+
+---
+
+### 2026-08-31 — Soft revenue days split into two mechanisms, distinguishable by order count vs AOV
+**Confidence: medium** — four instances across one 10-day window, but the arithmetic is clean and the two cases are unambiguous.
+
+Type A: order count holds or rises, AOV collapses → hard-goods incidence (Aug 27 $458/18/AOV $23.51; Aug 30 $576/26/AOV $22.17 with *more* orders than the comparable Sunday). Type B: order count collapses, AOV holds or rises → operational or weather event (Aug 31 $242/6/AOV $40.33, 4 POS transactions).
+
+These have opposite implications. Type A is a merchandising/placement problem and demand is fine. Type B is not a demand signal at all until you know whether the doors were open. Reading Aug 31 as "demand fell off a cliff" would be wrong; reading Aug 30 as "nobody came in" would also be wrong.
+
+**What would confirm it:** further shoulder days sorting cleanly into one bucket or the other, and Type B days correlating with either a logged closure/short day or a genuine washout. **What would kill it:** a day with both order count and AOV down together on normal hours and normal weather, which would mean actual demand decay and that the two-mechanism split is just noise on small numbers.
