@@ -607,3 +607,14 @@ Type A: order count holds or rises, AOV collapses → hard-goods incidence (Aug 
 These have opposite implications. Type A is a merchandising/placement problem and demand is fine. Type B is not a demand signal at all until you know whether the doors were open. Reading Aug 31 as "demand fell off a cliff" would be wrong; reading Aug 30 as "nobody came in" would also be wrong.
 
 **What would confirm it:** further shoulder days sorting cleanly into one bucket or the other, and Type B days correlating with either a logged closure/short day or a genuine washout. **What would kill it:** a day with both order count and AOV down together on normal hours and normal weather, which would mean actual demand decay and that the two-mechanism split is just noise on small numbers.
+
+---
+
+### 2026-09-01 — Website sessions are the tell for whether a zero-sales day is a closure or an outage
+**Confidence: medium** — one clean instance, but the logic is sound and cheap to apply.
+
+Sep 1 recorded $0 across POS, online store and TikTok. Web traffic that day was normal (49 sessions, baseline ~60) with 2 cart adds and 1 reaching checkout, so the storefront and analytics were both alive. That rules out a whole-platform failure and leaves closed doors (plus ordinary zero online conversion) or a POS-specific sync problem.
+
+Corollary: the 7-day top-seller board was byte-identical to the previous day's read, which is what a genuine zero-sales day produces and is *not* what a broken sales query produces.
+
+**What would confirm it:** BJ confirming a closure on a day that fits this signature, or a future outage where sessions also flatline and the product board shifts inconsistently. **What would kill it:** a case where sessions look normal, the board is static, and sales data later backfills — meaning the sync lag is invisible to both checks.
