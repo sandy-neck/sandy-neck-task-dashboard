@@ -618,3 +618,16 @@ Sep 1 recorded $0 across POS, online store and TikTok. Web traffic that day was 
 Corollary: the 7-day top-seller board was byte-identical to the previous day's read, which is what a genuine zero-sales day produces and is *not* what a broken sales query produces.
 
 **What would confirm it:** BJ confirming a closure on a day that fits this signature, or a future outage where sessions also flatline and the product board shifts inconsistently. **What would kill it:** a case where sessions look normal, the board is static, and sales data later backfills — meaning the sync lag is invisible to both checks.
+
+---
+
+### 2026-09-02 — The weekends-only shoulder transition mimics a data outage, and the expectation curve must be gated on trading days
+**Confidence: medium-high** — four consecutive days of the signature, clean mechanism, but still unconfirmed by BJ.
+
+Aug 31 → Sep 3 ran 6 · 0 · 5 · 4 orders immediately after a 34/46 Fri/Sat, in conditions scoring 395–410 with no precipitation. Weather cannot produce that shape. CONTEXT already predicts it: Early shoulder "drops toward weekends only." The transition appears to have landed around Aug 31.
+
+Why it matters: a conditions-only expectation curve prices a closed Wednesday at $1,255 and reports 10% of expected. Three of those in a row reads as business collapse when it's a scheduling decision. The same error inflates the week-ahead total — $12,500 expected next week assumes seven trading days when perhaps four are open, which makes the "week should comfortably beat target" verdict meaningless.
+
+**The rule to carry:** once order count sits at or below ~6 for two consecutive non-weekend days in Great conditions, assume reduced hours, suppress expected-vs-actual on those weekdays, and recompute `required` against open days only.
+
+**What would confirm it:** BJ confirming the schedule, or Fri–Sun Sep 4–6 returning to 25–45 orders while Mon–Thu stay under 6. **What would kill it:** a weekday in the next fortnight returning 20+ orders unprompted, which would mean the doors were open all along and demand genuinely fell off a cliff.
