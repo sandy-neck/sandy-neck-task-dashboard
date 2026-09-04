@@ -631,3 +631,14 @@ Why it matters: a conditions-only expectation curve prices a closed Wednesday at
 **The rule to carry:** once order count sits at or below ~6 for two consecutive non-weekend days in Great conditions, assume reduced hours, suppress expected-vs-actual on those weekdays, and recompute `required` against open days only.
 
 **What would confirm it:** BJ confirming the schedule, or Fri–Sun Sep 4–6 returning to 25–45 orders while Mon–Thu stay under 6. **What would kill it:** a weekday in the next fortnight returning 20+ orders unprompted, which would mean the doors were open all along and demand genuinely fell off a cliff.
+
+---
+
+### 2026-09-03 — Zero POS rows alongside live online orders is the definitive closed-store signature
+**Confidence: high** — clean instance, unambiguous mechanism, and it upgrades the weaker Sep 1 sessions-only test.
+
+Sep 3 returned no Point of Sale row at all while TikTok took 3 orders and the web store took 1 (with a completed checkout). Sales infrastructure was demonstrably alive on the same date, so a reporting or sync failure would have had to be POS-specific *and* silent — far less likely than the store simply being shut. The Sep 1 test (normal web sessions + zero sales everywhere) could only rule out a total platform failure; this one rules out a sales-pipeline failure too, because orders on other channels flowed through the same reporting path on the same day.
+
+**The rule:** POS absent + any other channel transacting → treat as closed, suppress expected-vs-actual entirely, and do not report the ratio.
+
+**What would confirm it:** BJ confirming the schedule, or Fri–Sun Sep 4–7 returning 25–45 orders with POS present while Mon–Thu keep showing POS-absent days. **What would kill it:** a later backfill putting POS orders onto Sep 3, which would mean POS-specific sync lag is real and invisible to both checks.
