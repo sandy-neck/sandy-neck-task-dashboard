@@ -642,3 +642,21 @@ Sep 3 returned no Point of Sale row at all while TikTok took 3 orders and the we
 **The rule:** POS absent + any other channel transacting → treat as closed, suppress expected-vs-actual entirely, and do not report the ratio.
 
 **What would confirm it:** BJ confirming the schedule, or Fri–Sun Sep 4–7 returning 25–45 orders with POS present while Mon–Thu keep showing POS-absent days. **What would kill it:** a later backfill putting POS orders onto Sep 3, which would mean POS-specific sync lag is real and invisible to both checks.
+
+---
+
+### 2026-09-04 — Order count down with AOV up is a footfall/hours signal, not a demand-quality one
+**Confidence: medium** — one clean like-for-like pair, but the mechanism is well separated from the two other soft-day signatures already logged.
+
+Fri Sep 4 (SNP 425, overcast, feels 80.6°F) did $1,233 on 26 orders / AOV $45.65. Fri Aug 28 (SNP 425, overcast, feels 88.8°F) did $1,496 on 34 orders / AOV $40.28. Same score, same weekday, same sky band — 24% fewer orders but a 13% larger basket. If demand quality had softened, basket would fall with count; it rose instead. So the customers who came bought normally and there were simply fewer of them, or the doors were open fewer hours.
+
+This completes a three-signature set for reading soft days: count near zero + normal AOV = closed; count normal + AOV collapse = product-mix/ice incidence; count down + AOV up = footfall or reduced hours.
+
+**What would confirm it:** hourly order distribution showing Sep 4's orders compressed into a shorter window (hours) or spread normally but thinner (footfall). **What would kill it:** finding a large-ticket outlier inflating Sep 4's AOV, which would make the basket rise an artifact of one sale rather than a real shift.
+
+### 2026-09-04 — A holiday weekend does not reliably backfill shoulder-season footfall
+**Confidence: low** — single observation, and hours are an unexcluded confound.
+
+The Friday of Labor Day weekend came in below the ordinary Friday a week earlier in identical scored conditions. The prior assumption was that a holiday weekend carries a premium over an adjacent normal weekend. On the Cape the holiday may mark the *end* of the visitor population rather than a peak of it — people leave for the school year rather than arrive for the long weekend.
+
+**What would confirm it:** Sep 5–7 also landing at or below Aug 28–30 despite better scores (Sep 7 forecasts 455 against Aug 30's 405). **What would kill it:** a strong Sep 5/6/7, which would make Sep 4 a one-day anomaly or purely an hours artifact.
