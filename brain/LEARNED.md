@@ -660,3 +660,21 @@ This completes a three-signature set for reading soft days: count near zero + no
 The Friday of Labor Day weekend came in below the ordinary Friday a week earlier in identical scored conditions. The prior assumption was that a holiday weekend carries a premium over an adjacent normal weekend. On the Cape the holiday may mark the *end* of the visitor population rather than a peak of it — people leave for the school year rather than arrive for the long weekend.
 
 **What would confirm it:** Sep 5–7 also landing at or below Aug 28–30 despite better scores (Sep 7 forecasts 455 against Aug 30's 405). **What would kill it:** a strong Sep 5/6/7, which would make Sep 4 a one-day anomaly or purely an hours artifact.
+
+---
+
+### 2026-09-05 — Cool, windy shoulder days shift the mix from beach consumables into apparel
+**Confidence: medium** — one day, but with unusual breadth (8 separate orders on one SKU) and a clear mechanism.
+
+Sep 5: 69.8°F, 17.2 mph wind, overcast, SNP 400 — the mildest scored day in the recent band. The SNP Coastal Varsity Crewneck went $368 / 8 units / **8 distinct orders**, straight to the top of the board from nowhere, and day AOV hit $56.39 (previous month high $45.65). Beach consumables didn't lead. CONTEXT already notes rain favours apparel over consumables; this extends it to *cold-but-dry*, which the SNP 500 still scores as a "Great" beach day.
+
+If true, the expectation curve is mis-specified for autumn: a mild, windy, dry day scores well on beach criteria but drives a *different basket* — fewer, larger, apparel-weighted tickets — which can beat expectation rather than miss it.
+
+**What would confirm it:** the next cool (<72°F) dry Saturday also topping the board with sweatshirts/hoodies and AOV above $50. **What would kill it:** the crewneck being a one-off (new product launch, a display change, or a group purchase), or warm shoulder days selling the same volume of apparel.
+
+### 2026-09-05 — Retract: holiday weekends DO backfill shoulder footfall
+**Confidence: high on the retraction** — the 2026-09-04 claim was built on a single Friday and is contradicted directly.
+
+Sep 4 (Fri, SNP 425) did $1,233 / 26 orders and I hypothesised the Labor Day weekend was marking the end of the visitor population rather than a peak. Sep 5 (Sat, SNP 400 — a *worse* day) did $4,593 / 79 orders, the largest single day of the season and ~50% above peak-summer Saturdays. The holiday weekend delivered emphatically.
+
+Sep 4 is best explained as reduced hours or a one-day dip. **Lesson to carry: do not promote a directional claim about season shape off one day, especially when hours are an unexcluded confound.**
