@@ -678,3 +678,16 @@ If true, the expectation curve is mis-specified for autumn: a mild, windy, dry d
 Sep 4 (Fri, SNP 425) did $1,233 / 26 orders and I hypothesised the Labor Day weekend was marking the end of the visitor population rather than a peak. Sep 5 (Sat, SNP 400 — a *worse* day) did $4,593 / 79 orders, the largest single day of the season and ~50% above peak-summer Saturdays. The holiday weekend delivered emphatically.
 
 Sep 4 is best explained as reduced hours or a one-day dip. **Lesson to carry: do not promote a directional claim about season shape off one day, especially when hours are an unexcluded confound.**
+
+---
+
+### 2026-09-06 — Shoulder-season Sundays cap out around $500–$600 regardless of a good SNP score
+**Confidence: medium-high** — two clean like-for-like Sundays in near-identical conditions, obvious mechanism.
+
+Sun Aug 30 (SNP 405, overcast) $576.33 / 26 orders / AOV $22.17. Sun Sep 06 (SNP 400, overcast) $468.52 / 23 orders / AOV $19.93. Both scored "Great," both landed at ~20–25% of a Sunday-adjusted expectation north of $2,200. Sep 6 was the Sunday of Labor Day weekend and still didn't move — the day after the season's largest single day ($4,593).
+
+Mechanism: Cape day-trippers and weekenders travel home Sunday. Saturday is the visitor-volume peak; Sunday is a departure day, so it behaves like a weekday on footfall and like a weekday-plus on small tickets.
+
+Implication: the expectation curve's Sunday day-of-week factor is materially too high for the shoulder, and scoring shoulder Sundays against it will keep manufacturing false misses of $1,500+.
+
+**What would confirm it:** Sun Sep 13 (forecast SNP 455) landing $500–$800 against an expected above $2,500. **What would kill it:** Sep 13 clearing $1,500, which would make Aug 30/Sep 6 a weather-mildness artifact (both were cool, 67–81°F, 17mph) rather than a day-of-week effect.
