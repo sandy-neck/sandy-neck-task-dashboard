@@ -691,3 +691,16 @@ Mechanism: Cape day-trippers and weekenders travel home Sunday. Saturday is the 
 Implication: the expectation curve's Sunday day-of-week factor is materially too high for the shoulder, and scoring shoulder Sundays against it will keep manufacturing false misses of $1,500+.
 
 **What would confirm it:** Sun Sep 13 (forecast SNP 455) landing $500–$800 against an expected above $2,500. **What would kill it:** Sep 13 clearing $1,500, which would make Aug 30/Sep 6 a weather-mildness artifact (both were cool, 67–81°F, 17mph) rather than a day-of-week effect.
+
+---
+
+### 2026-09-07 — On holiday weekends the soft day is Sunday and the Monday holds; on ordinary weekends Sunday is the soft day and Monday is dead
+**Confidence: medium-high** — one clean holiday instance, but the contrast is large in both directions and the mechanism is unambiguous.
+
+Labor Day weekend: Fri $1,233/26 · Sat $4,593/79 · **Sun $469/23** · **Mon $950/33**. Sunday scored SNP 400, Monday 475, but the gap is far larger than the score difference warrants. Compare an ordinary shoulder Monday — Mon Aug 31, SNP 410, $242 on 6 orders. Labor Day Monday ran ~4x that on 5.5x the orders.
+
+Mechanism: a Monday public holiday moves the drive-home from Sunday to Monday afternoon. Sunday becomes a stay-put day (low footfall, small tickets — AOV $19.93), Monday becomes a last-trip-before-leaving day (higher footfall, mid tickets — AOV $28.80).
+
+**Why it matters:** Columbus Day, Monday Oct 12, closes the late shoulder. If this holds, the Monday is worth staffing and stocking properly and the Sunday is not — the opposite of the ordinary-weekend rule. Also means the expectation curve needs a holiday flag rather than just a day-of-week factor; without one it will hold a dead ordinary Monday and a live holiday Monday to the same number.
+
+**What would confirm it:** Columbus Day Mon Oct 12 clearly out-earning Sun Oct 11 on both orders and revenue. **What would kill it:** Oct 12 collapsing to ordinary-Monday levels, which would make Sep 7 a Labor-Day-specific artifact (last day of summer, not a generic holiday effect) rather than a rule about Monday holidays.
