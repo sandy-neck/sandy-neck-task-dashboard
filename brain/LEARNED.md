@@ -704,3 +704,16 @@ Mechanism: a Monday public holiday moves the drive-home from Sunday to Monday af
 **Why it matters:** Columbus Day, Monday Oct 12, closes the late shoulder. If this holds, the Monday is worth staffing and stocking properly and the Sunday is not — the opposite of the ordinary-weekend rule. Also means the expectation curve needs a holiday flag rather than just a day-of-week factor; without one it will hold a dead ordinary Monday and a live holiday Monday to the same number.
 
 **What would confirm it:** Columbus Day Mon Oct 12 clearly out-earning Sun Oct 11 on both orders and revenue. **What would kill it:** Oct 12 collapsing to ordinary-Monday levels, which would make Sep 7 a Labor-Day-specific artifact (last day of summer, not a generic holiday effect) rather than a rule about Monday holidays.
+
+---
+
+### 2026-09-08 — Once the visitors leave, SNP score stops predicting revenue at all
+**Confidence: medium** — three clean reads at the top of the score range, but confounded with the schedule change.
+
+The three highest-scoring days of the shoulder produced: Aug 26 (SNP 480, Wed, open) $966 · Sep 7 (SNP 475, Mon, holiday, open) $950 · Sep 8 (SNP 495, Tue, closed) $6. Meanwhile Sep 5 scored the *lowest* of the recent band (400) and did $4,593 — the season's largest day.
+
+The read: after Labor Day the binding constraint is how many people are on the Cape, not what the sky is doing. Weather quality reallocates *what* the remaining people buy (cool day → apparel, per Sep 5) but can't manufacture footfall that has physically driven home. The expectation curve is weather-in, revenue-out, so it will keep producing $1,700–$2,000 expecteds for the entire Exceptional run Sep 10–16 and keep manufacturing $1,200+ "misses."
+
+**What would confirm it:** the Sep 11–15 run — five days scored 410–475 — landing in the $500–$1,500 band on open days rather than anywhere near the $1,700–$1,980 expecteds. **What would kill it:** Sat Sep 12 (465) clearing $3,000, which would mean weather does still convert on weekends and only midweek is footfall-bound.
+
+**Implication if true:** the curve needs a season-phase multiplier, not just day-of-week and holiday flags. From Sep 16 the honest framing is to stop scoring store days against SNP-derived expectations entirely and judge them against the observed shoulder bands instead (weekday $120–$250, Fri $1,200–$1,500, Sat $1,700–$4,600, Sun $470–$580).
