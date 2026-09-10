@@ -717,3 +717,14 @@ The read: after Labor Day the binding constraint is how many people are on the C
 **What would confirm it:** the Sep 11–15 run — five days scored 410–475 — landing in the $500–$1,500 band on open days rather than anywhere near the $1,700–$1,980 expecteds. **What would kill it:** Sat Sep 12 (465) clearing $3,000, which would mean weather does still convert on weekends and only midweek is footfall-bound.
 
 **Implication if true:** the curve needs a season-phase multiplier, not just day-of-week and holiday flags. From Sep 16 the honest framing is to stop scoring store days against SNP-derived expectations entirely and judge them against the observed shoulder bands instead (weekday $120–$250, Fri $1,200–$1,500, Sat $1,700–$4,600, Sun $470–$580).
+
+---
+
+### 2026-09-09 — Weekly session totals are distorted by single in-store spike days; quote the median, not the % change
+**Confidence: medium** — one clean case, but the mechanism is obvious and the failure mode is severe.
+
+Sessions ran 459 last 7 days vs 385 prior, which reads as +19.2%. The daily series is [54,65,104,69,64,51,52]. The 104 is Sep 5 — the $4,593 in-store Saturday, the season's largest day. Every other day in both weeks sits in the 42–69 band. Median daily is ~60 both weeks. The "growth" is one spike.
+
+This matters because it compounds an earlier finding: session spikes track in-store spikes, which suggests sessions partly measure intent-to-visit rather than e-commerce demand. So a big retail day mechanically inflates the weekly session count, and reporting the week-over-week percentage would credit online growth for what is actually a foot-traffic event.
+
+**Rule:** for a traffic base this small, report the median daily session count and only call a change real when the whole band shifts, not when one day carries it. **What would kill it:** several weeks where the % change and the median move together, meaning the spikes are incidental rather than structural.
