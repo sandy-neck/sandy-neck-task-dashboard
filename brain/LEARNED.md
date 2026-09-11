@@ -728,3 +728,16 @@ Sessions ran 459 last 7 days vs 385 prior, which reads as +19.2%. The daily seri
 This matters because it compounds an earlier finding: session spikes track in-store spikes, which suggests sessions partly measure intent-to-visit rather than e-commerce demand. So a big retail day mechanically inflates the weekly session count, and reporting the week-over-week percentage would credit online growth for what is actually a foot-traffic event.
 
 **Rule:** for a traffic base this small, report the median daily session count and only call a change real when the whole band shifts, not when one day carries it. **What would kill it:** several weeks where the % change and the median move together, meaning the spikes are incidental rather than structural.
+
+---
+
+### 2026-09-10 — Session spikes do NOT reliably track in-store spikes; the coupling has broken
+**Confidence: low** — one contradicting case against one supporting case.
+
+On 2026-09-09 I recorded that weekly session totals get inflated by single in-store spike days (Sep 5: 104 sessions alongside the $4,593 Saturday), and inferred sessions partly measure intent-to-visit. Sep 10 produced **92 sessions with the store closed and zero POS activity** — the second-highest day in the 15-day series, with no footfall event attached.
+
+So either (a) the Sep 5 correlation was coincidence, (b) there are two distinct spike mechanisms and only one is footfall-linked, or (c) some portion of these sessions is non-human and I have no bot filtering to check.
+
+**What would confirm a source shift:** Sep 11–13 sessions staying in the 80–100 band regardless of whether the store trades. **What would kill it:** Sep 11 reverting to ~60 and the next spike landing on a big Saturday again.
+
+**Practical rule until resolved:** do not attribute a session spike to anything without a named cause. Ask BJ/Meghan what was posted before inferring a mechanism — a single floor answer settles this faster than weeks of session data.
