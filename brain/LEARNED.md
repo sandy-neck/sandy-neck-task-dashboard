@@ -741,3 +741,25 @@ So either (a) the Sep 5 correlation was coincidence, (b) there are two distinct 
 **What would confirm a source shift:** Sep 11–13 sessions staying in the 80–100 band regardless of whether the store trades. **What would kill it:** Sep 11 reverting to ~60 and the next spike landing on a big Saturday again.
 
 **Practical rule until resolved:** do not attribute a session spike to anything without a named cause. Ask BJ/Meghan what was posted before inferring a mechanism — a single floor answer settles this faster than weeks of session data.
+
+---
+
+### 2026-09-11 — Check gross vs net every day; a single reversal can inflate the headline several-fold
+**Confidence: high** — arithmetic, not inference.
+
+Sep 11 reported gross $565.46 across 4 orders. Net sales were $81.98. The difference is exactly $483.48, the value of a single Shopify-Mobile order that was reversed. Reported on gross, the day looks like a thin-but-real Friday at 32% of expectation. On net it is $82 — indistinguishable from a closed day, and the POS count (1) confirms closed.
+
+I have been reading `gross_sales` from the daily totals without checking `net_sales` alongside it. At shoulder-season volumes one refunded ticket can be most of the day.
+
+**Rule:** compare gross to net on every daily read. Where they diverge by more than a few percent, lead with net and name the reversal. **What would kill it:** nothing — this is definitional. What's worth watching is how often it happens; if reversals are frequent, that's its own operational question.
+
+### 2026-09-11 — The session/footfall coupling is dead; two consecutive spikes landed on closed days
+**Confidence: medium** — two clean contradicting cases now, against one supporting case.
+
+Sep 9 I hypothesised sessions partly measure intent-to-visit, because Sep 5's 104-session spike sat on the $4,593 Saturday. Sep 10 produced 92 sessions with the store closed. Sep 11 produced **123 sessions** — the highest in the series — also with the store closed and one POS order. Baseline is ~60/day.
+
+Two consecutive decoupled spikes is no longer explicable as coincidence. Something else is driving traffic. The 2 completed checkouts on Sep 11 (frozen bait, ice — the first multi-order online day recorded) argue that at least part of it is human, since bots don't convert.
+
+**Candidate causes, unranked:** a social post, an SEO/AI-legibility Routine edit landing, or unfiltered bot traffic. I cannot distinguish these with the connectors available.
+
+**What would confirm a genuine source shift:** the 80–125 band holding through Sep 12–15 regardless of trading, plus continued cart adds. **What would kill it:** reversion to ~60 within two days, marking this as a two-day anomaly. **Fastest resolution:** ask the floor what was posted — one answer beats weeks of session data.
