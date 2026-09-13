@@ -763,3 +763,16 @@ Two consecutive decoupled spikes is no longer explicable as coincidence. Somethi
 **Candidate causes, unranked:** a social post, an SEO/AI-legibility Routine edit landing, or unfiltered bot traffic. I cannot distinguish these with the connectors available.
 
 **What would confirm a genuine source shift:** the 80–125 band holding through Sep 12–15 regardless of trading, plus continued cart adds. **What would kill it:** reversion to ~60 within two days, marking this as a two-day anomaly. **Fastest resolution:** ask the floor what was posted — one answer beats weeks of session data.
+
+---
+
+### 2026-09-12 — The shoulder-season decline hits basket size as hard as it hits footfall
+**Confidence: medium** — one clean Saturday-to-Saturday comparison plus one corroborating Sunday, with the product mix supporting the mechanism.
+
+Sat Sep 5 (SNP 400): 79 orders, AOV $56.39. Sat Sep 12 (SNP 430, slightly better day): 24 orders, AOV $17.35. Orders fell 70% and basket fell 69% — roughly equally. Sun Sep 6 showed the same shape (23 orders, AOV $19.94) and I misread it at the time as simply a quiet day.
+
+The mechanism is visible in the product board: beach hardware is exiting (GCI Big Surf $294/3u → $196/2u → $98/1u across three reads; Fluzzle Tube and Wave Zone gone entirely) while the only line with meaningful order count is Coffee On Tap at $66.50 across 9 orders. Post-season visitors are buying consumables and the occasional small giftable, not equipment. Equipment is a "we're here for the summer" purchase and that population has left.
+
+**Why it matters:** every `required` dollar figure for the rest of the season has to be read as a ticket count. Sat Sep 19 requires ~$920, which at a $17 basket is ~50 transactions — far above anything the shoulder has produced. It reframes the lever from "get more people in" to "get anything above $20 into the basket," which is a merchandising question, not a traffic question.
+
+**What would confirm:** Sat Sep 19 (SNP 445 forecast) coming in with AOV in the $15–25 band. **What would kill it:** Sep 19 AOV back above $35, which would mark Sep 12 as an anomalous day rather than the new shape.
