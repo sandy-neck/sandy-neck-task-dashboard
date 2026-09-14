@@ -776,3 +776,23 @@ The mechanism is visible in the product board: beach hardware is exiting (GCI Bi
 **Why it matters:** every `required` dollar figure for the rest of the season has to be read as a ticket count. Sat Sep 19 requires ~$920, which at a $17 basket is ~50 transactions — far above anything the shoulder has produced. It reframes the lever from "get more people in" to "get anything above $20 into the basket," which is a merchandising question, not a traffic question.
 
 **What would confirm:** Sat Sep 19 (SNP 445 forecast) coming in with AOV in the $15–25 band. **What would kill it:** Sep 19 AOV back above $35, which would mark Sep 12 as an anomalous day rather than the new shape.
+
+---
+
+### 2026-09-13 — The elevated web-session band is a real source shift, not a footfall echo
+**Confidence: medium-high on the fact, zero on the cause.**
+
+Four consecutive days in the 80–125 range (92, 123, 82, 79) against a ~60/day baseline that held all month. Those four days span a closed Friday, an open Saturday, and a closed rain-washout Sunday — so the band survives complete variation in whether the store traded. This kills the Sep 9 "sessions partly measure intent-to-visit" hypothesis outright, and it's now too long to be a two-day anomaly.
+
+The online orders in the window — frozen bait (2 orders, 4 units) and a 5lb bag of ice — argue at least part of it is human, and human in a specifically *local* way. Nobody ships frozen bait.
+
+**What would confirm a named source:** BJ or Meghan identifying a post or listing change in the Sep 10–11 window. **What would kill the "real" reading:** reversion to ~60 by Sep 16–17 with no further cart adds. **Fastest resolution remains asking the floor** — I have now spent four days of session data on a question one sentence would answer, which is itself a lesson: escalate unresolved attribution questions to the humans early rather than accumulating evidence.
+
+### 2026-09-13 — The expectation curve overprices heavy-rain days at shoulder volumes
+**Confidence: medium** — two heavy-rain days now, both SNP 275, both at 3–8% of expected.
+
+Sep 3 (275, heavy rain, open) → $115.95 against ~$1,400 expected. Sep 13 (275, 1.2" rain, zero sun, closed) → $50.97 against $1,468. BJ's anchor is $500 for a rainy day at SNP 150, and the curve interpolates 275 up to ~$1,468 — but a genuine Cape washout in September has produced roughly $120 at best, not $1,400.
+
+The likely error is that 275 is scoring "marginal *beach* day" while the revenue reality is "nobody leaves the house." Rain looks like a step function, not a linear input: once precipitation clears some threshold (~0.5"?) the day collapses to a floor regardless of score.
+
+**What would confirm:** a third heavy-rain day, open for trading, landing under $200 against a four-figure expectation. **What this implies if true:** precipitation should cap expected revenue directly rather than feed the composite score. Worth raising when the curve is next touched — logging here rather than emailing, since BJ knows a rainy day is bad and doesn't need telling.
