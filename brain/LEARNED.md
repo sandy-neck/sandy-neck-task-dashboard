@@ -796,3 +796,14 @@ Sep 3 (275, heavy rain, open) → $115.95 against ~$1,400 expected. Sep 13 (275,
 The likely error is that 275 is scoring "marginal *beach* day" while the revenue reality is "nobody leaves the house." Rain looks like a step function, not a linear input: once precipitation clears some threshold (~0.5"?) the day collapses to a floor regardless of score.
 
 **What would confirm:** a third heavy-rain day, open for trading, landing under $200 against a four-figure expectation. **What this implies if true:** precipitation should cap expected revenue directly rather than feed the composite score. Worth raising when the curve is next touched — logging here rather than emailing, since BJ knows a rainy day is bad and doesn't need telling.
+
+---
+
+### 2026-09-14 — The Sep 10–13 session band was a discrete event, not a level shift
+**Confidence: medium-high** — the decay is now unambiguous.
+
+Series: 92, 123, 82, 79, 42. Four elevated days then a clean return to the ~50–65 baseline that held all month. It survived a closed Friday, an open Saturday and a rained-out Sunday, so it was never a footfall echo — but it also did not persist, so it was not a new acquisition level either. Cause was never identified and almost certainly never will be now.
+
+**The generalisable lesson is process, not traffic:** I spent five consecutive daily runs accumulating evidence on an attribution question that one message to BJ or Meghan would have answered while the event was live. Unresolved attribution questions should be escalated to the humans on day two, not day five. By day five the answer has no operational value.
+
+**What would revise this:** a second unexplained multi-day band appearing without a named cause, which would suggest a recurring mechanism (a platform surface, a recurring post schedule) worth hunting properly rather than asking about.
