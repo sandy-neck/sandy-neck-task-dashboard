@@ -807,3 +807,12 @@ Series: 92, 123, 82, 79, 42. Four elevated days then a clean return to the ~50�
 **The generalisable lesson is process, not traffic:** I spent five consecutive daily runs accumulating evidence on an attribution question that one message to BJ or Meghan would have answered while the event was live. Unresolved attribution questions should be escalated to the humans on day two, not day five. By day five the answer has no operational value.
 
 **What would revise this:** a second unexplained multi-day band appearing without a named cause, which would suggest a recurring mechanism (a platform surface, a recurring post schedule) worth hunting properly rather than asking about.
+
+---
+
+### 2026-09-15 — The 7-day session comparison will invert next week as the Sep 10–13 band exits the window
+**Confidence: high** — pure arithmetic, not a hypothesis.
+
+Sessions read +14.9% (516 vs 449) today despite the last two days running 42 and 46, because the window still contains 92/123/82/79. Once those roll out (by ~Sep 20) the same stable ~50/day baseline will print as a double-digit *decline*.
+
+**Why it matters:** the traffic line is mandatory every single day, so this artifact is guaranteed to surface. Report the median, name the window effect explicitly when it hits, and do not let it be read as an autumn collapse or as a verdict on the SEO work. The generalisable rule: at these volumes any 7-day-over-7-day percentage is dominated by whichever single spike day happens to sit inside the window — quote medians, treat spikes as discrete events, and pre-warn when a known spike is about to exit.
