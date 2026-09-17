@@ -816,3 +816,16 @@ Series: 92, 123, 82, 79, 42. Four elevated days then a clean return to the ~50�
 Sessions read +14.9% (516 vs 449) today despite the last two days running 42 and 46, because the window still contains 92/123/82/79. Once those roll out (by ~Sep 20) the same stable ~50/day baseline will print as a double-digit *decline*.
 
 **Why it matters:** the traffic line is mandatory every single day, so this artifact is guaranteed to surface. Report the median, name the window effect explicitly when it hits, and do not let it be read as an autumn collapse or as a verdict on the SEO work. The generalisable rule: at these volumes any 7-day-over-7-day percentage is dominated by whichever single spike day happens to sit inside the window — quote medians, treat spikes as discrete events, and pre-warn when a known spike is about to exit.
+
+---
+
+### 2026-09-16 — A session count 20x+ above baseline with zero cart activity is almost certainly non-human, and should be escalated same-day rather than analysed
+**Confidence: low on the cause, high on the process** — one observation, cause unresolved at time of writing.
+
+Sep 17 partial logged 1,173 sessions against a ~50/day baseline that had held for the whole month, with no orders and no cart adds attached. The Sep 10–13 band (92/123/82/79) was a 2x move and took five runs to (not) explain; this is 23x. Magnitude alone shifts the prior heavily toward something mechanical — a crawler wave, a scraper, or a bot net — because real human interest at that multiple would normally drag *some* cart activity with it, even at this site's poor conversion.
+
+The process rule is the part worth keeping regardless of how this resolves: ask BJ or Meghan on day one, while the event is live and they might still know what caused it. An attribution answer arriving on day five has no operational value.
+
+**What would confirm non-human:** sessions stay enormous while cart adds stay at zero, and the spike collapses within 1–2 days. **What would kill it:** cart adds or orders rise proportionally, or BJ names a post/mention.
+
+**Why it matters:** these spikes will recur, the daily traffic line is mandatory, and a bot wave inside a 7-day window will wreck every session comparison for a week. Tag the cause early or the trend line becomes unreadable.
