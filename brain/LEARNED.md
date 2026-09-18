@@ -829,3 +829,19 @@ The process rule is the part worth keeping regardless of how this resolves: ask 
 **What would confirm non-human:** sessions stay enormous while cart adds stay at zero, and the spike collapses within 1–2 days. **What would kill it:** cart adds or orders rise proportionally, or BJ names a post/mention.
 
 **Why it matters:** these spikes will recur, the daily traffic line is mandatory, and a bot wave inside a 7-day window will wreck every session comparison for a week. Tag the cause early or the trend line becomes unreadable.
+
+---
+
+### 2026-09-17 — The Sep 17 session spike was non-human: 24x traffic, falling cart adds, full collapse within one day
+**Confidence: high on non-human, medium on the specific cause** — the signature is about as clean as this data can produce.
+
+Sessions went 49 → 1,191 → 15 across three days against a ~50/day baseline that had held all month. Over the same window 7-day cart adds *fell* from 4 to 2. Human interest at 24x volume drags some cart activity with it even at this site's near-zero conversion rate; this dragged negative. Collapse inside a single day rules out anything sustained like press or a viral post.
+
+Likely trigger: the SEO Routine edits the catalogue every 3 days, and a large re-crawl of ~993 products would produce exactly this shape. Unproven — Search Console isn't connected, which is the thing that would settle it.
+
+**The generalisable rules:**
+1. **Signature for a bot wave:** sessions up >10x, cart adds flat or down, duration 1–2 days. When all three hold, call it mechanical and move on — do not spend runs hunting a marketing cause.
+2. **A spike this size wrecks the 7-day session comparison for exactly 7 days.** Pre-warn on day one, quote the median throughout, and name the window contents whenever a percentage is unavoidable. Three different comparisons in ten days printed +11.8%, +14.9% and +224.3% off an essentially flat ~50/day baseline.
+3. **Escalate on day one anyway, but don't repeat the ask.** Escalating was right; the data happened to answer before BJ did. Two runs to resolution versus five for the Sep 10–13 band.
+
+**What would revise this:** a recurring 3-day-cadence spike pattern matching the Routine schedule would upgrade the cause from medium to high, and would mean these are now a permanent feature of the traffic series that needs filtering at source rather than narrating monthly.
