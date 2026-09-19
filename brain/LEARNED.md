@@ -845,3 +845,16 @@ Likely trigger: the SEO Routine edits the catalogue every 3 days, and a large re
 3. **Escalate on day one anyway, but don't repeat the ask.** Escalating was right; the data happened to answer before BJ did. Two runs to resolution versus five for the Sep 10–13 band.
 
 **What would revise this:** a recurring 3-day-cadence spike pattern matching the Routine schedule would upgrade the cause from medium to high, and would mean these are now a permanent feature of the traffic series that needs filtering at source rather than narrating monthly.
+
+---
+
+### 2026-09-18 — When there is no revenue to analyse, the forecast window is the story
+**Confidence: medium** — reasoned from structure and one applied instance, not yet validated against outcomes.
+
+Three consecutive zero days produced an email with a genuine, actionable point: today (Sat Sep 19, SNP 400/Great) is the last Great-rated day in a seven-day forecast that then runs 275 / 330 / 330 / 330 / 330 / 260 / **240 with rain on Saturday the 26th**. With only three or four trading weekends left before Columbus Day, one washout Saturday removes a meaningful fraction of the remaining season's revenue — so the good weekend immediately before it is worth pushing.
+
+The generalisable rule: **in late shoulder and off-season, the SNP 500 forecast is more informative than the sales data**, because the sales data is mostly zeros and the forecast tells you which of the few remaining open days actually carries weight. Flip the email from backward-looking (what the day did vs. expected) to forward-looking (which upcoming day is scarce) once the store goes below ~3 trading days a week.
+
+**What would confirm:** Sep 26 comes in materially below Sep 19 despite both being Saturdays, and the gap tracks the score gap (400 vs 240) rather than the calendar. **What would kill it:** weekend revenue in late shoulder turns out to be weather-insensitive — driven by a fixed base of locals and last-of-season visitors who come regardless — in which case the forecast has no predictive value here and the lever doesn't exist.
+
+**Corollary on scarcity:** the value of a single good day rises as the number of remaining trading days falls. A 400-score Saturday in July is one of ten; in late September it may be one of three. The expectation curve does not capture this, and a promo or push is worth more on the scarce day than the identical day in peak.
