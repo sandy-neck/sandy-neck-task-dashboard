@@ -858,3 +858,18 @@ The generalisable rule: **in late shoulder and off-season, the SNP 500 forecast 
 **What would confirm:** Sep 26 comes in materially below Sep 19 despite both being Saturdays, and the gap tracks the score gap (400 vs 240) rather than the calendar. **What would kill it:** weekend revenue in late shoulder turns out to be weather-insensitive — driven by a fixed base of locals and last-of-season visitors who come regardless — in which case the forecast has no predictive value here and the lever doesn't exist.
 
 **Corollary on scarcity:** the value of a single good day rises as the number of remaining trading days falls. A 400-score Saturday in July is one of ten; in late September it may be one of three. The expectation curve does not capture this, and a promo or push is worth more on the scarce day than the identical day in peak.
+
+---
+
+### 2026-09-19 — Cold days shift in-store mix from consumables to apparel and raise the basket
+**Confidence: medium** — one clean weekday-matched pair with a large effect and an obvious mechanism, but n=1.
+
+Sat Sep 12 (SNP 430, warmer): 24 orders / $449 / AOV $17.35. Sat Sep 19 (SNP 330, 63.7°F, feels 59.2°F, 19mph wind): 17 orders / $545 / **AOV $32.06**. Fewer orders, 85% higher basket, 21% more revenue.
+
+The mix is the evidence, not just the average. Five of the eight top in-store lines on Sep 19 were warm apparel (hoodie $58, sweatshirt $50, sweatpants $49, rope hat $44, kids fleece $35). Ice and drinks — the highest-order-count items all summer — were absent from the top eight entirely.
+
+Mechanism: cold thins the door but converts whoever comes into apparel buyers, and an apparel ticket is 5–8x an ice ticket. The two effects partly cancel, which is why a low SNP score can produce a *higher* revenue day than a higher-scored one in shoulder season.
+
+**Why it matters:** the SNP 500 curve treats cool weather purely as a negative. In late shoulder that may be wrong in direction, not just magnitude — and it implies a cheap merchandising lever (front the fleece when the forecast turns cold) that costs nothing to pull.
+
+**What would confirm:** Sat Sep 26 (275/Marginal, rain) comes in with a basket at or above $32 on low order count. **What would kill it:** Sep 26 collapses on both basket and total, meaning rain and cold behave differently and Sep 19 was just a good apparel day. Also killed if the next warm open day posts an equally high basket — that would make Sep 12's $17 AOV the anomaly rather than the baseline.
