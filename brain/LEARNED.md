@@ -873,3 +873,17 @@ Mechanism: cold thins the door but converts whoever comes into apparel buyers, a
 **Why it matters:** the SNP 500 curve treats cool weather purely as a negative. In late shoulder that may be wrong in direction, not just magnitude — and it implies a cheap merchandising lever (front the fleece when the forecast turns cold) that costs nothing to pull.
 
 **What would confirm:** Sat Sep 26 (275/Marginal, rain) comes in with a basket at or above $32 on low order count. **What would kill it:** Sep 26 collapses on both basket and total, meaning rain and cold behave differently and Sep 19 was just a good apparel day. Also killed if the next warm open day posts an equally high basket — that would make Sep 12's $17 AOV the anomaly rather than the baseline.
+
+---
+
+### 2026-09-20 — The SNP 500 appears to over-weight the sunset/day-extension component against precipitation in shoulder season
+**Confidence: low** — one clean pair, but the effect size is large and the direction is the wrong way round.
+
+Sat Sep 19: dry, 9.4 hrs sun, 63.7°F, 19mph wind → scored **330 / Mixed** → did **$545 on 17 orders**.
+Sun Sep 20: heavy drizzle 0.114in, 4.0 hrs sun, 64.2°F, 9mph wind → scored **400 / Great** → did **$75 on 5 orders**.
+
+Near-identical temperature. The wet day scored 70 points *higher*, on the strength of "comfortable breeze, good sunset and bonfire window, access," and sold a seventh as much. Precipitation appears to be entering the score weakly while day_extension and wind carry too much. Day-of-week confounds this (Saturday vs Sunday), so it is not clean — but the day-of-week factor is applied to *expected*, not to the score itself, and the score ordering is what looks wrong.
+
+**Why it matters:** the score feeds expected revenue, and if drizzle is under-penalised then wet days get set up to look like misses while dry cold days look like overperformance. It also affects the forward-looking use of the score, which is now the main value of the email in late shoulder — telling BJ which upcoming day is worth opening for.
+
+**What would confirm:** two or three more pairs at similar temperature where the wetter day scores higher and sells materially worse. **What would kill it:** the gap turns out to be entirely Saturday-vs-Sunday — testable when a wet Saturday and a dry Saturday land at similar temperature. Do not raise this with BJ until there is more than one pair; he built the engine and a single-day complaint about it is not worth his attention.
