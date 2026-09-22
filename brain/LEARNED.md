@@ -887,3 +887,14 @@ Near-identical temperature. The wet day scored 70 points *higher*, on the streng
 **Why it matters:** the score feeds expected revenue, and if drizzle is under-penalised then wet days get set up to look like misses while dry cold days look like overperformance. It also affects the forward-looking use of the score, which is now the main value of the email in late shoulder — telling BJ which upcoming day is worth opening for.
 
 **What would confirm:** two or three more pairs at similar temperature where the wetter day scores higher and sells materially worse. **What would kill it:** the gap turns out to be entirely Saturday-vs-Sunday — testable when a wet Saturday and a dry Saturday land at similar temperature. Do not raise this with BJ until there is more than one pair; he built the engine and a single-day complaint about it is not worth his attention.
+
+---
+
+### 2026-09-21 — In-store AOV is a more stable signal than daily revenue once order counts fall below ~20
+**Confidence: medium** — mechanically obvious at low n, and now supported by three days of consistent mix.
+
+At 2–20 orders a day, total revenue is decided by whether a single apparel buyer walked in: Sep 20 $75/5 orders, Sep 21 $184/3 orders. Revenue swung 145% on a difference of one ticket. But the *composition* held steady — the 7-day board has been seven-of-eight apparel for three runs, with zero ice or drinks, versus ice being the highest-order-count line all summer.
+
+The practical consequence: in late shoulder, report basket and mix, and treat daily totals as approximately noise. It also means the SNP 500 → expected-revenue comparison degrades to meaninglessness faster than the score itself does — the score may still rank days correctly while the revenue mapping cannot.
+
+**What would confirm:** across the remaining Saturdays to Columbus Day, basket varies less (as a coefficient of variation) than daily revenue does. **What would kill it:** a cool day arrives with a low basket and high order count, meaning the apparel mix was about who happened to be in town rather than the weather.
