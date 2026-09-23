@@ -898,3 +898,24 @@ At 2–20 orders a day, total revenue is decided by whether a single apparel buy
 The practical consequence: in late shoulder, report basket and mix, and treat daily totals as approximately noise. It also means the SNP 500 → expected-revenue comparison degrades to meaninglessness faster than the score itself does — the score may still rank days correctly while the revenue mapping cannot.
 
 **What would confirm:** across the remaining Saturdays to Columbus Day, basket varies less (as a coefficient of variation) than daily revenue does. **What would kill it:** a cool day arrives with a low basket and high order count, meaning the apparel mix was about who happened to be in town rather than the weather.
+
+---
+
+### 2026-09-22 — Precipitation, not the composite score, predicts late-shoulder retail
+**Confidence: medium** — five days, consistent direction, but confounded by day of week.
+
+Dry days in the late-shoulder window have sold materially better than wet days regardless of where the SNP 500 put them:
+
+| Day | SNP | Precip | Gross |
+|---|---:|---|---:|
+| Sat Sep 19 | 330 | 0.0 in | $545 |
+| Mon Sep 21 | 330 | 0.031 in | $184 |
+| Sun Sep 13 | 275 | wet | $51 |
+| Sun Sep 20 | 400 | 0.114 in | $75 |
+| Tue Sep 15 | 400 | dry, closed-ish | $68 |
+
+The two best-selling days are the two driest, and the 400-scored wet Sunday sold a seventh of the 330-scored dry Saturday. Mechanism is plain: in September nobody browses a coastal shop in the rain, and the people who do show up on a cold dry day buy fleece. The composite score is built for beach quality, which weights tide, sunset window and wind — inputs that matter for a July beach trip and barely at all for late-September retail footfall.
+
+**Practical use:** when choosing which day to open in late shoulder, rank by precipitation first and temperature second, and treat the SNP 500 as secondary. The immediate test is Sat Sep 26 (240, persistent rain) versus Wed Sep 30 (440, dry) — if both trade, the dry midweek day beating the wet Saturday would be strong support.
+
+**What would kill it:** the wet Saturday outsells the dry midweek day, meaning weekend visitor volume dominates weather entirely and the rain effect was really a Sunday effect.
