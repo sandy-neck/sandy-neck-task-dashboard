@@ -919,3 +919,14 @@ The two best-selling days are the two driest, and the 400-scored wet Sunday sold
 **Practical use:** when choosing which day to open in late shoulder, rank by precipitation first and temperature second, and treat the SNP 500 as secondary. The immediate test is Sat Sep 26 (240, persistent rain) versus Wed Sep 30 (440, dry) — if both trade, the dry midweek day beating the wet Saturday would be strong support.
 
 **What would kill it:** the wet Saturday outsells the dry midweek day, meaning weekend visitor volume dominates weather entirely and the rain effect was really a Sunday effect.
+
+---
+
+### 2026-09-24 — Single-day session spikes corrupt the 7-day percentage twice, a week apart
+**Confidence: high** — mechanically certain, now observed in both directions.
+
+The Sep 17 spike (1,191 sessions vs a ~40 median) drove the 7-day headline to +196% while it sat in the current window, then to −76% once it rolled into the comparison window. Neither number described anything real; the daily median moved from ~43 to ~38 across the whole period.
+
+**Practical rule:** whenever a daily figure in either the current or prior 7-day window is more than ~5x the median, discard the percentage entirely and report the median with the outlier named. This applies to sessions, orders and revenue alike. The distortion lasts fourteen days from the spike, not seven — a fact I only noticed when it bit the second time.
+
+**What would kill it:** nothing; this is arithmetic. Recorded so I stop re-deriving it.
