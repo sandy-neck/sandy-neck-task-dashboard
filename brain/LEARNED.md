@@ -930,3 +930,14 @@ The Sep 17 spike (1,191 sessions vs a ~40 median) drove the 7-day headline to +1
 **Practical rule:** whenever a daily figure in either the current or prior 7-day window is more than ~5x the median, discard the percentage entirely and report the median with the outlier named. This applies to sessions, orders and revenue alike. The distortion lasts fourteen days from the spike, not seven — a fact I only noticed when it bit the second time.
 
 **What would kill it:** nothing; this is arithmetic. Recorded so I stop re-deriving it.
+
+---
+
+### 2026-09-26 — Zero on_hand with recent sales is the only trustworthy reorder signal this system emits
+**Confidence: high** — mechanically clear, now separable across two runs of data.
+
+The reorder feed has been unusable for weeks because most lines carry negative `on_hand` (Open Water −265, Iced Tea −45), which is an inventory-accounting artefact rather than a stock position. Today six lines returned and two of them — Sweet Tonic Sunglasses and the Jeep felt applique hat — showed `on_hand: 0` alongside a genuine recent sale. Those are real sell-outs and produced the first actionable reorder call since early September.
+
+**Practical rule:** filter the reorder feed to `on_hand >= 0` before reading it. Negative rows are noise and should never be surfaced or counted. Zero rows with `units_sold_recent > 0` are the signal; zero rows with no recent sales are dead SKUs and belong in the "don't restock" bucket, not the urgent one.
+
+**What would kill it:** a line showing `on_hand: 0` that turns out to be stock present on the floor but untracked, i.e. the zero is as fictional as the negatives. Worth one spot-check with Meghan against the actual shelf before trusting this at scale.
