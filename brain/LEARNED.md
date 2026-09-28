@@ -941,3 +941,14 @@ The reorder feed has been unusable for weeks because most lines carry negative `
 **Practical rule:** filter the reorder feed to `on_hand >= 0` before reading it. Negative rows are noise and should never be surfaced or counted. Zero rows with `units_sold_recent > 0` are the signal; zero rows with no recent sales are dead SKUs and belong in the "don't restock" bucket, not the urgent one.
 
 **What would kill it:** a line showing `on_hand: 0` that turns out to be stock present on the floor but untracked, i.e. the zero is as fictional as the negatives. Worth one spot-check with Meghan against the actual shelf before trusting this at scale.
+
+---
+
+### 2026-09-27 — In late shoulder the SNP 500 stops discriminating entirely; the only variable is whether the door was open
+**Confidence: high** — five days now in the 390–400 band spanning $0 to $75, and the widest spread sits inside an identical score.
+
+Band 390–400: Sep 14 $19.97, Sep 15 $68.00, Sep 20 $74.95, Sep 22 $4.00, Sep 27 $0.00. Separately the 330 band has spanned $0 to $545. In both cases the ordering is explained by open/closed and precipitation, not by score. Expected-vs-actual in this phase therefore carries no information about demand and should not lead the email — I've suppressed it for the last six runs and that was right.
+
+This is narrower than the earlier "composite weights beach inputs, not retail footfall" note: it's not that the score is mis-weighted, it's that at this volume a single apparel buyer is worth more than the entire weather signal. The score only regains meaning if daily order counts get back above roughly ten.
+
+**What would kill it:** an open Great-rated day in October doing materially more than an open Mixed-rated one. Thu Oct 1 (435) and Fri Oct 2 (445) versus Sep 19 (330, $545) is the clean test if BJ trades them.
