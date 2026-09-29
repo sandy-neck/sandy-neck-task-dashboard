@@ -952,3 +952,14 @@ Band 390–400: Sep 14 $19.97, Sep 15 $68.00, Sep 20 $74.95, Sep 22 $4.00, Sep 2
 This is narrower than the earlier "composite weights beach inputs, not retail footfall" note: it's not that the score is mis-weighted, it's that at this volume a single apparel buyer is worth more than the entire weather signal. The score only regains meaning if daily order counts get back above roughly ten.
 
 **What would kill it:** an open Great-rated day in October doing materially more than an open Mixed-rated one. Thu Oct 1 (435) and Fri Oct 2 (445) versus Sep 19 (330, $545) is the clean test if BJ trades them.
+
+---
+
+### 2026-09-28 — A clean cart→checkout rate with zero completions localises the online failure to the final step
+**Confidence: low** — n=4, one week.
+
+Since August the online funnel has been characterised as "converts near zero" with no identified cause (see 2026-08-07 entry). This week is the first with a distinguishable shape: 4 cart adds → 4 reached checkout → 0 completed. Every session that added to cart proceeded to checkout, and every one abandoned there. If that shape repeats, the problem is not product pages, pricing-on-page, or cart friction — it is something revealed at or after the checkout screen. Shipping cost is the obvious candidate for a coastal gift/gear shop with small baskets; a broken payment method or mobile rendering fault are the others.
+
+**What would confirm:** two or three more weeks of the same 100%-to-checkout, 0%-completed shape. **What would kill it:** a single completed order, or a week where cart→checkout itself drops off. Also killed if BJ's live test order goes through cleanly on a phone with sane shipping — in which case this is just small numbers.
+
+Cheap to test, which is the whole reason it's worth recording at n=4.
