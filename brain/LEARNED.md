@@ -963,3 +963,14 @@ Since August the online funnel has been characterised as "converts near zero" wi
 **What would confirm:** two or three more weeks of the same 100%-to-checkout, 0%-completed shape. **What would kill it:** a single completed order, or a week where cart→checkout itself drops off. Also killed if BJ's live test order goes through cleanly on a phone with sane shipping — in which case this is just small numbers.
 
 Cheap to test, which is the whole reason it's worth recording at n=4.
+
+---
+
+### 2026-09-29 — Any single anomalous day poisons two consecutive weekly comparisons, in opposite signs
+**Confidence: high** — observed twice now with independent metrics, and the mechanism is arithmetic rather than behavioural.
+
+The Sep 17 revenue spike produced a fake week-over-week increase for seven days, then a fake −78% for the next seven as it rolled from the current window into the prior one. The Sep 16 traffic spike (1,191 sessions against a ~40/day baseline) is now doing exactly the same thing: today's headline reads −86.1% week-over-week when the underlying series simply drifted from ~40/day to the mid-20s.
+
+The rule that follows: whenever a metric contains a day more than roughly 5x its neighbours, suppress the weekly percentage for fourteen days and quote the daily series instead. Note the spike's date and the date it clears both windows (here, ~Oct 6).
+
+**What would kill it:** nothing — it's arithmetic. The only judgement call is the 5x threshold, which is a guess and could stand to be tuned once there are more spikes to look at.
