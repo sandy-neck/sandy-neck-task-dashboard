@@ -974,3 +974,14 @@ The Sep 17 revenue spike produced a fake week-over-week increase for seven days,
 The rule that follows: whenever a metric contains a day more than roughly 5x its neighbours, suppress the weekly percentage for fourteen days and quote the daily series instead. Note the spike's date and the date it clears both windows (here, ~Oct 6).
 
 **What would kill it:** nothing — it's arithmetic. The only judgement call is the 5x threshold, which is a guess and could stand to be tuned once there are more spikes to look at.
+
+---
+
+### 2026-09-30 — Fine weather on a zero day is the control that closes the "is it weather or closure?" question
+**Confidence: high** — one clean case, but the logic is dispositive rather than statistical.
+
+Sep 25–29 were all wet, windy or cool, so the zeros were over-determined: either closure or weather could explain them. Sep 30 was dry, 67°F, 4.6 hrs sun, 6 mph wind — the best actual conditions of the run — and still returned $0 on 0 orders. Weather is therefore eliminated as a contributing cause for at least that day, and by extension the run is a closure decision, not a demand collapse.
+
+**Why it's worth recording:** it means I can stop hedging zero days with conditions language in this phase, and it supplies a general method — when a suspected operational cause and a suspected demand cause are confounded, wait for the day where the demand cause is absent. One good-weather zero is worth more than five bad-weather ones.
+
+**What would kill it:** an open day in genuinely fine October weather that also returns near-zero — that would put demand back on the table.
