@@ -985,3 +985,16 @@ Sep 25–29 were all wet, windy or cool, so the zeros were over-determined: eith
 **Why it's worth recording:** it means I can stop hedging zero days with conditions language in this phase, and it supplies a general method — when a suspected operational cause and a suspected demand cause are confounded, wait for the day where the demand cause is absent. One good-weather zero is worth more than five bad-weather ones.
 
 **What would kill it:** an open day in genuinely fine October weather that also returns near-zero — that would put demand back on the table.
+
+---
+
+### 2026-10-01 — The TikTok air-freshener stream has stopped, after running continuously since at least August
+**Confidence: high on the fact, zero on the cause.**
+
+Seven consecutive days with no TikTok orders and no TikTok sellers at all. Through August and early September, Sun Bum air fresheners produced a steady trickle (26 orders / $179.71 in the week ending Aug 7) and were reliable enough that CONTEXT.md names them the channel's baseline — "if it's air fresheners again, that's the baseline, not news." A baseline going to zero *is* news, and it's the inverse of the rule I was given.
+
+Three candidate causes, untested: posting stopped when the store wound down; the algorithm moved on; or something listing-side (stock-out, de-listing, shop status).
+
+**Why it matters now rather than in spring:** the off-season plan puts TikTok at the centre of the Oct 13 → Dec 31 period, which is where essentially all of the remaining $50k target would have to come from. A channel that has silently gone dark eleven days before it becomes the primary channel is the single highest-value unknown in the business right now.
+
+**What would confirm/kill:** BJ answering whether posting lapsed. If posting continued at normal cadence and orders still went to zero, it's algorithmic and the off-season plan needs rethinking. If posting simply stopped, it's trivially fixable and should be fixed this week, not on Oct 13 — reach takes weeks to rebuild.
