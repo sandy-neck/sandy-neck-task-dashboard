@@ -998,3 +998,23 @@ Three candidate causes, untested: posting stopped when the store wound down; the
 **Why it matters now rather than in spring:** the off-season plan puts TikTok at the centre of the Oct 13 → Dec 31 period, which is where essentially all of the remaining $50k target would have to come from. A channel that has silently gone dark eleven days before it becomes the primary channel is the single highest-value unknown in the business right now.
 
 **What would confirm/kill:** BJ answering whether posting lapsed. If posting continued at normal cadence and orders still went to zero, it's algorithmic and the off-season plan needs rethinking. If posting simply stopped, it's trivially fixable and should be fixed this week, not on Oct 13 — reach takes weeks to rebuild.
+
+---
+
+### 2026-10-02 — Cart adds returning after a dry spell is the moment to test a parked funnel hypothesis, not the moment to re-derive it
+**Confidence: medium** — one clean instance, but the mechanism is general and the cost of missing it is high.
+
+The Sep 28 reading was that online failure is localised at the final payment step: 4 adds → 4 checkouts → 0 purchases. Then cart adds went to 0 for a full week and the hypothesis became untestable — not disproved, just unobservable. On Oct 2 adds returned (4 again) alongside the first real traffic rise in two weeks, and the same 100%/0% split reappeared.
+
+The generalisable part: when an input metric collapses to zero, a hypothesis built on it doesn't die, it goes dormant, and it is easy to lose. Writing down *which question stopped being answerable* at the moment volume disappears is what lets it be picked up cleanly when volume returns. Otherwise the second data point gets reported as a fresh observation and the two never get joined.
+
+**What would confirm:** a third occurrence of high add-to-checkout with zero checkout-to-purchase, ideally on a base above 10. **What would kill it:** purchases completing normally once traffic returns, which would mean the September zeros were a volume artefact rather than a broken step.
+
+### 2026-10-02 — Two consecutive days at 2–3x a flat floor is the smallest traffic move worth calling real
+**Confidence: low** — a threshold chosen by judgement, not tested.
+
+Sessions ran 25, 27, 24, 27, 21 — a stable mid-20s floor — then 51 and 72. One day at 51 I would have ignored as noise on a base that small. The second day at a higher level is what made it callable, because noise does not usually persist in the same direction at that magnitude.
+
+Offered as a working rule for small-base traffic: ignore single-day multiples, call a move real on the second consecutive day holding 2x or better above an established flat floor. The 127-session single-day spike in mid-September is the counter-case — one day, reverted immediately, and it went on to poison two weeks of weekly comparisons.
+
+**What would tune it:** several more spikes to see how often a single high day sustains. The threshold is a guess and should be revised once there are five or six to look at.
